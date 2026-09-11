@@ -1,0 +1,153 @@
+{
+  "appName": "Handelingen Ministries International",
+  "navigation": {
+    "dashboard": "Dashboard",
+    "ministries": "Bedieningen",
+    "departments": "Afdelingen",
+    "members": "Leden",
+    "leaders": "Leiders",
+    "events": "Evenementen",
+    "documents": "Documenten",
+    "tasks": "Taken",
+    "reports": "Rapporten",
+    "notifications": "Meldingen",
+    "settings": "Instellingen"
+  },
+  "common": {
+    "search": "Zoeken",
+    "save": "Opslaan",
+    "cancel": "Annuleren",
+    "delete": "Verwijderen",
+    "edit": "Bewerken",
+    "create": "Aanmaken",
+    "loading": "Laden...",
+    "error": "Er is iets misgegaan",
+    "noResults": "Geen resultaten gevonden",
+    "retry": "Opnieuw proberen",
+    "comingSoon": "Binnenkort beschikbaar",
+    "language": "Taal",
+    "theme": "Thema",
+    "light": "Licht",
+    "dark": "Donker",
+    "system": "Systeem",
+    "profile": "Profiel",
+    "signOut": "Uitloggen"
+  },
+  "shell": {
+    "collapseSidebar": "Zijbalk inklappen",
+    "expandSidebar": "Zijbalk uitklappen",
+    "openMenu": "Menu openen",
+    "closeMenu": "Menu sluiten",
+    "searchPlaceholder": "Zoek in het platform..."
+  },
+  "emptyState": {
+    "title": "Nog niets om te tonen",
+    "description": "Deze module wordt in een volgende fase uitgewerkt."
+  },
+  "errorState": {
+    "title": "Er ging iets mis",
+    "description": "Probeer de pagina te vernieuwen. Blijft het probleem bestaan, neem dan contact op met de beheerder."
+  },
+  "home": {
+    "heroTitle": "Welkom thuis",
+    "heroVerse": "\"Want wij wandelen in geloof en niet in aanschouwen.\" Een gemeenschap toegewijd aan gebed, het Woord en het bereiken van de naties - één ziel tegelijk.",
+    "joinUs": "Word lid",
+    "getConnectedTitle": "Kom in contact",
+    "getConnectedSubtitle": "Vind jouw plek in onze kerkfamilie",
+    "footerTagline": "Zie alleen op Jezus",
+    "cards": {
+      "sermons": { "title": "Preken & onderwijs", "description": "Bekijk de laatste boodschappen, Bijbelstudies en overdenkingen van onze voorgangers en gastsprekers." },
+      "missions": { "title": "Zending in het buitenland", "description": "Volg onze uitreiking in Suriname, Nederland en daarbuiten terwijl we het Evangelie naar de naties brengen." },
+      "community": { "title": "Gemeenschap & zorg", "description": "Sluit je aan bij een kleine groep, vraag om gebed of word vrijwilliger - vind jouw plek om te horen en te dienen." }
+    }
+  },
+  "auth": {
+    "signIn": "Inloggen",
+    "signInDescription": "Log in om toegang te krijgen tot jouw kerkplatform account.",
+    "signOut": "Uitloggen",
+    "email": "E-mail",
+    "password": "Wachtwoord",
+    "confirmPassword": "Bevestig wachtwoord",
+    "newPassword": "Nieuw wachtwoord",
+    "displayName": "Volledige naam",
+    "forgotPassword": "Wachtwoord vergeten?",
+    "forgotPasswordDescription": "Voer je e-mailadres in en we sturen je een link om je wachtwoord opnieuw in te stellen.",
+    "sendResetLink": "Verstuur resetlink",
+    "resetEmailSent": "Als er een account bestaat voor dit e-mailadres, is er een resetlink onderweg.",
+    "resetPassword": "Wachtwoord opnieuw instellen",
+    "resetLinkInvalid": "Deze link voor wachtwoordherstel is ongeldig of verlopen. Vraag een nieuwe aan.",
+    "passwordResetSuccess": "Je wachtwoord is opnieuw ingesteld. Je kunt nu inloggen.",
+    "backToLogin": "Terug naar inloggen",
+    "noAccount": "Nog geen account?",
+    "alreadyHaveAccount": "Heb je al een account?",
+    "createAccount": "Account aanmaken",
+    "passwordRequirements": "Minimaal 8 tekens, met een letter en een cijfer.",
+    "verified": "Geverifieerd",
+    "verificationRequired": "Verificatie vereist",
+    "accountStatus": "Accountstatus",
+    "role": "Rol",
+    "status": {
+      "pending": "In afwachting",
+      "active": "Actief",
+      "suspended": "Geschorst",
+      "disabled": "Uitgeschakeld"
+    },
+    "roles": {
+      "member": "Lid",
+      "leader": "Leider",
+      "ministry_leader": "Bedieningsleider",
+      "church_admin": "Kerkbeheerder",
+      "church_pastor": "Voorganger",
+      "super_admin": "Platformbeheerder"
+    },
+    "selectChurch": {
+      "title": "Kies je kerk",
+      "description": "Selecteer de kerk waarbij je je wilt aansluiten om verder te gaan met registreren.",
+      "emptyTitle": "Nog geen kerken beschikbaar",
+      "emptyDescription": "Kom later terug, of neem contact op met je kerkbeheerder.",
+      "noLongerActive": "Deze kerk accepteert geen registraties meer. Kies een andere kerk."
+    },
+    "register": {
+      "title": "Maak je account aan",
+      "description": "Registreren bij {{church}}"
+    },
+    "verifyEmail": {
+      "title": "Verifieer je e-mailadres",
+      "description": "We hebben een verificatielink gestuurd naar {{email}}. Verifieer je e-mailadres om verder te gaan.",
+      "checkStatus": "Ik heb mijn e-mail geverifieerd",
+      "resend": "Verificatie-e-mail opnieuw versturen",
+      "resendSuccess": "Verificatie-e-mail verstuurd.",
+      "stillNotVerified": "Je e-mailadres is nog niet geverifieerd. Controleer je inbox en probeer het opnieuw."
+    },
+    "accessDenied": {
+      "title": "Toegang geweigerd",
+      "description": "Je hebt geen toestemming om deze pagina te bekijken."
+    },
+    "errors": {
+      "invalidCredential": "Onjuist e-mailadres of wachtwoord.",
+      "invalidEmail": "Dit e-mailadres lijkt niet correct.",
+      "accountDisabled": "Dit account is uitgeschakeld. Neem contact op met je beheerder.",
+      "emailInUse": "Er bestaat al een account voor dit e-mailadres.",
+      "weakPassword": "Dit wachtwoord is te zwak. Kies een sterker wachtwoord.",
+      "tooManyRequests": "Te veel pogingen. Wacht even en probeer het opnieuw.",
+      "network": "Netwerkfout. Controleer je verbinding en probeer het opnieuw.",
+      "requiresRecentLogin": "Log opnieuw in om deze actie te voltooien.",
+      "expiredCode": "Deze link is verlopen. Vraag een nieuwe aan.",
+      "invalidCode": "Deze link is ongeldig. Vraag een nieuwe aan.",
+      "popupClosed": "Het inlogvenster werd gesloten voordat het proces was voltooid.",
+      "unknown": "Er is iets misgegaan. Probeer het opnieuw."
+    },
+    "validation": {
+      "emailRequired": "E-mailadres is verplicht.",
+      "emailInvalid": "Voer een geldig e-mailadres in.",
+      "passwordRequired": "Wachtwoord is verplicht.",
+      "passwordTooShort": "Wachtwoord moet minimaal 8 tekens bevatten.",
+      "passwordTooWeak": "Wachtwoord moet minimaal één letter en één cijfer bevatten.",
+      "confirmPasswordRequired": "Bevestig je wachtwoord.",
+      "passwordsDoNotMatch": "Wachtwoorden komen niet overeen.",
+      "displayNameRequired": "Volledige naam is verplicht.",
+      "displayNameTooShort": "Volledige naam is te kort.",
+      "displayNameTooLong": "Volledige naam is te lang."
+    }
+  }
+}

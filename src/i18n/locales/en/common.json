@@ -1,0 +1,153 @@
+{
+  "appName": "Handelingen Ministries International",
+  "navigation": {
+    "dashboard": "Dashboard",
+    "ministries": "Ministries",
+    "departments": "Departments",
+    "members": "Members",
+    "leaders": "Leaders",
+    "events": "Events",
+    "documents": "Documents",
+    "tasks": "Tasks",
+    "reports": "Reports",
+    "notifications": "Notifications",
+    "settings": "Settings"
+  },
+  "common": {
+    "search": "Search",
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "create": "Create",
+    "loading": "Loading...",
+    "error": "Something went wrong",
+    "noResults": "No results found",
+    "retry": "Retry",
+    "comingSoon": "Coming soon",
+    "language": "Language",
+    "theme": "Theme",
+    "light": "Light",
+    "dark": "Dark",
+    "system": "System",
+    "profile": "Profile",
+    "signOut": "Sign out"
+  },
+  "shell": {
+    "collapseSidebar": "Collapse sidebar",
+    "expandSidebar": "Expand sidebar",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu",
+    "searchPlaceholder": "Search the platform..."
+  },
+  "emptyState": {
+    "title": "Nothing to show yet",
+    "description": "This module will be built out in an upcoming phase."
+  },
+  "errorState": {
+    "title": "Something went wrong",
+    "description": "Try refreshing the page. If the problem persists, contact your administrator."
+  },
+  "home": {
+    "heroTitle": "Welcome home",
+    "heroVerse": "\"For we walk by faith, not by sight.\" A community devoted to prayer, the Word, and reaching the nations - one soul at a time.",
+    "joinUs": "Join us",
+    "getConnectedTitle": "Get connected",
+    "getConnectedSubtitle": "Find your place in our church family",
+    "footerTagline": "Zie alleen op Jezus",
+    "cards": {
+      "sermons": { "title": "Sermons & teaching", "description": "Catch up on the latest messages, Bible studies, and devotionals from our pastors and guest speakers." },
+      "missions": { "title": "Missions abroad", "description": "Follow our outreach across Suriname, the Netherlands, and beyond as we carry the Gospel to the nations." },
+      "community": { "title": "Community & care", "description": "Join a small group, request prayer, or volunteer - find your place to belong and to serve." }
+    }
+  },
+  "auth": {
+    "signIn": "Sign in",
+    "signInDescription": "Sign in to access your church platform account.",
+    "signOut": "Sign out",
+    "email": "Email",
+    "password": "Password",
+    "confirmPassword": "Confirm password",
+    "newPassword": "New password",
+    "displayName": "Full name",
+    "forgotPassword": "Forgot password?",
+    "forgotPasswordDescription": "Enter your email and we'll send you a link to reset your password.",
+    "sendResetLink": "Send reset link",
+    "resetEmailSent": "If an account exists for that email, a password reset link is on its way.",
+    "resetPassword": "Reset password",
+    "resetLinkInvalid": "This password reset link is invalid or has expired. Request a new one.",
+    "passwordResetSuccess": "Your password has been reset. You can now sign in.",
+    "backToLogin": "Back to sign in",
+    "noAccount": "Don't have an account?",
+    "alreadyHaveAccount": "Already have an account?",
+    "createAccount": "Create account",
+    "passwordRequirements": "At least 8 characters, including a letter and a number.",
+    "verified": "Verified",
+    "verificationRequired": "Verification required",
+    "accountStatus": "Account status",
+    "role": "Role",
+    "status": {
+      "pending": "Pending",
+      "active": "Active",
+      "suspended": "Suspended",
+      "disabled": "Disabled"
+    },
+    "roles": {
+      "member": "Member",
+      "leader": "Leader",
+      "ministry_leader": "Ministry leader",
+      "church_admin": "Church administrator",
+      "church_pastor": "Church pastor",
+      "super_admin": "Super administrator"
+    },
+    "selectChurch": {
+      "title": "Choose your church",
+      "description": "Select the church you'd like to join to continue registration.",
+      "emptyTitle": "No churches available yet",
+      "emptyDescription": "Please check back soon, or contact your church administrator.",
+      "noLongerActive": "This church is no longer accepting registrations. Please choose another."
+    },
+    "register": {
+      "title": "Create your account",
+      "description": "Registering with {{church}}"
+    },
+    "verifyEmail": {
+      "title": "Verify your email",
+      "description": "We sent a verification link to {{email}}. Verify your email to continue.",
+      "checkStatus": "I've verified my email",
+      "resend": "Resend verification email",
+      "resendSuccess": "Verification email sent.",
+      "stillNotVerified": "Your email isn't verified yet. Check your inbox and try again."
+    },
+    "accessDenied": {
+      "title": "Access denied",
+      "description": "You don't have permission to view this page."
+    },
+    "errors": {
+      "invalidCredential": "Incorrect email or password.",
+      "invalidEmail": "That email address doesn't look right.",
+      "accountDisabled": "This account has been disabled. Contact your administrator.",
+      "emailInUse": "An account already exists for this email.",
+      "weakPassword": "That password is too weak. Please choose a stronger one.",
+      "tooManyRequests": "Too many attempts. Please wait a moment and try again.",
+      "network": "Network error. Check your connection and try again.",
+      "requiresRecentLogin": "Please sign in again to complete this action.",
+      "expiredCode": "This link has expired. Please request a new one.",
+      "invalidCode": "This link is invalid. Please request a new one.",
+      "popupClosed": "The sign-in window was closed before completing.",
+      "unknown": "Something went wrong. Please try again."
+    },
+    "validation": {
+      "emailRequired": "Email is required.",
+      "emailInvalid": "Enter a valid email address.",
+      "passwordRequired": "Password is required.",
+      "passwordTooShort": "Password must be at least 8 characters.",
+      "passwordTooWeak": "Password must include at least one letter and one number.",
+      "confirmPasswordRequired": "Please confirm your password.",
+      "passwordsDoNotMatch": "Passwords do not match.",
+      "displayNameRequired": "Full name is required.",
+      "displayNameTooShort": "Full name is too short.",
+      "displayNameTooLong": "Full name is too long."
+    }
+  }
+}

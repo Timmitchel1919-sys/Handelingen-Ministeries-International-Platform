@@ -1,0 +1,23 @@
+rules_version = '2';
+
+// Baseline Storage rules for Layer 1. No feature in this layer uploads
+// files yet (profile photos, church logos, documents are later-layer
+// work), so this deliberately stays a locked-down default rather than a
+// permissive placeholder - "allow read, write: if true" is never
+// acceptable, including here.
+service firebase.storage {
+  match /b/{bucket}/o {
+    // Each signed-in user may manage files under their own uid-scoped
+    // folder only (e.g. a future profile photo upload at
+    // users/{uid}/avatar.jpg). Nothing else is readable or writable.
+    match /users/{userId}/{allPaths=**} {
+      allow read: if request.auth != null;
+      allow write: if request.auth != null && request.auth.uid == userId
+        && request.resource.size < 5 * 1024 * 1024;
+    }
+
+    match /{allPaths=**} {
+      allow read, write: if false;
+    }
+  }
+}
