@@ -11,6 +11,7 @@ node_modules
 dist
 dist-ssr
 *.local
+.firebase
 
 # Reference/source material (spec docs, design mockups, generated images)
 # supplied for building the app - not part of the application itself.
