@@ -1,5 +1,4 @@
 import { Route, Routes } from 'react-router-dom';
-
 import { AppShell } from '@/components/layout/AppShell';
 import { RequireAuth } from '@/app/routes/guards/RequireAuth';
 import { RequireVerified } from '@/app/routes/guards/RequireVerified';
@@ -23,7 +22,7 @@ import { ReportsPage } from '@/features/reports/ReportsPage';
 import { NotificationsPage } from '@/features/notifications/NotificationsPage';
 import { SettingsPage } from '@/features/settings/SettingsPage';
 import { NotFoundPage } from '@/app/routes/NotFoundPage';
-
+// import ChurchSelectionPage from '@/features/churches/ChurchSelectionPage';
 /**
  * Central route table.
  *

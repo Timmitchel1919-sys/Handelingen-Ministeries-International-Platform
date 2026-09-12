@@ -16,7 +16,7 @@ import {
 import { useRegistration } from '@/features/auth/RegistrationContext';
 import { logAuditEvent } from '@/services/audit-service';
 import { registerWithEmail } from '@/services/auth-service';
-import { getActiveChurchById } from '@/services/church-service';
+import { getActiveChurches } from '@/services/church-service';
 
 /**
  * Account-creation step of the registration flow (see Layer 1 spec
@@ -49,8 +49,11 @@ export function RegisterPage() {
   // account is created, in case status changed in between.
   useEffect(() => {
     if (!selectedChurch) return;
-    getActiveChurchById(selectedChurch.id)
-      .then((church) => setChurchStillActive(Boolean(church)))
+    getActiveChurches()
+      .then((churches) => {
+        const found = churches.some((c: any) => c.id === selectedChurch.id);
+        setChurchStillActive(found);
+      })
       .catch(() => setChurchStillActive(false));
   }, [selectedChurch]);
 

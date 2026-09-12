@@ -1,26 +1,72 @@
 /**
- * Church (tenant) foundation types.
- *
- * The church is the platform's primary organizational boundary - every
- * membership, permission check and Firestore rule that needs to isolate
- * one congregation's data from another's keys off `churchId`, never a
- * display name (names change, aren't unique, and can't safely gate access).
+ * Handelingen Ministries International
+ * Layer 2 - Church & Organization types
  */
-export type ChurchStatus = 'active' | 'inactive';
+
+export type ChurchStatus = 'active' | 'inactive' | 'pending';
 
 export interface Church {
   id: string;
   name: string;
+  shortName?: string;
+  country: string;
+  district: string;
+  address?: string;
+  phone?: string;
+  email?: string;
   status: ChurchStatus;
-  createdAt: number | null;
-  updatedAt: number | null;
+  createdAt: number;
+  updatedAt: number;
 }
 
-/** The church a user is currently scoped to. Deliberately minimal at
- * Layer 1 - later layers may enrich this (branch/campus, timezone, ...)
- * without changing its identifying field. */
-export interface ChurchContext {
+export interface Ministry {
+  id: string;
   churchId: string;
-  churchName: string;
-  churchStatus: ChurchStatus;
+  name: string;
+  description?: string;
+  leaderIds: string[];
+  status: 'active' | 'inactive';
+  createdAt: number;
+  updatedAt: number;
 }
+
+export interface Department {
+  id: string;
+  churchId: string;
+  name: string;
+  description?: string;
+  leaderIds: string[];
+  status: 'active' | 'inactive';
+  createdAt: number;
+  updatedAt: number;
+}
+
+export type MembershipStatus =
+  | 'pending'
+  | 'active'
+  | 'inactive'
+  | 'rejected'
+  | 'suspended';
+
+export interface ChurchMembership {
+  id: string;
+  churchId: string;
+  userId: string;
+  status: MembershipStatus;
+  isPrimary: boolean;
+  joinedAt?: number;
+  createdAt: number;
+  updatedAt: number;
+}
+
+export const MINISTRY_INTERESTS = [
+  'choir',
+  'ushers',
+  'media_tech',
+  'youth',
+  'children',
+  'evangelism',
+  'facility',
+] as const;
+
+export type MinistryInterest = (typeof MINISTRY_INTERESTS)[number];

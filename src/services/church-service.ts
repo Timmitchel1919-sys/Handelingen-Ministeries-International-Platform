@@ -1,50 +1,91 @@
-import { collection, doc, serverTimestamp, setDoc, where } from 'firebase/firestore';
+import {
+  collection,
+  doc,
+  getDoc,
+  getDocs,
+  orderBy,
+  query,
+  where,
+} from 'firebase/firestore';
 
 import { getFirebaseFirestore } from '@/lib/firebase';
-import { FirestoreRepository } from '@/services/firestore-repository';
 import type { Church } from '@/types/church';
-import type { AppError } from '@/types/common';
 
-const CHURCHES_COLLECTION = 'churches';
-
-const churchRepository = new FirestoreRepository<Omit<Church, 'id'>>(CHURCHES_COLLECTION);
-
-/** Public-facing church list for the "choose your church" step of
- * registration. Firestore rules restrict this read to churches whose
- * status is "active" (see firestore.rules) - a church being inactive isn't
- * just a UI filter. */
-export async function listActiveChurches(): Promise<Church[]> {
-  const page = await churchRepository.list([where('status', '==', 'active')], 100);
-  return page.items;
-}
-
-/** Re-validates a client-supplied churchId against Firestore before it's
- * trusted anywhere (registration, church context). Never accept a church
- * name from the client as the source of truth - only this lookup result. */
-export async function getActiveChurchById(churchId: string): Promise<Church | null> {
-  try {
-    const church = await churchRepository.getById(churchId);
-    return church.status === 'active' ? church : null;
-  } catch (cause) {
-    if ((cause as AppError).kind === 'not-found') return null;
-    throw cause;
-  }
-}
-
-/** Seeds a church document. Intended for initial/administrative setup
- * (e.g. the first church of a new deployment) - ordinary church creation
- * in later layers should route through an authorized HRM/church-management
- * flow rather than calling this directly from arbitrary UI. */
-export async function createChurch(name: string): Promise<string> {
+function requireFirestore() {
   const db = getFirebaseFirestore();
-  if (!db) throw { kind: 'network', message: 'Firebase is not configured.' } satisfies AppError;
 
-  const newDocRef = doc(collection(db, CHURCHES_COLLECTION));
-  await setDoc(newDocRef, {
-    name,
-    status: 'active',
-    createdAt: serverTimestamp(),
-    updatedAt: serverTimestamp(),
-  });
-  return newDocRef.id;
+  if (!db) {
+    throw new Error('Firebase is not configured.');
+  }
+
+  return db;
+}
+
+function mapChurch(
+  id: string,
+  data: Record<string, unknown>,
+): Church {
+  return {
+    id,
+    name: String(data.name ?? ''),
+    shortName: data.shortName ? String(data.shortName) : undefined,
+    country: String(data.country ?? ''),
+    district: String(data.district ?? ''),
+    address: data.address ? String(data.address) : undefined,
+    phone: data.phone ? String(data.phone) : undefined,
+    email: data.email ? String(data.email) : undefined,
+    status:
+      data.status === 'inactive' || data.status === 'pending'
+        ? data.status
+        : 'active',
+    createdAt: Number(data.createdAt ?? 0),
+    updatedAt: Number(data.updatedAt ?? 0),
+  };
+}
+
+export async function getActiveChurches(): Promise<Church[]> {
+  const db = requireFirestore();
+
+  const churchesQuery = query(
+    collection(db, 'churches'),
+    where('status', '==', 'active'),
+    orderBy('name', 'asc'),
+  );
+
+  const snapshot = await getDocs(churchesQuery);
+
+  return snapshot.docs.map((churchDoc) =>
+    mapChurch(churchDoc.id, churchDoc.data()),
+  );
+}
+
+export async function getChurchById(
+  churchId: string,
+): Promise<Church | null> {
+  if (!churchId.trim()) {
+    return null;
+  }
+
+  const db = requireFirestore();
+
+  const churchRef = doc(db, 'churches', churchId);
+  const snapshot = await getDoc(churchRef);
+
+  if (!snapshot.exists()) {
+    return null;
+  }
+
+  return mapChurch(snapshot.id, snapshot.data());
+}
+
+export async function validateActiveChurch(
+  churchId: string,
+): Promise<Church | null> {
+  const church = await getChurchById(churchId);
+
+  if (!church || church.status !== 'active') {
+    return null;
+  }
+
+  return church;
 }

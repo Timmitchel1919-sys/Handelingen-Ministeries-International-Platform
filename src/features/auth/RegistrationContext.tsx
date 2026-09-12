@@ -1,6 +1,6 @@
 import { createContext, type ReactNode, useContext, useEffect, useMemo, useState } from 'react';
 
-import { getActiveChurchById } from '@/services/church-service';
+import { getActiveChurches } from '@/services/church-service';
 import type { Church } from '@/types/church';
 
 const STORAGE_KEY = 'hmi.selectedChurchId';
@@ -51,8 +51,11 @@ export function RegistrationProvider({ children }: { children: ReactNode }) {
       return;
     }
 
-    getActiveChurchById(storedId)
-      .then((church) => setSelectedChurch(church))
+    getActiveChurches()
+      .then((churches) => {
+        const church = churches?.find((c) => c.id === storedId) ?? null;
+        setSelectedChurch(church);
+      })
       .catch(() => setSelectedChurch(null))
       .finally(() => setIsRestoring(false));
   }, []);

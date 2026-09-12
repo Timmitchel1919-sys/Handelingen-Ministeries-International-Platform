@@ -1,4 +1,17 @@
 {
-  "indexes": [],
+  "indexes": [{
+  "collectionGroup": "churches",
+  "queryScope": "COLLECTION",
+  "fields": [
+    {
+      "fieldPath": "status",
+      "order": "ASCENDING"
+    },
+    {
+      "fieldPath": "name",
+      "order": "ASCENDING"
+    }
+  ]
+}],
   "fieldOverrides": []
 }

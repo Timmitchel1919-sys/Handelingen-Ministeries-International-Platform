@@ -70,11 +70,26 @@ service cloud.firestore {
     // (SelectChurchPage) runs before the visitor has an account. A church
     // being inactive isn't just a UI filter (Layer 1 rule).
     match /churches/{churchId} {
-      allow get, list: if resource.data.status == 'active' || isSignedIn();
-      allow create: if isSuperAdmin();
-      allow update: if isSuperAdmin() || isChurchAdmin(churchId);
-      allow delete: if isSuperAdmin();
-    }
+  // Public church directory:
+  // Only active churches are publicly readable.
+  // Signed-in users may read church records as required by
+  // authenticated church-context flows.
+  allow get, list: if
+    resource.data.status == 'active'
+    || isSignedIn();
+
+  // Only a super administrator may create a church.
+  allow create: if isSuperAdmin();
+
+  // Super admins may manage any church.
+  // Church admins may update their own church only.
+  allow update: if
+    isSuperAdmin()
+    || isChurchAdmin(churchId);
+
+  // Church deletion remains restricted to super administrators.
+  allow delete: if isSuperAdmin();
+}
 
     // ----- users/{userId} ----------------------------------------------------
     match /users/{userId} {

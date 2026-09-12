@@ -7,7 +7,7 @@ import { EmptyState } from '@/components/ui/EmptyState';
 import { ErrorState } from '@/components/ui/ErrorState';
 import { LoadingState } from '@/components/ui/LoadingState';
 import { useRegistration } from '@/features/auth/RegistrationContext';
-import { listActiveChurches } from '@/services/church-service';
+import { getActiveChurches } from '@/services/church-service';
 import type { Church } from '@/types/church';
 import { Icon } from '@/components/ui/icons';
 
@@ -27,7 +27,7 @@ export function SelectChurchPage() {
 
   const load = () => {
     setStatus('loading');
-    listActiveChurches()
+    getActiveChurches()
       .then((result) => {
         setChurches(result);
         setStatus('success');
@@ -39,7 +39,7 @@ export function SelectChurchPage() {
 
   const handleSelect = (church: Church) => {
     selectChurch(church);
-    navigate('/register');
+    navigate('/churches');
   };
 
   return (
