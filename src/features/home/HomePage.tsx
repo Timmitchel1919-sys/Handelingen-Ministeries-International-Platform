@@ -35,13 +35,16 @@ export function HomePage() {
               className="mx-auto mb-7 h-24 w-24 rounded-full object-cover shadow-[0_15px_45px_rgba(23,59,112,0.18)] ring-4 ring-white/40 sm:h-28 sm:w-28"
             />
 
-            <p className="mb-3 text-sm font-bold uppercase tracking-[0.28em] text-[var(--color-primary)]">
-              {t('public.landing.international')}
-            </p>
-
-            <h1 className="text-4xl font-extrabold tracking-tight text-[var(--color-text)] sm:text-6xl lg:text-7xl">
-              Handelingen Ministries
-            </h1>
+            <div className="mx-auto w-max">
+              <h1 className="text-4xl font-extrabold tracking-tight text-[var(--color-text)] sm:text-6xl lg:text-7xl">
+                Handelingen Ministries
+              </h1>
+              <div className="mt-2 flex w-full justify-between text-sm font-bold uppercase text-[var(--color-primary)]">
+                {"INTERNATIONAL".split('').map((char, i) => (
+                  <span key={i}>{char}</span>
+                ))}
+              </div>
+            </div>
 
             <div className="mx-auto my-7 flex max-w-md items-center gap-4">
               <div className="h-px flex-1 bg-surface/75" />
@@ -66,7 +69,7 @@ export function HomePage() {
                 type="button"
                 id="hero-register-btn"
                 onClick={() => setRegistrationOpen(true)}
-                className="inline-flex h-12 items-center justify-center gap-2 rounded-2xl bg-linear-to-r from-[#1458B8] to-[#3FA9F5] px-8 text-sm font-bold text-white shadow-[0_10px_28px_rgba(20,88,184,0.28)] transition duration-200 hover:-translate-y-0.5 hover:shadow-[0_14px_35px_rgba(20,88,184,0.34)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#3FA9F5]"
+                className="inline-flex h-12 items-center justify-center gap-2 rounded-2xl bg-[#1458B8] hover:bg-[#0f4798] px-8 text-sm font-bold text-white shadow-[0_10px_28px_rgba(20,88,184,0.28)] transition duration-200 hover:shadow-[0_14px_35px_rgba(20,88,184,0.34)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#3FA9F5]"
               >
                 {t('public.landing.register')}
                 <Icon name="arrow-right" size={17} />
@@ -74,7 +77,7 @@ export function HomePage() {
 
               <a
                 href="#features"
-                className="inline-flex h-12 items-center justify-center rounded-2xl border border-white/70 bg-surface/30 px-8 text-sm font-bold text-[var(--color-primary)] shadow-sm backdrop-blur-xl transition duration-200 hover:-translate-y-0.5 hover:bg-surface/50"
+                className="inline-flex h-12 items-center justify-center rounded-2xl border border-white/70 bg-surface/30 px-8 text-sm font-bold text-[var(--color-primary)] shadow-sm backdrop-blur-xl transition duration-200 hover:bg-surface/50"
               >
                 {t('public.landing.learnMore')}
               </a>

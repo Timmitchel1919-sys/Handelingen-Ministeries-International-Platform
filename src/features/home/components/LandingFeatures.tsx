@@ -47,7 +47,7 @@ export function LandingFeatures() {
           {features.map((feature) => (
             <article
               key={feature.key}
-              className="rounded-[28px] border border-white/80 bg-surface/55 p-7 shadow-[0_12px_35px_rgba(23,59,112,0.08)] backdrop-blur-xl transition duration-200 hover:-translate-y-1 hover:bg-surface/70"
+              className="rounded-[28px] border border-white/80 bg-surface/55 p-7 shadow-[0_12px_35px_rgba(23,59,112,0.08)] backdrop-blur-xl transition duration-200 hover:bg-surface/70"
             >
               <div className="mb-5 flex h-14 w-14 items-center justify-center rounded-full border border-white/80 bg-surface/55 text-[var(--color-primary)] shadow-sm">
                 <Icon name={feature.icon} size={25} />

@@ -40,13 +40,13 @@ export function AuthLayout({
                 className="h-10 w-10 rounded-full object-cover shadow-md ring-2 ring-white/50"
               />
 
-              <span className="hidden sm:block">
+              <span className="hidden sm:block w-max">
                 <span className="block text-sm font-bold text-[var(--color-text)]">
                   Handelingen Ministries
                 </span>
 
-                <span className="block text-[10px] font-semibold tracking-[0.16em] text-[var(--color-primary)]">
-                  INTERNATIONAL
+                <span className="flex w-full justify-between text-[10px] font-semibold text-[var(--color-primary)]">
+                  {"INTERNATIONAL".split('').map((char, i) => <span key={i}>{char}</span>)}
                 </span>
               </span>
             </Link>
@@ -128,13 +128,15 @@ export function AuthLayout({
                     className="mx-auto mb-5 h-20 w-20 rounded-full object-cover shadow-lg ring-4 ring-white/30"
                   />
 
-                  <h2 className="text-sm font-bold text-[var(--color-primary)]">
-                    Handelingen Ministries
-                  </h2>
+                  <div className="mx-auto w-max">
+                    <h2 className="text-sm font-bold text-[var(--color-primary)]">
+                      Handelingen Ministries
+                    </h2>
 
-                  <p className="mt-0.5 text-xs font-medium uppercase tracking-[0.2em] text-[var(--color-primary-dark)]">
-                    International
-                  </p>
+                    <div className="mt-0.5 flex w-full justify-between text-xs font-medium uppercase text-[var(--color-primary-dark)]">
+                      {"International".split('').map((char, i) => <span key={i}>{char}</span>)}
+                    </div>
+                  </div>
 
                   <div className="mx-auto my-4 flex max-w-47.5 items-center gap-3">
                     <div className="h-px flex-1 bg-surface/70" />

@@ -26,7 +26,7 @@ export interface ButtonProps
 
 const variantClasses: Record<ButtonVariant, string> = {
   primary:
-    'border-transparent bg-gradient-to-r from-[#1458B8] to-[#3FA9F5] text-white shadow-md hover:-translate-y-0.5 hover:shadow-lg',
+    'border-transparent bg-gradient-to-r from-[#1458B8] to-[#3FA9F5] text-white shadow-md hover:shadow-lg',
   secondary:
     'border-transparent bg-[#3FA9F5] text-white hover:opacity-90',
   outline:

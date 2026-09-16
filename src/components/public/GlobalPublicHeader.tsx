@@ -51,12 +51,12 @@ export function GlobalPublicHeader({ onRegister }: GlobalPublicHeaderProps) {
             className="h-10 w-10 shrink-0 rounded-full object-cover"
           />
 
-          <span className="hidden leading-tight sm:block">
-            <span className="block truncate text-sm font-bold text-[var(--color-text)]">
+          <span className="hidden leading-tight sm:block w-max">
+            <span className="block text-sm font-bold text-[var(--color-text)]">
               Handelingen Ministries
             </span>
-            <span className="block text-[10px] font-medium tracking-[0.16em] text-[var(--color-primary)]">
-              INTERNATIONAL
+            <span className="flex w-full justify-between text-[10px] font-medium text-[var(--color-primary)]">
+              {"INTERNATIONAL".split('').map((char, i) => <span key={i}>{char}</span>)}
             </span>
           </span>
         </Link>
@@ -155,7 +155,7 @@ export function GlobalPublicHeader({ onRegister }: GlobalPublicHeaderProps) {
           {/* Sign In / Dashboard */}
           <Link
             to={authenticated ? '/dashboard' : '/login'}
-            className="hidden rounded-xl border border-[#1458B8]/15 bg-surface/35 px-4 py-2 text-sm font-semibold text-[var(--color-primary)] backdrop-blur-md transition hover:-translate-y-0.5 hover:bg-surface/55 sm:inline-flex"
+            className="hidden rounded-xl border border-[#1458B8]/15 bg-surface/35 px-4 py-2 text-sm font-semibold text-[var(--color-primary)] backdrop-blur-md transition hover:bg-surface/55 sm:inline-flex"
           >
             {authenticated ? t('navigation.dashboard') : t('auth.signIn')}
           </Link>
@@ -170,7 +170,7 @@ export function GlobalPublicHeader({ onRegister }: GlobalPublicHeaderProps) {
                   id="landing-register-btn"
                   aria-label={t('public.landing.register')}
                   onClick={onRegister}
-                  className="hidden rounded-xl bg-[#1458B8] px-4 py-2 text-sm font-semibold text-white shadow-md transition hover:-translate-y-0.5 hover:bg-[#0f4798] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#3FA9F5] sm:inline-flex"
+                  className="hidden rounded-xl bg-[#1458B8] px-4 py-2 text-sm font-semibold text-white shadow-md transition hover:bg-[#0f4798] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#3FA9F5] sm:inline-flex"
                 >
                   {t('public.landing.register')}
                 </button>
@@ -178,7 +178,7 @@ export function GlobalPublicHeader({ onRegister }: GlobalPublicHeaderProps) {
                 <Link
                   to="/select-church"
                   id="landing-register-btn"
-                  className="hidden rounded-xl bg-[#1458B8] px-4 py-2 text-sm font-semibold text-white shadow-md transition hover:-translate-y-0.5 hover:bg-[#0f4798] sm:inline-flex"
+                  className="hidden rounded-xl bg-[#1458B8] px-4 py-2 text-sm font-semibold text-white shadow-md transition hover:bg-[#0f4798] sm:inline-flex"
                 >
                   {t('public.landing.register')}
                 </Link>

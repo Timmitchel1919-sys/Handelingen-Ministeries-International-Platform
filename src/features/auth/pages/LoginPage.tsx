@@ -27,6 +27,8 @@ import {
   signInWithGoogle,
 } from '@/services/auth-service';
 
+import { GoogleIcon } from '@/components/ui/icons/GoogleIcon';
+
 export function LoginPage() {
   const { t } = useTranslation();
   const navigate = useNavigate();
@@ -247,7 +249,7 @@ export function LoginPage() {
           type="submit"
           size="lg"
           isLoading={isSubmitting}
-          className="w-full"
+          className="w-full !bg-[#1458B8] hover:!bg-[#0f4798] !bg-none"
         >
           {t('auth.signIn')}
           <Icon
@@ -272,9 +274,7 @@ export function LoginPage() {
           onClick={handleGoogle}
           className="w-full"
         >
-          <span className="font-extrabold text-[#4285F4]">
-            G
-          </span>
+          <GoogleIcon className="h-5 w-5" />
 
           {t(
             'auth.continueWithGoogle',
