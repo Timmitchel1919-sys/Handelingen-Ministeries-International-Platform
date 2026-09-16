@@ -1,12 +1,5 @@
 import type { SVGProps } from 'react';
 
-/**
- * Minimal inline icon set (stroke-based, 24x24 viewBox).
- *
- * Kept as plain SVG rather than pulling in an icon library dependency -
- * Layer 0 only needs a small, fixed set for navigation and shell chrome.
- * Add more entries here as later layers need them.
- */
 export type IconName =
   | 'dashboard'
   | 'ministries'
@@ -33,7 +26,16 @@ export type IconName =
   | 'globe'
   | 'alert-triangle'
   | 'inbox'
-  | 'more-horizontal';
+  | 'more-horizontal'
+  | 'mail'
+  | 'lock'
+  | 'eye'
+  | 'eye-off'
+  | 'heart'
+  | 'book'
+  | 'play'
+  | 'arrow-right'
+  | 'check';
 
 const paths: Record<IconName, string> = {
   dashboard: 'M3 13h8V3H3v10Zm0 8h8v-6H3v6Zm10 0h8V11h-8v10Zm0-18v6h8V3h-8Z',
@@ -46,8 +48,7 @@ const paths: Record<IconName, string> = {
   tasks: 'm4 7 2 2 3-3M4 15l2 2 3-3M11 8h9M11 16h9',
   reports: 'M4 21V3m0 18h16M8 17V9m5 8v-5m5 5V6',
   notifications: 'M6 8a6 6 0 1 1 12 0c0 6 2 8 2 8H4s2-2 2-8Zm4.5 11a1.5 1.5 0 0 0 3 0',
-  settings:
-    'M12 15.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Zm7.4-3.5c0 .4 0 .8-.1 1.2l2 1.6-2 3.4-2.3-1a7.4 7.4 0 0 1-2 1.2l-.4 2.6H9.4l-.4-2.6a7.4 7.4 0 0 1-2-1.2l-2.3 1-2-3.4 2-1.6c-.1-.4-.1-.8-.1-1.2s0-.8.1-1.2l-2-1.6 2-3.4 2.3 1c.6-.5 1.3-.9 2-1.2l.4-2.6h5.2l.4 2.6c.7.3 1.4.7 2 1.2l2.3-1 2 3.4-2 1.6c.1.4.1.8.1 1.2Z',
+  settings: 'M12 15.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Zm7.4-3.5c0 .4 0 .8-.1 1.2l2 1.6-2 3.4-2.3-1a7.4 7.4 0 0 1-2 1.2l-.4 2.6H9.4l-.4-2.6a7.4 7.4 0 0 1-2-1.2l-2.3 1-2-3.4 2-1.6c-.1-.4-.1-.8-.1-1.2s0-.8.1-1.2l-2-1.6 2-3.4 2.3 1c.6-.5 1.3-.9 2-1.2l.4-2.6h5.2l.4 2.6c.7.3 1.4.7 2 1.2l2.3-1 2 3.4-2 1.6c.1.4.1.8.1 1.2Z',
   menu: 'M4 6h16M4 12h16M4 18h16',
   close: 'm6 6 12 12M18 6 6 18',
   search: 'M11 19a8 8 0 1 0 0-16 8 8 0 0 0 0 16Zm10 2-4.35-4.35',
@@ -63,6 +64,16 @@ const paths: Record<IconName, string> = {
   'alert-triangle': 'M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0ZM12 9v4m0 4h.01',
   inbox: 'M22 12h-6l-2 3h-4l-2-3H2M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11Z',
   'more-horizontal': 'M12 13a1 1 0 1 0 0-2 1 1 0 0 0 0 2ZM19 13a1 1 0 1 0 0-2 1 1 0 0 0 0 2ZM5 13a1 1 0 1 0 0-2 1 1 0 0 0 0 2Z',
+
+  mail: 'M4 4h16v16H4V4Zm0 1 8 7 8-7',
+  lock: 'M6 10h12v10H6V10Zm3 0V7a3 3 0 0 1 6 0v3',
+  eye: 'M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6S2 12 2 12Zm10 3a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z',
+  'eye-off': 'm3 3 18 18M10.6 10.6a2 2 0 0 0 2.8 2.8M9.9 4.3A10.5 10.5 0 0 1 12 4c6.5 0 10 8 10 8a17 17 0 0 1-3 4.2M6.2 6.2C3.5 8.1 2 12 2 12s3.5 8 10 8a10 10 0 0 0 4.2-.9',
+  heart: 'M20.8 8.8c0 5.5-8.8 10.2-8.8 10.2S3.2 14.3 3.2 8.8A4.8 4.8 0 0 1 12 6.1a4.8 4.8 0 0 1 8.8 2.7Z',
+  book: 'M4 5a2 2 0 0 1 2-2h5v18H6a2 2 0 0 0-2 2V5Zm16 0a2 2 0 0 0-2-2h-5v18h5a2 2 0 0 1 2 2V5Z',
+  play: 'm9 6 10 6-10 6V6Z',
+  'arrow-right': 'M5 12h14m-6-6 6 6-6 6',
+  check: 'm5 12 4 4L19 6',
 };
 
 export interface IconProps extends SVGProps<SVGSVGElement> {
@@ -70,7 +81,12 @@ export interface IconProps extends SVGProps<SVGSVGElement> {
   size?: number;
 }
 
-export function Icon({ name, size = 20, strokeWidth = 1.8, ...props }: IconProps) {
+export function Icon({
+  name,
+  size = 20,
+  strokeWidth = 1.8,
+  ...props
+}: IconProps) {
   return (
     <svg
       width={size}

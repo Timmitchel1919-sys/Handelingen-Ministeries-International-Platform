@@ -22,7 +22,7 @@ import { ReportsPage } from '@/features/reports/ReportsPage';
 import { NotificationsPage } from '@/features/notifications/NotificationsPage';
 import { SettingsPage } from '@/features/settings/SettingsPage';
 import { NotFoundPage } from '@/app/routes/NotFoundPage';
-// import ChurchSelectionPage from '@/features/churches/ChurchSelectionPage';
+
 /**
  * Central route table.
  *

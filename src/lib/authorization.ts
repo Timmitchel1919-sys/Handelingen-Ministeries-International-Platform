@@ -112,5 +112,8 @@ export const ROLE_PERMISSIONS: Record<RoleName, Permission[]> = {
 export function can(user: Pick<AuthUser, 'role' | 'accountStatus'> | null, action: PermissionAction, resource: PermissionResource): boolean {
   if (!user) return false;
   if (user.accountStatus !== 'active') return false;
-  return ROLE_PERMISSIONS[user.role]?.includes(`${resource}.${action}` as Permission) ?? false;
+  const permissions = ROLE_PERMISSIONS[user.role];
+  return permissions?.includes(`${resource}.${action}` as Permission)
+    || permissions?.includes(`${resource}.manage` as Permission)
+    || false;
 }

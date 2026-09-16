@@ -1,17 +1,17 @@
 import type { Church } from '@/types/church';
 
-const STORAGE_KEY = 'handelingen.selectedChurchId';
+const STORAGE_KEY = 'hmi.selectedChurchId';
 
 export function getSelectedChurchId(): string | null {
-  return window.sessionStorage.getItem(STORAGE_KEY);
+  try { return window.sessionStorage.getItem(STORAGE_KEY) ?? window.sessionStorage.getItem('handelingen.selectedChurchId'); } catch { return null; }
 }
 
 export function setSelectedChurchId(churchId: string): void {
-  window.sessionStorage.setItem(STORAGE_KEY, churchId);
+  try { window.sessionStorage.setItem(STORAGE_KEY, churchId); } catch { /* Storage may be unavailable. */ }
 }
 
 export function clearSelectedChurchId(): void {
-  window.sessionStorage.removeItem(STORAGE_KEY);
+  try { window.sessionStorage.removeItem(STORAGE_KEY); window.sessionStorage.removeItem('handelingen.selectedChurchId'); } catch { /* Storage may be unavailable. */ }
 }
 
 export function storeSelectedChurch(church: Church): void {

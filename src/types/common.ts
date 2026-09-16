@@ -27,3 +27,42 @@ export interface NavBadge {
   count?: number;
   tone?: 'primary' | 'success' | 'warning' | 'danger';
 }
+import type { Timestamp } from 'firebase/firestore';
+
+export type FirestoreTimestamp = Timestamp;
+
+export type EntityStatus =
+  | 'active'
+  | 'inactive'
+  | 'archived';
+
+export interface AuditFields {
+  createdAt: FirestoreTimestamp;
+  updatedAt: FirestoreTimestamp;
+  createdBy: string;
+  updatedBy: string;
+}
+
+export interface SoftDeleteFields {
+  deletedAt: FirestoreTimestamp | null;
+  deletedBy: string | null;
+}
+
+export interface BaseEntity
+  extends AuditFields,
+    SoftDeleteFields {
+  id: string;
+}
+
+export type Gender =
+  | 'male'
+  | 'female'
+  | 'other'
+  | 'prefer-not-to-say';
+
+export type MembershipStatus =
+  | 'pending'
+  | 'active'
+  | 'inactive'
+  | 'transferred'
+  | 'archived';

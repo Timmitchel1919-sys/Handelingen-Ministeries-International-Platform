@@ -100,7 +100,7 @@ export function ResetPasswordPage() {
             error={fieldErrors.confirmPassword && t(fieldErrors.confirmPassword)}
           />
           {formError && (
-            <p role="alert" className="rounded-md bg-white/20 px-3 py-2 text-sm text-white">
+            <p role="alert" className="rounded-md bg-surface/20 px-3 py-2 text-sm text-white">
               {formError}
             </p>
           )}

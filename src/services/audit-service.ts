@@ -1,6 +1,7 @@
 import { addDoc, collection, serverTimestamp } from 'firebase/firestore';
 
 import { getFirebaseFirestore } from '@/lib/firebase';
+import { getUserProfile } from '@/services/user-profile-service';
 import type { AuditLogEntry } from '@/types/audit';
 
 const AUDIT_LOGS_COLLECTION = 'auditLogs';
@@ -19,8 +20,12 @@ export async function logAuditEvent(entry: Omit<AuditLogEntry, 'id' | 'createdAt
   if (!db) return;
 
   try {
+    const profile = await getUserProfile(entry.actorUid);
+    if (!profile) return;
     await addDoc(collection(db, AUDIT_LOGS_COLLECTION), {
       ...entry,
+      actorRole: profile.role,
+      churchId: profile.churchId,
       createdAt: serverTimestamp(),
     });
   } catch (cause) {

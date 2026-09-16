@@ -1,62 +1,81 @@
-import { useMemo, useState } from 'react';
-import { Outlet, useLocation } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
+import { useEffect, useState } from 'react';
+import { Outlet } from 'react-router-dom';
 
-import { navItems } from '@/components/navigation/nav-items';
-import { Drawer } from '@/components/ui/Drawer';
-import { Sidebar } from '@/components/layout/Sidebar';
-import { Topbar } from '@/components/layout/Topbar';
+import { MainContent } from './MainContent';
+import { MobileBottomNav } from './MobileBottomNav';
+import { MobileDrawer } from './MobileDrawer';
+import { Sidebar } from './Sidebar';
+import { Topbar } from './Topbar';
 
-/**
- * Application shell: responsive layout combining the sidebar, top
- * navigation and a routed content area. Mounted once at the router root
- * (see AppRoutes) so no page re-implements this layout.
- */
+const SIDEBAR_STORAGE_KEY = 'handelingen.sidebar.collapsed';
+
 export function AppShell() {
-  const { t } = useTranslation();
-  const location = useLocation();
-  const [collapsed, setCollapsed] = useState(false);
-  const [mobileOpen, setMobileOpen] = useState(false);
-
-  const activeItem = useMemo(
-    () => navItems.find((item) => location.pathname.startsWith(item.path)),
-    [location.pathname],
-  );
-
-  const breadcrumb = useMemo(() => {
-    if (!activeItem && location.pathname.startsWith('/profile')) {
-      return [
-        { label: t('navigation.dashboard'), path: '/dashboard' },
-        { label: t('common.profile') },
-      ];
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(() => {
+    try {
+      return localStorage.getItem(SIDEBAR_STORAGE_KEY) === 'true';
+    } catch {
+      return false;
     }
-    return [
-      { label: t('navigation.dashboard'), path: '/dashboard' },
-      ...(activeItem && activeItem.path !== '/dashboard' ? [{ label: t(activeItem.labelKey) }] : []),
-    ];
-  }, [activeItem, location.pathname, t]);
+  });
+
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  useEffect(() => {
+    try {
+      localStorage.setItem(SIDEBAR_STORAGE_KEY, String(sidebarCollapsed));
+    } catch {
+      // Local storage can be unavailable in restricted environments.
+    }
+  }, [sidebarCollapsed]);
+
+  useEffect(() => {
+    const handleKeyboardShortcut = (event: KeyboardEvent) => {
+      if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === 'b') {
+        event.preventDefault();
+        setSidebarCollapsed((value) => !value);
+      }
+    };
+
+    const handleMobileMenuEvent = () => {
+      setMobileMenuOpen(true);
+    };
+
+    window.addEventListener('keydown', handleKeyboardShortcut);
+    window.addEventListener('handelingen:open-mobile-menu', handleMobileMenuEvent);
+
+    return () => {
+      window.removeEventListener('keydown', handleKeyboardShortcut);
+      window.removeEventListener('handelingen:open-mobile-menu', handleMobileMenuEvent);
+    };
+  }, []);
 
   return (
-    <div className="flex h-screen overflow-hidden bg-background">
-      <div className="hidden lg:block">
-        <Sidebar collapsed={collapsed} onToggleCollapsed={() => setCollapsed((value) => !value)} />
-      </div>
-
-      <Drawer open={mobileOpen} onClose={() => setMobileOpen(false)} title={t('appName')} side="left">
+    <div className="flex min-h-screen bg-background text-[var(--color-text)]">
+      {/* Fixed Desktop Sidebar */}
+      <div className="hidden lg:block shrink-0">
         <Sidebar
-          collapsed={false}
-          onToggleCollapsed={() => {}}
-          variant="drawer"
-          onNavigate={() => setMobileOpen(false)}
+          collapsed={sidebarCollapsed}
+          onToggleCollapsed={() => setSidebarCollapsed((prev) => !prev)}
         />
-      </Drawer>
-
-      <div className="flex min-w-0 flex-1 flex-col">
-        <Topbar breadcrumb={breadcrumb} onOpenMobileMenu={() => setMobileOpen(true)} />
-        <main className="flex-1 overflow-y-auto">
-          <Outlet />
-        </main>
       </div>
+
+      {/* Main Layout Area */}
+      <div className="flex min-w-0 flex-1 flex-col">
+        <Topbar onOpenMobileMenu={() => setMobileMenuOpen(true)} />
+
+        <MainContent>
+          <Outlet />
+        </MainContent>
+      </div>
+
+      {/* Mobile Overlay & Drawer */}
+      <MobileDrawer
+        open={mobileMenuOpen}
+        onClose={() => setMobileMenuOpen(false)}
+      />
+
+      {/* Mobile Bottom Navigation Bar */}
+      <MobileBottomNav />
     </div>
   );
 }

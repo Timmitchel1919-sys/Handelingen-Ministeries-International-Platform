@@ -1,0 +1,897 @@
+// Archived unfinished prototype. Production registration uses RegistrationModal and RegisterPage.
+import { useEffect, useId, useState, type JSXElementConstructor, type Key, type ReactElement, type ReactNode, type ReactPortal } from "react";
+import { useActiveChurches } from '@/features/auth/hooks/useActiveChurches';
+import "./RegistrationCard.css";
+RegistrationCard - card__retry {
+    margin - top: 10px;
+    border: 0;
+    background: transparent;
+    padding: 0;
+    color: inherit;
+    font: inherit;
+    font - weight: 600;
+    text - decoration: underline;
+    cursor: pointer;
+}
+
+.registration - card__retry:hover {
+    opacity: 0.75;
+}
+export interface ChurchOption {
+    id: string;
+    name: string;
+}
+
+export interface RegistrationCardProps {
+    isOpen: boolean;
+    churches?: ChurchOption[];
+    language?: "en" | "nl";
+    onClose: () => void;
+    onChurchSelected?: (church: ChurchOption) => void;
+}
+
+type RegistrationStep = "church" | "form";
+
+interface FormState {
+    firstName: string;
+    lastName: string;
+    dateOfBirth: string;
+    gender: string;
+    phone: string;
+    email: string;
+    district: string;
+    maritalStatus: string;
+    memberType: string;
+    howHeard: string;
+    emergencyName: string;
+    emergencyPhone: string;
+    emergencyRelationship: string;
+    ministryInterests: string[];
+}
+
+const initialFormState: FormState = {
+    firstName: "",
+    lastName: "",
+    dateOfBirth: "",
+    gender: "",
+    phone: "",
+    email: "",
+    district: "",
+    maritalStatus: "",
+    memberType: "",
+    howHeard: "",
+    emergencyName: "",
+    emergencyPhone: "",
+    emergencyRelationship: "",
+    ministryInterests: [],
+};
+
+const districts = [
+    "Paramaribo",
+    "Wanica",
+    "Nickerie",
+    "Coronie",
+    "Saramacca",
+    "Commewijne",
+    "Marowijne",
+    "Para",
+    "Brokopondo",
+    "Sipaliwini",
+];
+
+const ministryOptions = [
+    {
+        value: "choir",
+        en: "Choir",
+        nl: "Koor",
+    },
+    {
+        value: "ushers",
+        en: "Ushers",
+        nl: "Ontvangstcomité",
+    },
+    {
+        value: "media",
+        en: "Media & tech team",
+        nl: "Media & techniek team",
+    },
+    {
+        value: "youth",
+        en: "Youth ministry",
+        nl: "Jeugdbediening",
+    },
+    {
+        value: "children",
+        en: "Children's ministry",
+        nl: "Kinderbediening",
+    },
+    {
+        value: "evangelism",
+        en: "Evangelism team",
+        nl: "Evangelisatieteam",
+    },
+];
+
+const copy = {
+    en: {
+        title: "Member registration",
+        subtitle: "Tell us a bit about yourself",
+        selectChurchTitle: "Select your church",
+        selectChurchDescription:
+            "Choose the church you currently attend before continuing with your registration.",
+        church: "Church",
+        churchPlaceholder: "Select your church",
+        continue: "Continue",
+        close: "Close registration",
+        back: "Back",
+        identity: "Identity",
+        firstName: "First name",
+        lastName: "Last name",
+        dateOfBirth: "Date of birth",
+        gender: "Gender",
+        select: "Select",
+        male: "Male",
+        female: "Female",
+        contact: "Contact",
+        phone: "Phone number",
+        email: "Email",
+        background: "Background",
+        district: "District",
+        maritalStatus: "Marital status",
+        single: "Single",
+        married: "Married",
+        widowed: "Widowed",
+        divorced: "Divorced",
+        memberType: "Member type",
+        newConvert: "New convert",
+        transfer: "Transfer member",
+        visitor: "Visitor",
+        returning: "Returning member",
+        howHeard: "How did you hear about us?",
+        evangelism: "Street evangelism",
+        invite: "Friend or family invite",
+        social: "Social media",
+        walkin: "Walk-in",
+        other: "Other",
+        emergency: "Emergency contact",
+        name: "Name",
+        relationship: "Relationship",
+        ministry: "Ministry interest (optional)",
+        choir: "Choir",
+        ushers: "Ushers",
+        media: "Media & tech team",
+        youth: "Youth ministry",
+        children: "Children's ministry",
+        evangelismTeam: "Evangelism team",
+        register: "Register",
+        requiredFields:
+            "Please fill in first name, last name, phone, and email.",
+        churchRequired: "Please select your church before continuing.",
+        successTitle: "Welcome to the family",
+        successBody:
+            "Your registration has been prepared successfully.",
+        successNote:
+            "Your registration will be linked to the selected church.",
+    },
+
+    nl: {
+        title: "Lidmaatschap registratie",
+        subtitle: "Vertel ons iets over jezelf",
+        selectChurchTitle: "Selecteer uw kerk",
+        selectChurchDescription:
+            "Kies eerst de kerk die u momenteel bezoekt voordat u doorgaat met uw registratie.",
+        church: "Kerk",
+        churchPlaceholder: "Selecteer uw kerk",
+        continue: "Doorgaan",
+        close: "Registratie sluiten",
+        back: "Terug",
+        identity: "Identiteit",
+        firstName: "Voornaam",
+        lastName: "Achternaam",
+        dateOfBirth: "Geboortedatum",
+        gender: "Geslacht",
+        select: "Selecteer",
+        male: "Man",
+        female: "Vrouw",
+        contact: "Contact",
+        phone: "Telefoonnummer",
+        email: "E-mail",
+        background: "Achtergrond",
+        district: "District",
+        maritalStatus: "Burgerlijke staat",
+        single: "Ongehuwd",
+        married: "Getrouwd",
+        widowed: "Weduwe/Weduwnaar",
+        divorced: "Gescheiden",
+        memberType: "Type lid",
+        newConvert: "Nieuwe bekeerling",
+        transfer: "Overgeplaatst lid",
+        visitor: "Bezoeker",
+        returning: "Terugkerend lid",
+        howHeard: "Hoe heb je over ons gehoord?",
+        evangelism: "Straatevangelisatie",
+        invite: "Uitnodiging van vriend/familie",
+        social: "Sociale media",
+        walkin: "Spontaan binnengelopen",
+        other: "Anders",
+        emergency: "Noodcontact",
+        name: "Naam",
+        relationship: "Relatie",
+        ministry: "Bedieningsinteresse (optioneel)",
+        choir: "Koor",
+        ushers: "Ontvangstcomité",
+        media: "Media & techniek team",
+        youth: "Jeugdbediening",
+        children: "Kinderbediening",
+        evangelismTeam: "Evangelisatieteam",
+        register: "Registreren",
+        requiredFields:
+            "Vul voornaam, achternaam, telefoon en e-mail in.",
+        churchRequired:
+            "Selecteer eerst uw kerk om door te gaan.",
+        successTitle: "Welkom in de familie",
+        successBody:
+            "Uw registratie is succesvol voorbereid.",
+        successNote:
+            "Uw registratie wordt gekoppeld aan de geselecteerde kerk.",
+    },
+};
+export function RegistrationCard({
+    isOpen,
+    churches: providedChurches,
+    language = "en",
+    onClose,
+    onChurchSelected,
+}: RegistrationCardProps) {
+    const {
+        churches: loadedChurches,
+        status: churchesStatus,
+        reload: reloadChurches,
+    } = useActiveChurches();
+
+    const churches =
+        providedChurches && providedChurches.length > 0
+            ? providedChurches
+            : loadedChurches;
+    const text = copy[language];
+    const churchSelectId = useId();
+
+    const [step, setStep] = useState<RegistrationStep>("church");
+    const [selectedChurchId, setSelectedChurchId] = useState("");
+    const [form, setForm] = useState<FormState>(initialFormState);
+    const [error, setError] = useState("");
+    const [submitted, setSubmitted] = useState(false);
+
+    useEffect(() => {
+        if (!isOpen) {
+            return;
+        }
+
+        setStep("church");
+        setSelectedChurchId("");
+        setForm(initialFormState);
+        setError("");
+        setSubmitted(false);
+    }, [isOpen]);
+
+    useEffect(() => {
+        if (!isOpen) {
+            return;
+        }
+
+        const handleKeyDown = (event: KeyboardEvent) => {
+            if (event.key === "Escape") {
+                onClose();
+            }
+        };
+
+        const previousOverflow = document.body.style.overflow;
+        document.body.style.overflow = "hidden";
+
+        window.addEventListener("keydown", handleKeyDown);
+
+        return () => {
+            document.body.style.overflow = previousOverflow;
+            window.removeEventListener("keydown", handleKeyDown);
+        };
+    }, [isOpen, onClose]);
+
+    if (!isOpen) {
+        return null;
+    }
+
+    const selectedChurch = churches.find(
+        (church: { id: string; }) => church.id === selectedChurchId,
+    );
+
+    const updateField = <K extends keyof FormState>(
+        field: K,
+        value: FormState[K],
+    ) => {
+        setForm((current) => ({
+            ...current,
+            [field]: value,
+        }));
+    };
+
+    const toggleMinistry = (value: string) => {
+        setForm((current) => {
+            const exists = current.ministryInterests.includes(value);
+
+            return {
+                ...current,
+                ministryInterests: exists
+                    ? current.ministryInterests.filter((item) => item !== value)
+                    : [...current.ministryInterests, value],
+            };
+        });
+    };
+
+    const handleContinue = () => {
+        if (!selectedChurch) {
+            setError(text.churchRequired);
+            return;
+        }
+
+        setError("");
+        onChurchSelected?.(selectedChurch);
+        setStep("form");
+    };
+
+    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
+
+        if (
+            !form.firstName.trim() ||
+            !form.lastName.trim() ||
+            !form.phone.trim() ||
+            !form.email.trim()
+        ) {
+            setError(text.requiredFields);
+            return;
+        }
+
+        setError("");
+        setSubmitted(true);
+    };
+
+    const handleOverlayClick = (
+        event: React.MouseEvent<HTMLDivElement>,
+    ) => {
+        if (event.target === event.currentTarget) {
+            onClose();
+        }
+    };
+
+    return (
+        <div
+            className="registration-overlay"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="registration-title"
+            onMouseDown={handleOverlayClick}
+        >
+            <div className="registration-card">
+                <div className="registration-card__top">
+                    <div className="registration-card__brand">
+                        <span className="registration-card__brand-mark">
+                            HM
+                        </span>
+
+                        <span>
+                            Handelingen Ministries International
+                        </span>
+                    </div>
+
+                    <button
+                        type="button"
+                        className="registration-card__close"
+                        onClick={onClose}
+                        aria-label={text.close}
+                    >
+                        ×
+                    </button>
+                </div>
+
+                {!submitted ? (
+                    <>
+                        <header className="registration-card__header">
+                            <span className="registration-card__eyebrow">
+                                {step === "church"
+                                    ? "REGISTRATION · 01"
+                                    : "REGISTRATION · 02"}
+                            </span>
+
+                            <h1 id="registration-title">
+                                {step === "church"
+                                    ? text.selectChurchTitle
+                                    : text.title}
+                            </h1>
+
+                            <p>
+                                {step === "church"
+                                    ? text.selectChurchDescription
+                                    : text.subtitle}
+                            </p>
+                        </header>
+
+                        <section className="registration-church-step">
+                            {churchesStatus === 'loading' ? (
+                                <div className="registration-card__notice" role="status">
+                                    {language === 'nl'
+                                        ? 'Kerken laden...'
+                                        : 'Loading churches...'}
+                                </div>
+                            ) : null}
+
+                            {churchesStatus === 'error' ? (
+                                <div
+                                    className="registration-card__notice"
+                                    role="alert"
+                                >
+                                    <p>
+                                        {language === 'nl'
+                                            ? 'De kerken konden niet worden geladen.'
+                                            : 'The churches could not be loaded.'}
+                                    </p>
+
+                                    <button
+                                        type="button"
+                                        className="registration-card__retry"
+                                        onClick={reloadChurches}
+                                    >
+                                        {language === 'nl'
+                                            ? 'Opnieuw proberen'
+                                            : 'Try again'}
+                                    </button>
+                                </div>
+                            ) : null}
+
+                            {churchesStatus === 'success' && churches.length === 0 ? (
+                                <div className="registration-card__notice">
+                                    {language === 'nl'
+                                        ? 'Er zijn momenteel geen actieve kerken beschikbaar.'
+                                        : 'No active churches are currently available.'}
+                                </div>
+                            ) : null}
+
+                            {churchesStatus === 'success' && churches.length > 0 ? (
+                                <>
+                                    <div className="registration-field">
+                                        <label htmlFor={churchSelectId}>
+                                            {text.church}
+                                            <span aria-hidden="true">*</span>
+                                        </label>
+
+                                        <select
+                                            id={churchSelectId}
+                                            value={selectedChurchId}
+                                            onChange={(event) => {
+                                                setSelectedChurchId(event.target.value);
+                                                setError('');
+                                            }}
+                                            required
+                                        >
+                                            <option value="">
+                                                {text.churchPlaceholder}
+                                            </option>
+
+                                            {churches.map((church: { id: Key | readonly string[] | null | undefined; name: string | number | bigint | boolean | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<string | number | bigint | boolean | ReactPortal | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | null | undefined> | Iterable<ReactNode> | null | undefined; }) => (
+                                                <option
+                                                    key={church.id}
+                                                    value={church.id}
+                                                >
+                                                    {church.name}
+                                                </option>
+                                            ))}
+                                        </select>
+                                    </div>
+
+                                    {error ? (
+                                        <p
+                                            className="registration-card__error"
+                                            role="alert"
+                                        >
+                                            {error}
+                                        </p>
+                                    ) : null}
+
+                                    <button
+                                        type="button"
+                                        className="registration-card__primary"
+                                        onClick={handleContinue}
+                                        disabled={!selectedChurchId}
+                                    >
+                                        {text.continue}
+                                    </button>
+                                </>
+                            ) : null}
+                        </section>
+
+                        {error ? (
+                            <p
+                                className="registration-card__error"
+                                role="alert"
+                            >
+                                {error}
+                            </p>
+                        ) : null}
+
+                        <button
+                            type="button"
+                            className="registration-card__primary"
+                            onClick={handleContinue}
+                            disabled={!selectedChurchId}
+                        >
+                            {text.continue}
+                        </button>
+                    </section{">"}
+                ) : (
+                <form
+                    className="registration-form"
+                    onSubmit={handleSubmit}
+                >
+                    <section className="registration-section">
+                        <div className="registration-section__heading">
+                            <h2>{text.identity}</h2>
+                        </div>
+
+                        <div className="registration-grid">
+                            <Field
+                                label={text.firstName}
+                                required
+                                value={form.firstName}
+                                onChange={(value) =>
+                                    updateField("firstName", value)
+                                }
+                            />
+
+                            <Field
+                                label={text.lastName}
+                                required
+                                value={form.lastName}
+                                onChange={(value) =>
+                                    updateField("lastName", value)
+                                }
+                            />
+
+                            <Field
+                                label={text.dateOfBirth}
+                                type="date"
+                                value={form.dateOfBirth}
+                                onChange={(value) =>
+                                    updateField("dateOfBirth", value)
+                                }
+                            />
+
+                            <SelectField
+                                label={text.gender}
+                                value={form.gender}
+                                onChange={(value) =>
+                                    updateField("gender", value)
+                                }
+                                options={[
+                                    ["", text.select],
+                                    ["male", text.male],
+                                    ["female", text.female],
+                                ]}
+                            />
+                        </div>
+                    </section>
+
+                    <section className="registration-section">
+                        <h2>{text.contact}</h2>
+
+                        <div className="registration-grid">
+                            <Field
+                                label={text.phone}
+                                type="tel"
+                                required
+                                placeholder="+597 XXX-XXXX"
+                                value={form.phone}
+                                onChange={(value) =>
+                                    updateField("phone", value)
+                                }
+                            />
+
+                            <Field
+                                label={text.email}
+                                type="email"
+                                required
+                                value={form.email}
+                                onChange={(value) =>
+                                    updateField("email", value)
+                                }
+                            />
+                        </div>
+                    </section>
+
+                    <section className="registration-section">
+                        <h2>{text.background}</h2>
+
+                        <div className="registration-grid">
+                            <SelectField
+                                label={text.district}
+                                value={form.district}
+                                onChange={(value) =>
+                                    updateField("district", value)
+                                }
+                                options={[
+                                    ["", text.select],
+                                    ...districts.map((district) => [
+                                        district,
+                                        district,
+                                    ] as [string, string]),
+                                ]}
+                            />
+
+                            <SelectField
+                                label={text.maritalStatus}
+                                value={form.maritalStatus}
+                                onChange={(value) =>
+                                    updateField("maritalStatus", value)
+                                }
+                                options={[
+                                    ["", text.select],
+                                    ["single", text.single],
+                                    ["married", text.married],
+                                    ["widowed", text.widowed],
+                                    ["divorced", text.divorced],
+                                ]}
+                            />
+
+                            <SelectField
+                                label={text.memberType}
+                                value={form.memberType}
+                                onChange={(value) =>
+                                    updateField("memberType", value)
+                                }
+                                options={[
+                                    ["", text.select],
+                                    ["new_convert", text.newConvert],
+                                    ["transfer", text.transfer],
+                                    ["visitor", text.visitor],
+                                    ["returning", text.returning],
+                                ]}
+                            />
+
+                            <SelectField
+                                label={text.howHeard}
+                                value={form.howHeard}
+                                onChange={(value) =>
+                                    updateField("howHeard", value)
+                                }
+                                options={[
+                                    ["", text.select],
+                                    ["evangelism", text.evangelism],
+                                    ["invite", text.invite],
+                                    ["social", text.social],
+                                    ["walkin", text.walkin],
+                                    ["other", text.other],
+                                ]}
+                            />
+                        </div>
+                    </section>
+
+                    <section className="registration-section">
+                        <h2>{text.emergency}</h2>
+
+                        <div className="registration-grid registration-grid--three">
+                            <Field
+                                label={text.name}
+                                value={form.emergencyName}
+                                onChange={(value) =>
+                                    updateField("emergencyName", value)
+                                }
+                            />
+
+                            <Field
+                                label={text.phone}
+                                type="tel"
+                                value={form.emergencyPhone}
+                                onChange={(value) =>
+                                    updateField("emergencyPhone", value)
+                                }
+                            />
+
+                            <Field
+                                label={text.relationship}
+                                value={form.emergencyRelationship}
+                                onChange={(value) =>
+                                    updateField(
+                                        "emergencyRelationship",
+                                        value,
+                                    )
+                                }
+                            />
+                        </div>
+                    </section>
+
+                    <section className="registration-section">
+                        <h2>{text.ministry}</h2>
+
+                        <div className="registration-checkbox-grid">
+                            {ministryOptions.map((option) => {
+                                const checked =
+                                    form.ministryInterests.includes(
+                                        option.value,
+                                    );
+
+                                return (
+                                    <label
+                                        key={option.value}
+                                        className={`registration-checkbox ${checked
+                                            ? "registration-checkbox--checked"
+                                            : ""
+                                            }`}
+                                    >
+                                        <input
+                                            type="checkbox"
+                                            checked={checked}
+                                            onChange={() =>
+                                                toggleMinistry(option.value)
+                                            }
+                                        />
+
+                                        <span>
+                                            {language === "nl"
+                                                ? option.nl
+                                                : option.en}
+                                        </span>
+                                    </label>
+                                );
+                            })}
+                        </div>
+                    </section>
+
+                    {selectedChurch ? (
+                        <div className="registration-selected-church">
+                            <span>{text.church}</span>
+                            <strong>{selectedChurch.name}</strong>
+                        </div>
+                    ) : null}
+
+                    {error ? (
+                        <p
+                            className="registration-card__error"
+                            role="alert"
+                        >
+                            {error}
+                        </p>
+                    ) : null}
+
+                    <div className="registration-actions">
+                        <button
+                            type="button"
+                            className="registration-card__secondary"
+                            onClick={() => {
+                                setStep("church");
+                                setError("");
+                            }}
+                        >
+                            {text.back}
+                        </button>
+
+                        <button
+                            type="submit"
+                            className="registration-card__primary"
+                        >
+                            {text.register}
+                        </button>
+                    </div>
+                </form>
+                        )}
+            </>
+            ) : (
+            <section className="registration-success">
+                <div className="registration-success__icon">
+                    ✓
+                </div>
+
+                <span className="registration-card__eyebrow">
+                    REGISTRATION COMPLETE
+                </span>
+
+                <h1>{text.successTitle}</h1>
+
+                <p>{text.successBody}</p>
+
+                {selectedChurch ? (
+                    <div className="registration-success__church">
+                        <span>{text.church}</span>
+                        <strong>{selectedChurch.name}</strong>
+                    </div>
+                ) : null}
+
+                <p className="registration-success__note">
+                    {text.successNote}
+                </p>
+
+                <button
+                    type="button"
+                    className="registration-card__primary"
+                    onClick={onClose}
+                >
+                    {text.close}
+                </button>
+            </section>
+                )}
+        </div>
+        </div >
+    );
+}
+
+interface FieldProps {
+    label: string;
+    value: string;
+    onChange: (value: string) => void;
+    type?: "text" | "date" | "tel" | "email";
+    required?: boolean;
+    placeholder?: string;
+}
+
+function Field({
+    label,
+    value,
+    onChange,
+    type = "text",
+    required = false,
+    placeholder,
+}: FieldProps) {
+    const id = useId();
+
+    return (
+        <div className="registration-field">
+            <label htmlFor={id}>
+                {label}
+
+                {required ? (
+                    <span aria-hidden="true">*</span>
+                ) : null}
+            </label>
+
+            <input
+                id={id}
+                type={type}
+                value={value}
+                onChange={(event) => onChange(event.target.value)}
+                required={required}
+                placeholder={placeholder}
+            />
+        </div>
+    );
+}
+
+interface SelectFieldProps {
+    label: string;
+    value: string;
+    onChange: (value: string) => void;
+    options: [string, string][];
+}
+
+function SelectField({
+    label,
+    value,
+    onChange,
+    options,
+}: SelectFieldProps) {
+    const id = useId();
+
+    return (
+        <div className="registration-field">
+            <label htmlFor={id}>{label}</label>
+
+            <select
+                id={id}
+                value={value}
+                onChange={(event) => onChange(event.target.value)}
+            >
+                {options.map(([optionValue, optionLabel]) => (
+                    <option key={optionValue} value={optionValue}>
+                        {optionLabel}
+                    </option>
+                ))}
+            </select>
+        </div>
+    );
+}

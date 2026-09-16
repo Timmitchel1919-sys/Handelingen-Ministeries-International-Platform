@@ -30,7 +30,7 @@ export const Switch = forwardRef<HTMLInputElement, SwitchProps>(function Switch(
         />
         <span
           aria-hidden="true"
-          className="pointer-events-none absolute left-0.5 h-5 w-5 translate-x-0 rounded-full bg-white shadow-sm transition-transform duration-150 peer-checked:translate-x-5"
+          className="pointer-events-none absolute left-0.5 h-5 w-5 translate-x-0 rounded-full bg-surface shadow-sm transition-transform duration-150 peer-checked:translate-x-5"
         />
       </span>
       {label && <span className="text-sm text-[var(--color-text)]">{label}</span>}

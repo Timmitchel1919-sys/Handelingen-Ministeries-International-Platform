@@ -14,6 +14,7 @@ function renderAt(path: string) {
     <MemoryRouter initialEntries={[path]}>
       <Routes>
         <Route path="/verify-email" element={<div>verify email page</div>} />
+        <Route path="/profile" element={<div>profile page</div>} />
         <Route element={<RequireVerified />}>
           <Route path="/dashboard" element={<div>dashboard page</div>} />
         </Route>
@@ -41,8 +42,15 @@ describe('RequireVerified', () => {
   });
 
   it('renders the protected route once the email is verified', () => {
-    useAuthMock.mockReturnValue({ user: { emailVerified: true } });
+    useAuthMock.mockReturnValue({ user: { emailVerified: true, accountStatus: 'active', churchId: 'church-a' } });
     renderAt('/dashboard');
     expect(screen.getByText('dashboard page')).toBeInTheDocument();
+  });
+
+  it.each(['pending', 'suspended', 'disabled'])('blocks a verified %s account', (accountStatus) => {
+    useAuthMock.mockReturnValue({ user: { emailVerified: true, accountStatus, churchId: 'church-a' } });
+    renderAt('/dashboard');
+    expect(screen.getByText('profile page')).toBeInTheDocument();
+    expect(screen.queryByText('dashboard page')).not.toBeInTheDocument();
   });
 });

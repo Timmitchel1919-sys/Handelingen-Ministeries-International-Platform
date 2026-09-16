@@ -12,6 +12,14 @@
       "order": "ASCENDING"
     }
   ]
+}, {
+  "collectionGroup": "members",
+  "queryScope": "COLLECTION",
+  "fields": [
+    { "fieldPath": "churchId", "order": "ASCENDING" },
+    { "fieldPath": "membershipStatus", "order": "ASCENDING" },
+    { "fieldPath": "lastName", "order": "ASCENDING" }
+  ]
 }],
   "fieldOverrides": []
 }

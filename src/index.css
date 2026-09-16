@@ -36,6 +36,7 @@
   --shadow-lg: var(--shadow-lg);
 }
 
+@layer base {
 html,
 body,
 #root {
@@ -94,4 +95,5 @@ h4 {
 ::-webkit-scrollbar-thumb {
   background-color: var(--color-border);
   border-radius: var(--radius-full);
+}
 }

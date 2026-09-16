@@ -6,6 +6,7 @@ import {
   orderBy,
   query,
   where,
+  Timestamp,
 } from 'firebase/firestore';
 
 import { getFirebaseFirestore } from '@/lib/firebase';
@@ -37,9 +38,9 @@ function mapChurch(
     status:
       data.status === 'inactive' || data.status === 'pending'
         ? data.status
-        : 'active',
-    createdAt: Number(data.createdAt ?? 0),
-    updatedAt: Number(data.updatedAt ?? 0),
+        : data.status === 'active' ? 'active' : 'inactive',
+    createdAt: data.createdAt instanceof Timestamp ? data.createdAt.toMillis() : Number(data.createdAt ?? 0),
+    updatedAt: data.updatedAt instanceof Timestamp ? data.updatedAt.toMillis() : Number(data.updatedAt ?? 0),
   };
 }
 
@@ -62,7 +63,7 @@ export async function getActiveChurches(): Promise<Church[]> {
 export async function getChurchById(
   churchId: string,
 ): Promise<Church | null> {
-  if (!churchId.trim()) {
+  if (!churchId.trim() || churchId.includes('/')) {
     return null;
   }
 

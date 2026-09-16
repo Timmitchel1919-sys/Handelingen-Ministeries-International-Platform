@@ -34,7 +34,11 @@ export interface AuthAppError extends AppError {
 }
 
 export function toAuthError(cause: unknown): AuthAppError {
-  const code = cause instanceof FirebaseError ? cause.code : undefined;
+  if (typeof cause === 'object' && cause !== null && 'messageKey' in cause && typeof cause.messageKey === 'string') {
+    return { kind: 'validation', message: cause.messageKey, messageKey: cause.messageKey, cause };
+  }
+  const code = cause instanceof FirebaseError ? cause.code
+    : typeof cause === 'object' && cause !== null && 'code' in cause && typeof cause.code === 'string' ? cause.code : undefined;
   const messageKey = (code && CODE_TO_KEY[code]) || 'auth.errors.unknown';
 
   let kind: AppError['kind'] = 'unknown';

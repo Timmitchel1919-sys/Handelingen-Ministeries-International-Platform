@@ -1,132 +1,104 @@
-import { Link } from 'react-router-dom';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { appConfig } from '@/app/config/app.config';
-import { useTheme } from '@/app/providers/ThemeProvider';
-import { useAuth } from '@/features/auth/AuthContext';
-import { Dropdown } from '@/components/ui/Dropdown';
+import { GlobalPublicHeader } from '@/components/public/GlobalPublicHeader';
+import { SkyBackground } from '@/components/public/SkyBackground';
 import { Icon } from '@/components/ui/icons';
 
-/**
- * Public landing page - the entry point of the registration flow
- * (Homepage -> choose church -> registration, see Layer 1 spec section
- * 11). Visually matches the supplied Homepage HTML reference
- * (glassmorphism nav/hero/cards on a navy-to-sky radial gradient), built
- * with Layer 0 tokens/components rather than a second design system.
- */
+import { CurvedTransition } from './components/CurvedTransition';
+import { LandingFeatures } from './components/LandingFeatures';
+import { RegistrationModal } from './components/RegistrationModal';
+
 export function HomePage() {
-  const { t, i18n } = useTranslation();
-  const { mode, setMode } = useTheme();
-  const { status } = useAuth();
+  const { t } = useTranslation();
+  const [registrationOpen, setRegistrationOpen] = useState(false);
 
   return (
-    <div className="relative min-h-screen overflow-hidden [background:radial-gradient(circle_at_20%_0%,var(--color-accent)_0%,var(--color-primary)_35%,var(--color-primary-dark)_100%)]">
-      <div aria-hidden="true" className="pointer-events-none absolute -left-36 -top-24 h-[500px] w-[500px] rounded-full bg-secondary/35 blur-[80px]" />
-      <div aria-hidden="true" className="pointer-events-none absolute -bottom-48 -right-36 h-[600px] w-[600px] rounded-full bg-[var(--color-primary-dark)]/40 blur-[80px]" />
+    <SkyBackground>
+      {/*
+       * The header is now position:fixed so we do NOT render it inside the
+       * normal flow. It is rendered outside SkyBackground's z-10 wrapper so
+       * the fixed positioning is not clipped by a transform ancestor.
+       * We add pt-28 (≈ header height 64px + 12px top padding × 2 + 4px gap)
+       * to the hero section to compensate.
+       */}
+      <GlobalPublicHeader onRegister={() => setRegistrationOpen(true)} />
 
-      <div className="relative z-[1] mx-auto max-w-6xl px-4 py-6 sm:px-6">
-        <nav className="mb-10 flex flex-wrap items-center justify-between gap-4 rounded-2xl border border-white/35 bg-white/15 px-5 py-4 shadow-xl backdrop-blur-2xl">
-          <div className="flex items-center gap-3">
-            <img src={appConfig.logoUrl} alt="" className="h-10 w-10 rounded-full object-cover" />
-            <div className="leading-tight">
-              <span className="block text-[15px] font-semibold text-white">{t('appName')}</span>
-              <span className="block text-[11px] tracking-wide text-white/80">INTERNATIONAL</span>
+      <main>
+        {/* Hero section — pt-28 compensates for the fixed header height */}
+        <section className="relative mx-auto flex min-h-[calc(100vh-90px)] max-w-7xl items-center justify-center px-4 pt-28 pb-20 sm:px-6 lg:px-8">
+          <div className="relative z-10 mx-auto max-w-4xl text-center">
+            <img
+              src={appConfig.logoUrl}
+              alt={t('appName')}
+              className="mx-auto mb-7 h-24 w-24 rounded-full object-cover shadow-[0_15px_45px_rgba(23,59,112,0.18)] ring-4 ring-white/40 sm:h-28 sm:w-28"
+            />
+
+            <p className="mb-3 text-sm font-bold uppercase tracking-[0.28em] text-[var(--color-primary)]">
+              {t('public.landing.international')}
+            </p>
+
+            <h1 className="text-4xl font-extrabold tracking-tight text-[var(--color-text)] sm:text-6xl lg:text-7xl">
+              Handelingen Ministries
+            </h1>
+
+            <div className="mx-auto my-7 flex max-w-md items-center gap-4">
+              <div className="h-px flex-1 bg-surface/75" />
+              <span className="text-xl font-light text-[var(--color-primary)]">+</span>
+              <div className="h-px flex-1 bg-surface/75" />
             </div>
-          </div>
 
-          <div className="flex items-center gap-2">
-            <Dropdown
-              align="end"
-              trigger={
-                <span className="rounded-full border border-white/35 bg-white/20 p-2 text-white backdrop-blur-md">
-                  <Icon name="globe" size={18} />
-                </span>
-              }
-              items={appConfig.supportedLocales.map((locale) => ({
-                key: locale,
-                label: locale.toUpperCase(),
-                onSelect: () => void i18n.changeLanguage(locale),
-              }))}
-            />
-            <Dropdown
-              align="end"
-              trigger={
-                <span className="rounded-full border border-white/35 bg-white/20 p-2 text-white backdrop-blur-md">
-                  <Icon name={mode === 'dark' ? 'moon' : mode === 'light' ? 'sun' : 'monitor'} size={18} />
-                </span>
-              }
-              items={[
-                { key: 'light', label: t('common.light'), onSelect: () => setMode('light') },
-                { key: 'dark', label: t('common.dark'), onSelect: () => setMode('dark') },
-                { key: 'system', label: t('common.system'), onSelect: () => setMode('system') },
-              ]}
-            />
-            {status === 'authenticated' ? (
-              <Link
-                to="/dashboard"
-                className="rounded-xl border border-white/40 bg-secondary/85 px-5 py-2 text-sm font-semibold text-white shadow-md transition-transform hover:-translate-y-0.5"
-              >
-                {t('navigation.dashboard')}
-              </Link>
-            ) : (
-              <Link
-                to="/login"
-                className="rounded-xl border border-white/40 bg-white/20 px-5 py-2 text-sm font-semibold text-white backdrop-blur-md transition-transform hover:-translate-y-0.5"
-              >
-                {t('auth.signIn')}
-              </Link>
-            )}
-          </div>
-        </nav>
+            <p className="text-xl font-semibold text-[var(--color-primary-dark)] sm:text-2xl">
+              {t('public.landing.tagline')}
+            </p>
 
-        <section className="mb-12 px-4 py-10 text-center text-white">
-          <h1 className="mb-3 text-3xl font-bold [text-shadow:0_4px_20px_rgba(0,0,0,0.25)] sm:text-4xl">
-            {t('home.heroTitle')}
-          </h1>
-          <p className="mx-auto mb-8 max-w-xl text-base italic opacity-90">{t('home.heroVerse')}</p>
-          <div className="flex flex-wrap items-center justify-center gap-4">
-            <Link
-              to="/select-church"
-              className="rounded-2xl border border-white/40 bg-gradient-to-br from-secondary/90 to-accent/75 px-8 py-3.5 text-sm font-semibold text-white shadow-lg transition-transform hover:-translate-y-0.5"
-            >
-              {t('home.joinUs')}
-            </Link>
-            <Link
-              to="/login"
-              className="rounded-2xl border border-white/40 bg-white/20 px-8 py-3.5 text-sm font-semibold text-white shadow-lg backdrop-blur-md transition-transform hover:-translate-y-0.5"
-            >
-              {t('auth.signIn')}
-            </Link>
+            <p className="mx-auto mt-6 max-w-2xl text-base leading-7 text-[var(--color-text)]/80 sm:text-lg">
+              {t('public.landing.description')}
+            </p>
+
+            <div className="mt-9 flex flex-col justify-center gap-3 sm:flex-row">
+              {/*
+               * Primary CTA — opens the in-page registration modal.
+               * The Get Started link now mirrors the Register button behavior.
+               */}
+              <button
+                type="button"
+                id="hero-register-btn"
+                onClick={() => setRegistrationOpen(true)}
+                className="inline-flex h-12 items-center justify-center gap-2 rounded-2xl bg-linear-to-r from-[#1458B8] to-[#3FA9F5] px-8 text-sm font-bold text-white shadow-[0_10px_28px_rgba(20,88,184,0.28)] transition duration-200 hover:-translate-y-0.5 hover:shadow-[0_14px_35px_rgba(20,88,184,0.34)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#3FA9F5]"
+              >
+                {t('public.landing.register')}
+                <Icon name="arrow-right" size={17} />
+              </button>
+
+              <a
+                href="#features"
+                className="inline-flex h-12 items-center justify-center rounded-2xl border border-white/70 bg-surface/30 px-8 text-sm font-bold text-[var(--color-primary)] shadow-sm backdrop-blur-xl transition duration-200 hover:-translate-y-0.5 hover:bg-surface/50"
+              >
+                {t('public.landing.learnMore')}
+              </a>
+            </div>
           </div>
         </section>
 
-        <div className="mb-8 text-center text-white">
-          <h2 className="text-2xl font-bold">{t('home.getConnectedTitle')}</h2>
-          <p className="mt-1 text-sm opacity-85">{t('home.getConnectedSubtitle')}</p>
-        </div>
+        <CurvedTransition />
 
-        <div className="mb-14 grid grid-cols-1 gap-6 sm:grid-cols-3">
-          {(['sermons', 'missions', 'community'] as const).map((key) => (
-            <div
-              key={key}
-              className="rounded-[20px] border border-white/35 bg-white/15 p-6 text-white shadow-xl backdrop-blur-2xl transition-transform hover:-translate-y-1.5"
-            >
-              <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-full border border-white/40 bg-white/25 text-2xl">
-                <Icon
-                  name={key === 'sermons' ? 'documents' : key === 'missions' ? 'globe' : 'members'}
-                  size={26}
-                />
-              </div>
-              <h3 className="mb-2 text-lg font-semibold">{t(`home.cards.${key}.title`)}</h3>
-              <p className="text-sm leading-relaxed opacity-90">{t(`home.cards.${key}.description`)}</p>
-            </div>
-          ))}
-        </div>
+        <LandingFeatures />
 
-        <footer className="rounded-2xl border border-white/35 bg-white/15 px-5 py-6 text-center text-[13px] text-white/85 shadow-xl backdrop-blur-2xl">
-          {t('appName')} &mdash; {t('home.footerTagline')} &mdash; &copy; {new Date().getFullYear()}
+        <footer className="bg-[#dff2ff] px-4 pb-8 text-center sm:px-6">
+          <div className="mx-auto max-w-7xl border-t border-[#1458B8]/10 pt-7 text-sm text-[var(--color-text-muted)]">
+            {t('appName')} — {t('public.landing.tagline')} — ©{' '}
+            {new Date().getFullYear()}
+          </div>
         </footer>
-      </div>
-    </div>
+      </main>
+
+      {/* In-page registration modal */}
+      <RegistrationModal
+        open={registrationOpen}
+        onClose={() => setRegistrationOpen(false)}
+      />
+    </SkyBackground>
   );
 }

@@ -1,112 +1,48 @@
 import { useTranslation } from 'react-i18next';
-import { useNavigate } from 'react-router-dom';
+import { Breadcrumbs } from '@/components/navigation/Breadcrumbs';
+import { GlobalSearch } from '@/components/navigation/GlobalSearch';
+import { LanguageSwitcher } from '@/components/navigation/LanguageSwitcher';
+import { NotificationButton } from '@/components/navigation/NotificationButton';
+import { ShellIcon } from '@/components/navigation/ShellIcon';
+import { ThemeControl } from '@/components/navigation/ThemeControl';
+import { UserMenu } from '@/components/navigation/UserMenu';
 
-import { appConfig } from '@/app/config/app.config';
-import { useTheme } from '@/app/providers/ThemeProvider';
-import { useAuth } from '@/features/auth/AuthContext';
-import { Avatar } from '@/components/ui/Avatar';
-import { Breadcrumb, type BreadcrumbItem } from '@/components/ui/Breadcrumb';
-import { Dropdown } from '@/components/ui/Dropdown';
-import { Icon } from '@/components/ui/icons';
-import { SearchInput } from '@/components/ui/SearchInput';
-import { logAuditEvent } from '@/services/audit-service';
-import { signOutCurrentUser } from '@/services/auth-service';
-
-export interface TopbarProps {
-  breadcrumb: BreadcrumbItem[];
+type TopbarProps = {
   onOpenMobileMenu: () => void;
-}
+};
 
-/**
- * Reusable top navigation. Provides the chrome (breadcrumb, global search,
- * notifications entry point, language selector, account menu) that every
- * page reuses - individual pages only set the breadcrumb via their route.
- */
-export function Topbar({ breadcrumb, onOpenMobileMenu }: TopbarProps) {
-  const { t, i18n } = useTranslation();
-  const { mode, setMode } = useTheme();
-  const { user } = useAuth();
-  const navigate = useNavigate();
-
-  const displayName = user?.displayName ?? user?.email ?? 'Guest';
-
-  const handleSignOut = async () => {
-    if (user) {
-      await logAuditEvent({
-        actorUid: user.id,
-        actorRole: user.role,
-        action: 'sign-out',
-        resource: 'auth',
-        resourceId: user.id,
-        churchId: user.churchId,
-      });
-    }
-    await signOutCurrentUser();
-    navigate('/', { replace: true });
-  };
+export function Topbar({ onOpenMobileMenu }: TopbarProps) {
+  const { t } = useTranslation();
 
   return (
-    <header className="flex h-[var(--header-height)] items-center gap-3 border-b border-[var(--color-border)] bg-surface px-4">
-      <button
-        type="button"
-        onClick={onOpenMobileMenu}
-        aria-label={t('shell.openMenu')}
-        className="rounded-md p-2 text-[var(--color-text-muted)] hover:bg-[var(--color-surface-raised)] lg:hidden"
-      >
-        <Icon name="menu" size={20} />
-      </button>
+    <header className="sticky top-0 z-20 flex h-20 items-center justify-between border-b border-[#D7E6F7] bg-surface/80 px-4 backdrop-blur-xl sm:px-6 lg:px-8">
+      {/* Left Area: Mobile Toggle & Breadcrumbs */}
+      <div className="flex min-w-0 items-center gap-3">
+        <button
+          type="button"
+          onClick={onOpenMobileMenu}
+          aria-label={t('navigation.openMenu')}
+          className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-[#D7E6F7] bg-surface text-[var(--color-text)] shadow-xs backdrop-blur hover:bg-[#F4F8FD] lg:hidden"
+        >
+          <ShellIcon name="menu" width={19} height={19} />
+        </button>
 
-      <div className="hidden md:block">
-        <Breadcrumb items={breadcrumb} />
+        <div className="hidden min-w-0 lg:block">
+          <Breadcrumbs />
+        </div>
       </div>
 
-      <div className="ml-auto flex flex-1 items-center justify-end gap-2 md:flex-none">
-        <div className="hidden w-64 sm:block">
-          <SearchInput placeholder={t('shell.searchPlaceholder')} aria-label={t('common.search')} />
-        </div>
+      {/* Right Area: Search, Controls & User Menu */}
+      <div className="flex shrink-0 items-center gap-2.5 sm:gap-3">
+        <GlobalSearch />
 
-        <Dropdown
-          align="end"
-          trigger={
-            <span className="rounded-md p-2 text-[var(--color-text-muted)] hover:bg-[var(--color-surface-raised)]" aria-label={t('common.language')}>
-              <Icon name="globe" size={20} />
-            </span>
-          }
-          items={appConfig.supportedLocales.map((locale) => ({
-            key: locale,
-            label: locale.toUpperCase(),
-            onSelect: () => void i18n.changeLanguage(locale),
-          }))}
-        />
+        <NotificationButton />
 
-        <Dropdown
-          align="end"
-          trigger={
-            <span className="rounded-md p-2 text-[var(--color-text-muted)] hover:bg-[var(--color-surface-raised)]" aria-label={t('common.theme')}>
-              <Icon name={mode === 'dark' ? 'moon' : mode === 'light' ? 'sun' : 'monitor'} size={20} />
-            </span>
-          }
-          items={[
-            { key: 'light', label: t('common.light'), onSelect: () => setMode('light') },
-            { key: 'dark', label: t('common.dark'), onSelect: () => setMode('dark') },
-            { key: 'system', label: t('common.system'), onSelect: () => setMode('system') },
-          ]}
-        />
+        <ThemeControl />
 
-        <span className="relative rounded-md p-2 text-[var(--color-text-muted)] hover:bg-[var(--color-surface-raised)]">
-          <Icon name="bell" size={20} aria-hidden="true" />
-          <span className="sr-only">{t('navigation.notifications')}</span>
-        </span>
+        <LanguageSwitcher />
 
-        <Dropdown
-          align="end"
-          trigger={<Avatar name={displayName} size={32} />}
-          items={[
-            { key: 'profile', label: t('common.profile'), onSelect: () => navigate('/profile') },
-            { key: 'settings', label: t('navigation.settings'), onSelect: () => navigate('/settings') },
-            { key: 'sign-out', label: t('common.signOut'), onSelect: () => void handleSignOut(), danger: true },
-          ]}
-        />
+        <UserMenu />
       </div>
     </header>
   );

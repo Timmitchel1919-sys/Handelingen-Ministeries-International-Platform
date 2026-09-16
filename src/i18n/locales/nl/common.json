@@ -11,7 +11,44 @@
     "tasks": "Taken",
     "reports": "Rapporten",
     "notifications": "Meldingen",
-    "settings": "Instellingen"
+    "settings": "Instellingen",
+    "profile": "Profiel",
+    "sections": {
+      "main": "Hoofdmenu",
+      "churchManagement": "Kerkbeheer",
+      "operations": "Operaties",
+      "system": "Systeem",
+      "profile": "Profiel"
+    },
+    "breadcrumbs": "Broodkruimelnavigatie",
+    "language": "Taal",
+    "english": "English",
+    "dutch": "Nederlands",
+    "theme": "Thema",
+    "themeLight": "Lichte modus",
+    "themeDark": "Donkere modus",
+    "themeSystem": "Systeemthema",
+    "user": "Gebruiker",
+    "member": "Lid",
+    "userMenu": "Gebruikersmenu",
+    "collapseSidebar": "Zijbalk inklappen",
+    "expandSidebar": "Zijbalk uitklappen",
+    "openMenu": "Navigatiemenu openen",
+    "closeMenu": "Navigatiemenu sluiten",
+    "mobileNavigation": "Mobiele navigatie",
+    "more": "Meer",
+    "pageActions": "Pagina-acties"
+  },
+  "search": {
+    "title": "Zoeken",
+    "open": "Globale zoekfunctie openen",
+    "placeholder": "Zoek binnen het platform...",
+    "noResults": "Geen resultaten gevonden",
+    "noResultsDescription": "Probeer een andere zoekterm.",
+    "navigate": "navigeren",
+    "select": "selecteren",
+    "close": "sluiten",
+    "quickActions": "Snelle acties"
   },
   "common": {
     "search": "Zoeken",
@@ -62,6 +99,13 @@
     }
   },
   "auth": {
+    "welcomeBack": "Welkom terug!",
+    "rememberMe": "Onthoud mij",
+    "or": "of",
+    "continueWithGoogle": "Doorgaan met Google",
+    "firstName": "Voornaam",
+    "lastName": "Achternaam",
+    "terms": "Ik ga akkoord met de algemene voorwaarden",
     "signIn": "Inloggen",
     "signInDescription": "Log in om toegang te krijgen tot jouw kerkplatform account.",
     "signOut": "Uitloggen",
@@ -138,6 +182,9 @@
       "unknown": "Er is iets misgegaan. Probeer het opnieuw."
     },
     "validation": {
+      "firstNameRequired": "Voornaam is verplicht.",
+      "lastNameRequired": "Achternaam is verplicht.",
+      "termsRequired": "Accepteer de voorwaarden om verder te gaan.",
       "emailRequired": "E-mailadres is verplicht.",
       "emailInvalid": "Voer een geldig e-mailadres in.",
       "passwordRequired": "Wachtwoord is verplicht.",
@@ -148,6 +195,51 @@
       "displayNameRequired": "Volledige naam is verplicht.",
       "displayNameTooShort": "Volledige naam is te kort.",
       "displayNameTooLong": "Volledige naam is te lang."
+    }
+  },
+  "public": {
+    "navigation": {
+      "home": "Home",
+      "community": "Gemeenschap",
+      "bible": "Bijbel Centrum"
+    },
+    "landing": {
+      "international": "International",
+      "tagline": "Zie alleen op Jezus",
+      "description": "Een wereldwijd netwerk van kerken, gemeenten en gelovigen. Samen in geloof. Samen in dienst. Voor Zijn Koninkrijk.",
+      "getStarted": "Aan de slag",
+      "learnMore": "Meer over ons",
+      "register": "Registreren",
+      "registerModalTitle": "Lidmaatschapsregistratie",
+      "selectChurchFirst": "Selecteer eerst uw kerk",
+      "church": "Kerk",
+      "selectChurchPlaceholder": "Selecteer uw kerk",
+      "continue": "Doorgaan",
+      "churchRequired": "Selecteer eerst uw kerk om door te gaan.",
+      "closeRegistration": "Sluiten",
+      "step": "Stap",
+      "of": "van",
+      "accountDetails": "Accountgegevens",
+      "featuresEyebrow": "Samen geloven. Samen dienen.",
+      "featuresTitle": "Vind jouw plek",
+      "features": {
+        "bible": {
+          "title": "Bijbel Centrum",
+          "description": "Lees, bestudeer en groei in Gods Woord."
+        },
+        "sermons": {
+          "title": "Preken & Live",
+          "description": "Bekijk boodschappen en live diensten."
+        },
+        "community": {
+          "title": "Gemeenschap",
+          "description": "Verbind, groei en dien samen."
+        },
+        "prayer": {
+          "title": "Gebed & Support",
+          "description": "Wij staan klaar om voor jou te bidden."
+        }
+      }
     }
   }
 }

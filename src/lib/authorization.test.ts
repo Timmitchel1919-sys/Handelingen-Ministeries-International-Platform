@@ -30,6 +30,9 @@ describe('can', () => {
     expect(can(admin, 'manage', 'members')).toBe(true);
     expect(can(admin, 'manage', 'church')).toBe(true);
     expect(can(admin, 'manage', 'hrm')).toBe(true);
+    expect(can(admin, 'read', 'members')).toBe(true);
+    expect(can(admin, 'create', 'members')).toBe(true);
+    expect(can(admin, 'delete', 'members')).toBe(true);
   });
 
   it('never lets a member self-escalate: a raw role check would be wrong here', () => {

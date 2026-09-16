@@ -1,170 +1,95 @@
 rules_version = '2';
-
-// ---------------------------------------------------------------------------
-// Handelingen Ministries International - Firestore security baseline
-// (Layer 1: Identity, Authentication & Church Context).
-//
-// These rules are the actual authorization boundary. The client-side
-// `can()`/RequirePermission checks (see src/lib/authorization.ts,
-// src/app/routes/guards/) only control what the UI *shows* - a user who
-// bypasses the UI entirely and talks to Firestore directly must still be
-// stopped here. Nothing below ever evaluates `allow read, write: if true`.
-//
-// Known bootstrap limitation: role escalation from "member" to any
-// leadership/admin role, and church document writes, are gated on the
-// ACTING user's own already-stored `role` field (a standard Firestore RBAC
-// pattern that needs no Cloud Functions). This has a bootstrapping
-// problem - nothing in this app can create the very first church_admin/
-// super_admin, since that requires an existing admin to already exist.
-// The first admin of a new deployment must be set out-of-band (Firebase
-// console, or a one-off Admin SDK script) before this rule set is useful
-// for role management. A later layer should replace the self-referential
-// get() calls here with Firebase Auth custom claims set by a trusted
-// Cloud Function, which removes this limitation.
-// ---------------------------------------------------------------------------
-
 service cloud.firestore {
   match /databases/{database}/documents {
-
-    // ----- helpers ---------------------------------------------------------
-    function isSignedIn() {
-      return request.auth != null;
+    function signedIn() { return request.auth != null; }
+    function verified() { return signedIn() && request.auth.token.email_verified == true; }
+    function profile() { return get(/databases/$(database)/documents/users/$(request.auth.uid)).data; }
+    function active() {
+      return verified()
+        && exists(/databases/$(database)/documents/users/$(request.auth.uid))
+        && profile().accountStatus == 'active';
     }
-
-    function hasVerifiedEmail() {
-      return isSignedIn() && request.auth.token.email_verified == true;
+    function superAdmin() { return active() && profile().role == 'super_admin'; }
+    function churchAdmin(churchId) {
+      return active() && profile().churchId == churchId
+        && profile().role in ['church_admin', 'church_pastor'];
     }
-
-    function ownProfileExists() {
-      return isSignedIn() && exists(/databases/$(database)/documents/users/$(request.auth.uid));
+    function sameChurch(churchId) { return active() && profile().churchId == churchId; }
+    function staff(churchId) { return superAdmin() || churchAdmin(churchId); }
+    function validProfile(data) {
+      return data.keys().hasAll(['uid', 'email', 'displayName', 'photoURL', 'accountStatus', 'churchId', 'role', 'createdAt', 'updatedAt'])
+        && data.keys().hasOnly(['uid', 'email', 'displayName', 'photoURL', 'accountStatus', 'churchId', 'role', 'createdAt', 'updatedAt'])
+        && data.uid is string && data.email is string && data.email.size() <= 254
+        && data.displayName is string && data.displayName.size() >= 2 && data.displayName.size() <= 80
+        && (data.photoURL == null || (data.photoURL is string && data.photoURL.size() <= 2048))
+        && data.churchId is string && data.churchId.size() > 0
+        && data.role in ['member', 'leader', 'ministry_leader', 'church_admin', 'church_pastor', 'super_admin']
+        && data.accountStatus in ['pending', 'active', 'suspended', 'disabled']
+        && data.createdAt is timestamp && data.updatedAt == request.time;
     }
+    function changedOnly(keys) { return request.resource.data.diff(resource.data).affectedKeys().hasOnly(keys); }
 
-    function ownProfile() {
-      return get(/databases/$(database)/documents/users/$(request.auth.uid)).data;
-    }
-
-    function isActiveSelf() {
-      return ownProfileExists() && ownProfile().accountStatus == 'active';
-    }
-
-    function isSuperAdmin() {
-      return isActiveSelf() && ownProfile().role == 'super_admin';
-    }
-
-    function isChurchAdmin(churchId) {
-      return isActiveSelf()
-        && (ownProfile().role == 'church_admin' || ownProfile().role == 'church_pastor')
-        && ownProfile().churchId == churchId;
-    }
-
-    function isChurchStaff(churchId) {
-      return isSuperAdmin() || isChurchAdmin(churchId);
-    }
-
-    function unchangedExcept(doc, allowedKeys) {
-      return request.resource.data.diff(doc).affectedKeys().hasOnly(allowedKeys);
-    }
-
-    // ----- churches/{churchId} ---------------------------------------------
-    // Public read of active churches only - the "choose your church" step
-    // (SelectChurchPage) runs before the visitor has an account. A church
-    // being inactive isn't just a UI filter (Layer 1 rule).
+    // Public directory documents must contain public information only.
     match /churches/{churchId} {
-  // Public church directory:
-  // Only active churches are publicly readable.
-  // Signed-in users may read church records as required by
-  // authenticated church-context flows.
-  allow get, list: if
-    resource.data.status == 'active'
-    || isSignedIn();
-
-  // Only a super administrator may create a church.
-  allow create: if isSuperAdmin();
-
-  // Super admins may manage any church.
-  // Church admins may update their own church only.
-  allow update: if
-    isSuperAdmin()
-    || isChurchAdmin(churchId);
-
-  // Church deletion remains restricted to super administrators.
-  allow delete: if isSuperAdmin();
-}
-
-    // ----- users/{userId} ----------------------------------------------------
-    match /users/{userId} {
-      // A user reads their own profile; church staff read profiles within
-      // their own church; a super admin reads any profile. Tenant
-      // isolation: a church_admin can never read another church's users.
-      allow get: if isSignedIn() && (
-        request.auth.uid == userId ||
-        isSuperAdmin() ||
-        isChurchAdmin(resource.data.churchId)
-      );
-      // `list` rules are evaluated per returned document, which only works
-      // when the query itself filters on the same field (Firestore can't
-      // otherwise verify the rule without reading unconstrained data) - so
-      // any church-scoped user listing must query with
-      // where('churchId', '==', <id>), matched here via resource.data.
-      allow list: if isSuperAdmin() || isChurchAdmin(resource.data.churchId);
-
-      // Account creation: only as yourself, and only with the safe
-      // defaults (member / pending) - a client can never request a
-      // privileged role or a pre-activated account for itself. `churchId`
-      // must reference a church document that exists and is active.
-      allow create: if isSignedIn()
-        && request.auth.uid == userId
-        && request.resource.data.uid == userId
+      allow read: if resource.data.status == 'active' || staff(churchId)
+        || (signedIn() && profile().churchId == churchId);
+      allow create: if superAdmin()
+        && request.resource.data.name is string
+        && request.resource.data.name.size() > 0
+        && request.resource.data.status in ['active', 'inactive', 'pending']
+        && request.resource.data.createdAt == request.time
+        && request.resource.data.updatedAt == request.time;
+      allow update: if staff(churchId)
+        && request.resource.data.name is string && request.resource.data.name.size() > 0
+        && request.resource.data.status in ['active', 'inactive', 'pending']
+        && request.resource.data.createdAt == resource.data.createdAt
+        && request.resource.data.updatedAt == request.time;
+      allow delete: if superAdmin();
+    }
+    match /users/{uid} {
+      allow get: if signedIn() && (request.auth.uid == uid || staff(resource.data.churchId));
+      allow list: if staff(resource.data.churchId);
+      allow create: if signedIn() && request.auth.uid == uid
+        && validProfile(request.resource.data)
+        && request.resource.data.uid == uid
         && request.resource.data.email == request.auth.token.email
         && request.resource.data.role == 'member'
         && request.resource.data.accountStatus == 'pending'
-        && request.resource.data.churchId is string
-        && exists(/databases/$(database)/documents/churches/$(request.resource.data.churchId))
-        && get(/databases/$(database)/documents/churches/$(request.resource.data.churchId)).data.status == 'active'
         && request.resource.data.createdAt == request.time
-        && request.resource.data.updatedAt == request.time;
-
-      // Three, and only three, ways an existing profile can be updated:
-      allow update: if isSignedIn() && (
-        // (a) the owner updates their own non-sensitive display fields.
-        (request.auth.uid == userId
-          && unchangedExcept(resource.data, ['displayName', 'photoURL', 'updatedAt'])) ||
-
-        // (b) the one client-initiated status transition: pending -> active,
-        // gated on Firebase's own (non-client-controlled) email_verified
-        // token claim, never on anything the client asserts about itself.
-        (request.auth.uid == userId
-          && hasVerifiedEmail()
-          && resource.data.accountStatus == 'pending'
-          && request.resource.data.accountStatus == 'active'
-          && unchangedExcept(resource.data, ['accountStatus', 'updatedAt'])) ||
-
-        // (c) church staff manage role/status for members of their own
-        // church only; a super admin may do so for any church. Moving a
-        // user to a different church is not permitted through this path.
-        (isChurchStaff(resource.data.churchId)
-          && request.resource.data.churchId == resource.data.churchId
-          && unchangedExcept(resource.data, ['role', 'accountStatus', 'updatedAt']))
+        && get(/databases/$(database)/documents/churches/$(request.resource.data.churchId)).data.status == 'active';
+      allow update: if signedIn() && validProfile(request.resource.data) && (
+        (request.auth.uid == uid && changedOnly(['displayName', 'photoURL', 'updatedAt']))
+        || (request.auth.uid == uid && verified()
+          && resource.data.accountStatus == 'pending' && request.resource.data.accountStatus == 'active'
+          && changedOnly(['accountStatus', 'updatedAt']))
+        || (request.auth.uid != uid && changedOnly(['role', 'accountStatus', 'updatedAt'])
+          && (superAdmin() || (churchAdmin(resource.data.churchId)
+            && resource.data.role in ['member', 'leader', 'ministry_leader']
+            && request.resource.data.role in ['member', 'leader', 'ministry_leader'])))
       );
-
-      // No client-initiated deletes - account removal is an administrative
-      // operation reserved for a later, backend-enforced flow.
       allow delete: if false;
     }
-
-    // ----- auditLogs/{id} ----------------------------------------------------
-    // Append-only: anyone signed in may log an event about their own
-    // action; only administrators may read the trail, scoped to their own
-    // church (a super admin sees everything). Never editable or deletable.
-    match /auditLogs/{logId} {
-      allow create: if isSignedIn() && request.resource.data.actorUid == request.auth.uid;
-      allow get, list: if isSuperAdmin() || isChurchAdmin(resource.data.churchId);
+    // Existing member repository is read-only. Intake writes require the next layer.
+    match /members/{memberId} {
+      allow read: if staff(resource.data.churchId)
+        || (sameChurch(resource.data.churchId)
+          && (resource.data.userId == request.auth.uid || profile().role in ['leader', 'ministry_leader']));
+      allow write: if false;
+    }
+    // Client events are untrusted activity reports, never authoritative admin audit records.
+    match /auditLogs/{id} {
+      allow create: if signedIn()
+        && request.resource.data.keys().hasOnly(['actorUid', 'actorRole', 'action', 'resource', 'resourceId', 'churchId', 'createdAt'])
+        && request.resource.data.actorUid == request.auth.uid
+        && request.resource.data.actorRole == profile().role
+        && request.resource.data.churchId == profile().churchId
+        && request.resource.data.resource == 'auth'
+        && request.resource.data.resourceId == request.auth.uid
+        && request.resource.data.action in ['sign-up', 'sign-in', 'sign-out']
+        && request.resource.data.createdAt == request.time;
+      allow read: if staff(resource.data.churchId);
       allow update, delete: if false;
     }
-
-    // Deny everything else by default (no catch-all allow anywhere above).
-    match /{document=**} {
-      allow read, write: if false;
-    }
+    match /{document=**} { allow read, write: if false; }
   }
 }

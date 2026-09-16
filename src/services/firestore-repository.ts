@@ -63,7 +63,7 @@ export class FirestoreRepository<T extends DocumentData> {
       const db = this.requireDb();
       const snapshot = await getDoc(doc(db, this.collectionPath, id));
       if (!snapshot.exists()) throw { code: 'not-found' };
-      return { id: snapshot.id, ...(snapshot.data() as T) };
+      return { ...(snapshot.data() as T), id: snapshot.id };
     } catch (cause) {
       throw toAppError(cause);
     }
@@ -74,8 +74,8 @@ export class FirestoreRepository<T extends DocumentData> {
       const db = this.requireDb();
       const snapshot = await getDocs(query(collection(db, this.collectionPath), ...constraints, fsLimit(pageSize)));
       const items = snapshot.docs.map((docSnap: QueryDocumentSnapshot) => ({
-        id: docSnap.id,
         ...(docSnap.data() as T),
+        id: docSnap.id,
       }));
       const last = snapshot.docs.at(-1);
       return { items, nextCursor: last ? last.id : null };
@@ -96,8 +96,8 @@ export class FirestoreRepository<T extends DocumentData> {
         query(collection(db, this.collectionPath), ...constraints, startAfter(cursorSnap), fsLimit(pageSize)),
       );
       const items = snapshot.docs.map((docSnap: QueryDocumentSnapshot) => ({
-        id: docSnap.id,
         ...(docSnap.data() as T),
+        id: docSnap.id,
       }));
       const last = snapshot.docs.at(-1);
       return { items, nextCursor: last ? last.id : null };

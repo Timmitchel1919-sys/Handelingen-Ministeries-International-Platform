@@ -1,4 +1,5 @@
 import type { PermissionResource } from '@/types/auth';
+import { navigationItems } from './navigation.config';
 
 /**
  * Single source of truth for primary navigation.
@@ -31,16 +32,12 @@ export type NavIconName =
   | 'notifications'
   | 'settings';
 
-export const navItems: NavItem[] = [
-  { key: 'dashboard', labelKey: 'navigation.dashboard', path: '/dashboard', icon: 'dashboard', resource: 'dashboard' },
-  { key: 'ministries', labelKey: 'navigation.ministries', path: '/ministries', icon: 'ministries', resource: 'ministries' },
-  { key: 'departments', labelKey: 'navigation.departments', path: '/departments', icon: 'departments', resource: 'departments' },
-  { key: 'members', labelKey: 'navigation.members', path: '/members', icon: 'members', resource: 'members' },
-  { key: 'leaders', labelKey: 'navigation.leaders', path: '/leaders', icon: 'leaders', resource: 'leaders' },
-  { key: 'events', labelKey: 'navigation.events', path: '/events', icon: 'events', resource: 'events' },
-  { key: 'documents', labelKey: 'navigation.documents', path: '/documents', icon: 'documents', resource: 'documents' },
-  { key: 'tasks', labelKey: 'navigation.tasks', path: '/tasks', icon: 'tasks', resource: 'tasks' },
-  { key: 'reports', labelKey: 'navigation.reports', path: '/reports', icon: 'reports', resource: 'reports' },
-  { key: 'notifications', labelKey: 'navigation.notifications', path: '/notifications', icon: 'notifications', resource: 'notifications' },
-  { key: 'settings', labelKey: 'navigation.settings', path: '/settings', icon: 'settings', resource: 'settings' },
-];
+export const navItems: NavItem[] = navigationItems
+  .filter(item => item.id !== 'profile')
+  .map(item => ({
+    key: item.id,
+    labelKey: item.labelKey,
+    path: item.route,
+    icon: item.icon as NavIconName,
+    resource: item.id as PermissionResource,
+  }));

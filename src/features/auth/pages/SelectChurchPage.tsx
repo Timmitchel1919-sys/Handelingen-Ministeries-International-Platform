@@ -39,7 +39,7 @@ export function SelectChurchPage() {
 
   const handleSelect = (church: Church) => {
     selectChurch(church);
-    navigate('/churches');
+    navigate('/register');
   };
 
   return (
@@ -59,9 +59,9 @@ export function SelectChurchPage() {
               <button
                 type="button"
                 onClick={() => handleSelect(church)}
-                className="flex w-full items-center gap-3 rounded-xl border border-white/35 bg-white/10 px-4 py-3.5 text-left text-white transition-colors hover:bg-white/20"
+                className="flex w-full items-center gap-3 rounded-xl border border-white/35 bg-surface/10 px-4 py-3.5 text-left text-white transition-colors hover:bg-surface/20"
               >
-                <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-white/35 bg-white/20">
+                <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-white/35 bg-surface/20">
                   <Icon name="ministries" size={20} />
                 </span>
                 <span className="font-medium">{church.name}</span>

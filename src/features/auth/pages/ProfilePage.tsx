@@ -65,6 +65,16 @@ export function ProfilePage() {
           <Row label={t('navigation.ministries')} value={user.churchId ?? '-'} />
 
           <div className="pt-3">
+            {!user.churchId && (
+              <Button onClick={() => navigate('/select-church')}>
+                {t('auth.selectChurch.title')}
+              </Button>
+            )}
+            {!user.emailVerified && (
+              <Button onClick={() => navigate('/verify-email')}>
+                {t('auth.verifyEmail.title')}
+              </Button>
+            )}
             <Button variant="outline" onClick={() => void handleSignOut()}>
               {t('common.signOut')}
             </Button>
@@ -77,9 +87,9 @@ export function ProfilePage() {
 
 function Row({ label, value }: { label: string; value: ReactNode }) {
   return (
-    <div className="flex items-center justify-between border-b border-border)] pb-2 last:border-0">
-      <span className="text-muted)]">{label}</span>
-      <span className="font-medium text-text)]">{value}</span>
+    <div className="flex items-center justify-between border-b border-[var(--color-border)] pb-2 last:border-0">
+      <span className="text-[var(--color-text-muted)]">{label}</span>
+      <span className="font-medium text-[var(--color-text)]">{value}</span>
     </div>
   );
 }

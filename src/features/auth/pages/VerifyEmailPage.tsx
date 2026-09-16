@@ -69,7 +69,7 @@ export function VerifyEmailPage() {
       description={t('auth.verifyEmail.description', { email: firebaseUser.email })}
     >
       <div className="flex flex-col items-center gap-5 text-center">
-        <span className="flex h-14 w-14 items-center justify-center rounded-full border border-white/35 bg-white/20 text-white">
+        <span className="flex h-14 w-14 items-center justify-center rounded-full border border-white/35 bg-surface/20 text-white">
           <Icon name="notifications" size={28} />
         </span>
 
@@ -86,10 +86,10 @@ export function VerifyEmailPage() {
           <Button onClick={handleCheck} isLoading={isChecking} size="lg">
             {t('auth.verifyEmail.checkStatus')}
           </Button>
-          <Button onClick={handleResend} isLoading={isResending} variant="outline" size="lg" className="border-white/40 text-white hover:bg-white/10">
+          <Button onClick={handleResend} isLoading={isResending} variant="outline" size="lg" className="border-white/40 text-white hover:bg-surface/10">
             {t('auth.verifyEmail.resend')}
           </Button>
-          <Button onClick={() => void signOutCurrentUser()} variant="ghost" size="sm" className="text-white/85 hover:bg-white/10">
+          <Button onClick={() => void signOutCurrentUser()} variant="ghost" size="sm" className="text-white/85 hover:bg-surface/10">
             {t('common.signOut')}
           </Button>
         </div>

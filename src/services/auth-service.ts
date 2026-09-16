@@ -1,10 +1,15 @@
 import {
+  GoogleAuthProvider,
+  browserLocalPersistence,
+  browserSessionPersistence,
+  setPersistence,
   confirmPasswordReset as firebaseConfirmPasswordReset,
   createUserWithEmailAndPassword,
   reload,
   sendEmailVerification,
   sendPasswordResetEmail,
   signInWithEmailAndPassword,
+  signInWithPopup,
   signOut as firebaseSignOut,
   updateProfile,
   verifyPasswordResetCode as firebaseVerifyPasswordResetCode,
@@ -13,7 +18,9 @@ import {
 
 import { toAuthError } from '@/lib/auth-errors';
 import { getFirebaseAuth } from '@/lib/firebase';
-import { createUserProfile } from '@/services/user-profile-service';
+import { createUserProfile, getUserProfile } from '@/services/user-profile-service';
+import { validateActiveChurch } from '@/services/church-service';
+import { validateDisplayName, validateEmail, validatePassword } from '@/lib/validation';
 
 /**
  * Thin, error-normalizing wrapper around Firebase Authentication.
@@ -28,6 +35,32 @@ function requireAuth() {
   return auth;
 }
 
+export async function signInWithGoogle(churchId?: string, rememberMe = true): Promise<FirebaseUser> {
+  const auth = requireAuth();
+
+  try {
+    if (churchId && !await validateActiveChurch(churchId)) {
+      throw { messageKey: 'auth.selectChurch.noLongerActive', kind: 'validation' };
+    }
+    await setPersistence(auth, rememberMe ? browserLocalPersistence : browserSessionPersistence);
+    const provider = new GoogleAuthProvider();
+
+    provider.setCustomParameters({
+      prompt: 'select_account',
+    });
+
+    const credential = await signInWithPopup(auth, provider);
+    if (churchId && !await getUserProfile(credential.user.uid)) {
+      await createUserProfile({ uid: credential.user.uid, email: credential.user.email,
+        displayName: credential.user.displayName?.trim().slice(0, 80) || 'Google user', churchId });
+    }
+
+    return credential.user;
+  } catch (cause) {
+    throw toAuthError(cause);
+  }
+}
+
 export async function registerWithEmail(params: {
   email: string;
   password: string;
@@ -36,9 +69,18 @@ export async function registerWithEmail(params: {
 }): Promise<FirebaseUser> {
   const auth = requireAuth();
   try {
-    const credential = await createUserWithEmailAndPassword(auth, params.email, params.password);
+    for (const result of [validateEmail(params.email), validatePassword(params.password), validateDisplayName(params.displayName)]) {
+      if (!result.valid) throw { kind: 'validation', messageKey: result.errorKey };
+    }
+    if (!await validateActiveChurch(params.churchId)) {
+      throw { kind: 'validation', messageKey: 'auth.selectChurch.noLongerActive' };
+    }
+    const existingUser = auth.currentUser;
+    const credential = existingUser?.email?.toLowerCase() === params.email.trim().toLowerCase()
+      ? { user: existingUser }
+      : await createUserWithEmailAndPassword(auth, params.email.trim(), params.password);
     await updateProfile(credential.user, { displayName: params.displayName });
-    await createUserProfile({
+    if (!await getUserProfile(credential.user.uid)) await createUserProfile({
       uid: credential.user.uid,
       email: credential.user.email,
       displayName: params.displayName,
@@ -51,9 +93,10 @@ export async function registerWithEmail(params: {
   }
 }
 
-export async function signInWithEmail(email: string, password: string): Promise<FirebaseUser> {
+export async function signInWithEmail(email: string, password: string, rememberMe = true): Promise<FirebaseUser> {
   const auth = requireAuth();
   try {
+    await setPersistence(auth, rememberMe ? browserLocalPersistence : browserSessionPersistence);
     const credential = await signInWithEmailAndPassword(auth, email, password);
     return credential.user;
   } catch (cause) {
@@ -84,6 +127,7 @@ export async function resendVerificationEmail(user: FirebaseUser): Promise<void>
 export async function refreshCurrentUser(user: FirebaseUser): Promise<FirebaseUser> {
   try {
     await reload(user);
+    await user.getIdToken(true);
     return user;
   } catch (cause) {
     throw toAuthError(cause);

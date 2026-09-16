@@ -11,7 +11,44 @@
     "tasks": "Tasks",
     "reports": "Reports",
     "notifications": "Notifications",
-    "settings": "Settings"
+    "settings": "Settings",
+    "profile": "Profile",
+    "sections": {
+      "main": "Main",
+      "churchManagement": "Church Management",
+      "operations": "Operations",
+      "system": "System",
+      "profile": "Profile"
+    },
+    "breadcrumbs": "Breadcrumbs",
+    "language": "Language",
+    "english": "English",
+    "dutch": "Nederlands",
+    "theme": "Theme",
+    "themeLight": "Light mode",
+    "themeDark": "Dark mode",
+    "themeSystem": "System theme",
+    "user": "User",
+    "member": "Member",
+    "userMenu": "User menu",
+    "collapseSidebar": "Collapse sidebar",
+    "expandSidebar": "Expand sidebar",
+    "openMenu": "Open navigation menu",
+    "closeMenu": "Close navigation menu",
+    "mobileNavigation": "Mobile navigation",
+    "more": "More",
+    "pageActions": "Page actions"
+  },
+  "search": {
+    "title": "Search",
+    "open": "Open global search",
+    "placeholder": "Search the platform...",
+    "noResults": "No results found",
+    "noResultsDescription": "Try another search term.",
+    "navigate": "navigate",
+    "select": "select",
+    "close": "close",
+    "quickActions": "Quick actions"
   },
   "common": {
     "search": "Search",
@@ -62,10 +99,17 @@
     }
   },
   "auth": {
+    "welcomeBack": "Welcome back!",
+    "rememberMe": "Remember me",
     "signIn": "Sign in",
     "signInDescription": "Sign in to access your church platform account.",
     "signOut": "Sign out",
     "email": "Email",
+    "firstName": "First name",
+    "lastName": "Last name",
+    "terms": "I agree to the terms and conditions",
+    "or": "or",
+    "continueWithGoogle": "Continue with Google",
     "password": "Password",
     "confirmPassword": "Confirm password",
     "newPassword": "New password",
@@ -138,6 +182,9 @@
       "unknown": "Something went wrong. Please try again."
     },
     "validation": {
+      "firstNameRequired": "First name is required.",
+      "lastNameRequired": "Last name is required.",
+      "termsRequired": "Please accept the terms to continue.",
       "emailRequired": "Email is required.",
       "emailInvalid": "Enter a valid email address.",
       "passwordRequired": "Password is required.",
@@ -148,6 +195,51 @@
       "displayNameRequired": "Full name is required.",
       "displayNameTooShort": "Full name is too short.",
       "displayNameTooLong": "Full name is too long."
+    }
+  },
+  "public": {
+    "navigation": {
+      "home": "Home",
+      "community": "Community",
+      "bible": "Bible Center"
+    },
+    "landing": {
+      "international": "International",
+      "tagline": "Fix your eyes on Jesus",
+      "description": "A worldwide network of churches, congregations and believers. United in faith. United in service. For His Kingdom.",
+      "getStarted": "Get Started",
+      "learnMore": "Learn More",
+      "register": "Register",
+      "registerModalTitle": "Member Registration",
+      "selectChurchFirst": "Select your church first",
+      "church": "Church",
+      "selectChurchPlaceholder": "Select your church",
+      "continue": "Continue",
+      "churchRequired": "Please select your church before continuing.",
+      "closeRegistration": "Close",
+      "step": "Step",
+      "of": "of",
+      "accountDetails": "Account details",
+      "featuresEyebrow": "Together in faith. Together in service.",
+      "featuresTitle": "Find your place",
+      "features": {
+        "bible": {
+          "title": "Bible Center",
+          "description": "Read, study and grow in God's Word."
+        },
+        "sermons": {
+          "title": "Sermons & Live",
+          "description": "Watch messages and live services."
+        },
+        "community": {
+          "title": "Community",
+          "description": "Connect, grow and serve together."
+        },
+        "prayer": {
+          "title": "Prayer & Support",
+          "description": "We are ready to pray with you."
+        }
+      }
     }
   }
 }

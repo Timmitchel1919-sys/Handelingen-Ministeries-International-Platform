@@ -1,9 +1,9 @@
-import { createContext, type ReactNode, useContext, useEffect, useMemo, useState } from 'react';
+import { createContext, type ReactNode, useContext, useEffect, useMemo, useRef, useState } from 'react';
 
-import { getActiveChurches } from '@/services/church-service';
+import { validateActiveChurch } from '@/services/church-service';
+import { getSelectedChurchId, setSelectedChurchId, clearSelectedChurchId } from '@/services/church-context';
 import type { Church } from '@/types/church';
 
-const STORAGE_KEY = 'hmi.selectedChurchId';
 
 interface RegistrationContextValue {
   /** The church picked in the "choose your church" step. Always a
@@ -23,11 +23,7 @@ interface RegistrationContextValue {
 const RegistrationContext = createContext<RegistrationContextValue | undefined>(undefined);
 
 function readStoredChurchId(): string | null {
-  try {
-    return window.sessionStorage.getItem(STORAGE_KEY);
-  } catch {
-    return null;
-  }
+  return getSelectedChurchId();
 }
 
 /**
@@ -42,44 +38,42 @@ function readStoredChurchId(): string | null {
  */
 export function RegistrationProvider({ children }: { children: ReactNode }) {
   const [selectedChurch, setSelectedChurch] = useState<Church | null>(null);
-  const [isRestoring, setIsRestoring] = useState(true);
+  const [storedId] = useState(readStoredChurchId);
+  const [isRestoring, setIsRestoring] = useState(Boolean(storedId));
+  const selectionVersion = useRef(0);
 
   useEffect(() => {
-    const storedId = readStoredChurchId();
     if (!storedId) {
-      setIsRestoring(false);
       return;
     }
-
-    getActiveChurches()
-      .then((churches) => {
-        const church = churches?.find((c) => c.id === storedId) ?? null;
+    let cancelled = false;
+    const version = selectionVersion.current;
+    validateActiveChurch(storedId)
+      .then((church) => {
+        if (cancelled || version !== selectionVersion.current) return;
         setSelectedChurch(church);
+        if (!church) clearSelectedChurchId();
       })
-      .catch(() => setSelectedChurch(null))
-      .finally(() => setIsRestoring(false));
-  }, []);
+      .catch(() => { if (!cancelled && version === selectionVersion.current) setSelectedChurch(null); })
+      .finally(() => { if (!cancelled) setIsRestoring(false); });
+    return () => { cancelled = true; };
+  }, [storedId]);
 
   const value = useMemo<RegistrationContextValue>(
     () => ({
       selectedChurch,
       isRestoring,
       selectChurch: (church) => {
+        selectionVersion.current++;
         setSelectedChurch(church);
-        try {
-          window.sessionStorage.setItem(STORAGE_KEY, church.id);
-        } catch {
-          // sessionStorage unavailable (private browsing, etc.) - the
-          // in-memory selection above still works for the current tab.
-        }
+        setIsRestoring(false);
+        setSelectedChurchId(church.id);
       },
       clearSelectedChurch: () => {
+        selectionVersion.current++;
         setSelectedChurch(null);
-        try {
-          window.sessionStorage.removeItem(STORAGE_KEY);
-        } catch {
-          /* no-op */
-        }
+        setIsRestoring(false);
+        clearSelectedChurchId();
       },
     }),
     [selectedChurch, isRestoring],

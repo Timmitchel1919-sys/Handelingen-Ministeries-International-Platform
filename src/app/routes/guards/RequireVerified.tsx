@@ -17,5 +17,9 @@ export function RequireVerified() {
     return <Navigate to="/verify-email" replace />;
   }
 
+  if (user.accountStatus !== 'active' || !user.churchId) {
+    return <Navigate to="/profile" replace />;
+  }
+
   return <Outlet />;
 }

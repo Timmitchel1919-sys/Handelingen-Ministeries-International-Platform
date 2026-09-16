@@ -37,3 +37,7 @@ void i18n
   });
 
 export default i18n;
+
+const updateDocumentLanguage = (language: string) => { document.documentElement.lang = language.split('-')[0]; };
+i18n.on('languageChanged', updateDocumentLanguage);
+updateDocumentLanguage(i18n.resolvedLanguage ?? appConfig.defaultLocale);

@@ -1,8 +1,9 @@
-import { onAuthStateChanged, type User as FirebaseUser } from 'firebase/auth';
+import { onIdTokenChanged, type User as FirebaseUser } from 'firebase/auth';
+import { doc, onSnapshot } from 'firebase/firestore';
 import { createContext, type ReactNode, useCallback, useContext, useEffect, useMemo, useState } from 'react';
 
 import { can } from '@/lib/authorization';
-import { getFirebaseAuth } from '@/lib/firebase';
+import { getFirebaseAuth, getFirebaseFirestore } from '@/lib/firebase';
 import { activateVerifiedAccount, getUserProfile, toAuthUser, type UserProfileDoc } from '@/services/user-profile-service';
 import type { AuthState, AuthUser, Permission } from '@/types/auth';
 
@@ -59,7 +60,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       return;
     }
 
-    const unsubscribe = onAuthStateChanged(auth, (nextFirebaseUser) => {
+    let generation = 0;
+    let unsubscribeProfile: (() => void) | undefined;
+    const unsubscribe = onIdTokenChanged(auth, (nextFirebaseUser) => {
+      const currentGeneration = ++generation;
+      unsubscribeProfile?.();
       setFirebaseUser(nextFirebaseUser);
 
       if (!nextFirebaseUser) {
@@ -69,20 +74,35 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
       setState({ status: 'loading', user: null });
       void loadAuthUser(nextFirebaseUser)
-        .then((user) => setState({ status: 'authenticated', user }))
+        .then((user) => {
+          if (currentGeneration !== generation) return;
+          setState({ status: 'authenticated', user });
+          const db = getFirebaseFirestore();
+          if (db) unsubscribeProfile = onSnapshot(doc(db, 'users', nextFirebaseUser.uid), (snapshot) => {
+            if (currentGeneration !== generation) return;
+            const profile = snapshot.exists() ? snapshot.data() as UserProfileDoc : null;
+            setState({ status: 'authenticated', user: toAuthUser(nextFirebaseUser, profile) });
+            if (profile?.accountStatus === 'pending' && nextFirebaseUser.emailVerified) {
+              void activateVerifiedAccount(nextFirebaseUser.uid).catch(() => {});
+            }
+          }, () => {
+            if (currentGeneration === generation) setState({ status: 'authenticated', user: toAuthUser(nextFirebaseUser, null) });
+          });
+        })
         .catch((cause) => {
+          if (currentGeneration !== generation) return;
           console.error('[auth] Failed to load user profile', cause);
           setState({ status: 'authenticated', user: toAuthUser(nextFirebaseUser, null) });
         });
     });
 
-    return unsubscribe;
+    return () => { generation++; unsubscribeProfile?.(); unsubscribe(); };
   }, []);
 
   const refreshProfile = useCallback(async () => {
     if (!firebaseUser) return;
     const user = await loadAuthUser(firebaseUser);
-    setState({ status: 'authenticated', user });
+    if (getFirebaseAuth()?.currentUser === firebaseUser) setState({ status: 'authenticated', user });
   }, [firebaseUser]);
 
   const value = useMemo<AuthContextValue>(

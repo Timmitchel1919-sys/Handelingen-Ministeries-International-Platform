@@ -1,4 +1,4 @@
-import { type ReactNode, useId, useRef, useState } from 'react';
+import { cloneElement, isValidElement, type ButtonHTMLAttributes, type ReactElement, type ReactNode, useId, useRef, useState } from 'react';
 
 import { useClickOutside } from '@/hooks/useClickOutside';
 import { cn } from '@/utils/cn';
@@ -22,6 +22,13 @@ export function Dropdown({ trigger, items, align = 'end' }: DropdownProps) {
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
   const menuId = useId();
+  const triggerProps = {
+    type: 'button' as const,
+    'aria-haspopup': 'menu' as const,
+    'aria-expanded': open,
+    'aria-controls': menuId,
+    onClick: () => setOpen(value => !value),
+  };
 
   useClickOutside(ref, () => setOpen(false), open);
 
@@ -30,19 +37,20 @@ export function Dropdown({ trigger, items, align = 'end' }: DropdownProps) {
       ref={ref}
       className="relative inline-block"
       onKeyDown={(event) => {
-        if (event.key === 'Escape') setOpen(false);
+        if (event.key === 'Escape') { setOpen(false); ref.current?.querySelector<HTMLButtonElement>('button')?.focus(); }
+        if (open && ['ArrowDown', 'ArrowUp', 'Home', 'End'].includes(event.key)) {
+          event.preventDefault();
+          const buttons = Array.from(ref.current?.querySelectorAll<HTMLButtonElement>('[role="menuitem"]') ?? []);
+          const current = buttons.indexOf(document.activeElement as HTMLButtonElement);
+          const next = event.key === 'Home' ? 0 : event.key === 'End' ? buttons.length - 1
+            : (current + (event.key === 'ArrowDown' ? 1 : -1) + buttons.length) % buttons.length;
+          buttons[next]?.focus();
+        }
       }}
     >
-      <button
-        type="button"
-        aria-haspopup="menu"
-        aria-expanded={open}
-        aria-controls={menuId}
-        onClick={() => setOpen((value) => !value)}
-        className="inline-flex items-center"
-      >
-        {trigger}
-      </button>
+      {isValidElement(trigger) && trigger.type === 'button'
+        ? cloneElement(trigger as ReactElement<ButtonHTMLAttributes<HTMLButtonElement>>, triggerProps)
+        : <button {...triggerProps} className="inline-flex items-center">{trigger}</button>}
       {open && (
         <div
           id={menuId}
