@@ -1,22 +1,16 @@
-import type {
-  BaseEntity,
-  EntityStatus,
-  FirestoreTimestamp,
-} from './common';
+import type { BaseEntity, EntityStatus, FirestoreTimestamp } from './common';
 
-export interface Department extends BaseEntity {
+export interface Team extends BaseEntity {
   churchId: string;
   ministryId?: string | null;
+  departmentId?: string | null;
 
   name: string;
-  code?: string;
   description?: string;
 
   status: EntityStatus;
 
   leaderMemberId?: string;
-  assistantLeaderMemberIds?: string[];
-  
   memberCount: number;
 
   archivedAt?: FirestoreTimestamp | null;

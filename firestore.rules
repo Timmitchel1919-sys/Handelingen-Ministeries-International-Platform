@@ -125,6 +125,36 @@ service cloud.firestore {
       allow read: if staff(resource.data.churchId);
       allow update, delete: if false;
     }
+    match /ministries/{id} {
+      allow read: if superAdmin() || sameChurch(resource.data.churchId);
+      allow create: if superAdmin() || churchAdmin(request.resource.data.churchId);
+      allow update: if superAdmin() || churchAdmin(resource.data.churchId);
+      allow delete: if superAdmin();
+    }
+    match /departments/{id} {
+      allow read: if superAdmin() || sameChurch(resource.data.churchId);
+      allow create: if superAdmin() || churchAdmin(request.resource.data.churchId);
+      allow update: if superAdmin() || churchAdmin(resource.data.churchId);
+      allow delete: if superAdmin();
+    }
+    match /teams/{id} {
+      allow read: if superAdmin() || sameChurch(resource.data.churchId);
+      allow create: if superAdmin() || churchAdmin(request.resource.data.churchId);
+      allow update: if superAdmin() || churchAdmin(resource.data.churchId);
+      allow delete: if superAdmin();
+    }
+    match /organizationMemberships/{id} {
+      allow read: if superAdmin() || sameChurch(resource.data.churchId);
+      allow create: if superAdmin() || churchAdmin(request.resource.data.churchId);
+      allow update: if superAdmin() || churchAdmin(resource.data.churchId);
+      allow delete: if superAdmin();
+    }
+    match /leadershipAssignments/{id} {
+      allow read: if superAdmin() || sameChurch(resource.data.churchId);
+      allow create: if superAdmin() || churchAdmin(request.resource.data.churchId);
+      allow update: if superAdmin() || churchAdmin(resource.data.churchId);
+      allow delete: if superAdmin();
+    }
     match /{document=**} { allow read, write: if false; }
   }
 }

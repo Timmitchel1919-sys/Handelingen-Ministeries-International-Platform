@@ -46,19 +46,10 @@ export const navigationItems: NavigationItem[] = [
 
   // CHURCH MANAGEMENT
   {
-    id: 'ministries',
-    labelKey: 'navigation.ministries',
-    route: '/ministries',
-    icon: 'ministries',
-    section: 'churchManagement',
-    mobileVisibility: true,
-    desktopVisibility: true,
-  },
-  {
-    id: 'departments',
-    labelKey: 'navigation.departments',
-    route: '/departments',
-    icon: 'departments',
+    id: 'organization',
+    labelKey: 'navigation.organization',
+    route: '/organization',
+    icon: 'departments', // Use departments icon for organization
     section: 'churchManagement',
     mobileVisibility: true,
     desktopVisibility: true,

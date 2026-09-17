@@ -38,7 +38,9 @@
     "mobileNavigation": "Mobile navigation",
     "more": "More",
     "pageActions": "Page actions",
-    "hrm": "HRM"
+    "hrm": "HRM",
+    "organization": "Organization",
+    "teams": "Teams"
   },
   "search": {
     "title": "Search",
@@ -255,5 +257,32 @@
       "loading": "LOADING A BRIGHTER TOMORROW...",
       "footer": "PEOPLE | CHURCHES | COMMUNITIES | FOR HIS KINGDOM"
     }
+  },
+  "organization": {
+    "title": "Organization",
+    "overview": "Overview",
+    "ministries": "Ministries",
+    "departments": "Departments",
+    "teams": "Teams"
+  },
+  "ministries": {
+    "title": "Ministries",
+    "create": "Create Ministry",
+    "edit": "Edit Ministry",
+    "archive": "Archive Ministry"
+  },
+  "departments": {
+    "title": "Departments",
+    "create": "Create Department",
+    "edit": "Edit Department"
+  },
+  "teams": {
+    "title": "Teams",
+    "create": "Create Team",
+    "edit": "Edit Team"
+  },
+  "leadership": {
+    "assign": "Assign Leader",
+    "change": "Change Leader"
   }
 }

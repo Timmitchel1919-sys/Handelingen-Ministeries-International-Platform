@@ -38,7 +38,9 @@
     "mobileNavigation": "Mobiele navigatie",
     "more": "Meer",
     "pageActions": "Pagina-acties",
-    "hrm": "HRM"
+    "hrm": "HRM",
+    "organization": "Organisatie",
+    "teams": "Teams"
   },
   "search": {
     "title": "Zoeken",
@@ -255,5 +257,32 @@
       "loading": "EEN BETERE TOEKOMST LADEN...",
       "footer": "MENSEN | KERKEN | GEMEENSCHAPPEN | VOOR ZIJN KONINKRIJK"
     }
+  },
+  "organization": {
+    "title": "Organisatie",
+    "overview": "Overzicht",
+    "ministries": "Bedieningen",
+    "departments": "Afdelingen",
+    "teams": "Teams"
+  },
+  "ministries": {
+    "title": "Bedieningen",
+    "create": "Bediening Aanmaken",
+    "edit": "Bediening Bewerken",
+    "archive": "Bediening Archiveren"
+  },
+  "departments": {
+    "title": "Afdelingen",
+    "create": "Afdeling Aanmaken",
+    "edit": "Afdeling Bewerken"
+  },
+  "teams": {
+    "title": "Teams",
+    "create": "Team Aanmaken",
+    "edit": "Team Bewerken"
+  },
+  "leadership": {
+    "assign": "Leider Toewijzen",
+    "change": "Leider Wijzigen"
   }
 }

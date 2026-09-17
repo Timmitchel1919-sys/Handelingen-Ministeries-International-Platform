@@ -43,8 +43,12 @@ export interface AuthUser {
 /** Resources are the nouns permissions are checked against. */
 export type PermissionResource =
   | 'dashboard'
+  | 'organization'
   | 'ministries'
   | 'departments'
+  | 'teams'
+  | 'organizationMembers'
+  | 'leadership'
   | 'members'
   | 'leaders'
   | 'events'

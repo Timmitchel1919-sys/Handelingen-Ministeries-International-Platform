@@ -11,8 +11,6 @@ import { ForgotPasswordPage } from '@/features/auth/pages/ForgotPasswordPage';
 import { ResetPasswordPage } from '@/features/auth/pages/ResetPasswordPage';
 import { ProfilePage } from '@/features/auth/pages/ProfilePage';
 import { DashboardPage } from '@/features/dashboard/DashboardPage';
-import { MinistriesPage } from '@/features/ministries/MinistriesPage';
-import { DepartmentsPage } from '@/features/departments/DepartmentsPage';
 import { MembersPage } from '@/features/members/MembersPage';
 import { LeadersPage } from '@/features/leaders/LeadersPage';
 import { EventsPage } from '@/features/events/EventsPage';
@@ -23,6 +21,7 @@ import { NotificationsPage } from '@/features/notifications/NotificationsPage';
 import { SettingsPage } from '@/features/settings/SettingsPage';
 import { NotFoundPage } from '@/app/routes/NotFoundPage';
 import { HRMRoutes } from '@/features/hrm/HRMRoutes';
+import { OrganizationRoutes } from '@/features/organization/OrganizationRoutes';
 
 /**
  * Central route table.
@@ -66,8 +65,6 @@ export function AppRoutes() {
           {/* Verified authenticated: every other in-app destination */}
           <Route element={<RequireVerified />}>
             <Route path="/dashboard" element={<DashboardPage />} />
-            <Route path="/ministries" element={<MinistriesPage />} />
-            <Route path="/departments" element={<DepartmentsPage />} />
             <Route path="/members" element={<MembersPage />} />
             <Route path="/leaders" element={<LeadersPage />} />
             <Route path="/events" element={<EventsPage />} />
@@ -76,6 +73,7 @@ export function AppRoutes() {
             <Route path="/reports" element={<ReportsPage />} />
             <Route path="/notifications" element={<NotificationsPage />} />
             <Route path="/settings" element={<SettingsPage />} />
+            <Route path="/organization/*" element={<OrganizationRoutes />} />
             <Route path="/hrm/*" element={<HRMRoutes />} />
           </Route>
         </Route>
