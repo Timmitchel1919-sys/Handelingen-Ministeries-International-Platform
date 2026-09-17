@@ -54,7 +54,7 @@ export function BrandedSplashScreen() {
 
   return (
     <div
-      className={`fixed inset-0 z-[99999] flex flex-col items-center justify-center overflow-hidden transition-opacity duration-500 ${
+      className={`fixed inset-0 z-99999 flex flex-col items-center justify-center overflow-hidden transition-opacity duration-500 ${
         phase === 'fading' ? 'opacity-0 pointer-events-none' : 'opacity-100'
       }`}
       style={{
@@ -66,7 +66,7 @@ export function BrandedSplashScreen() {
       
       {/* Light rays */}
       <div 
-        className="absolute top-0 left-1/2 w-[200vw] h-[100vh] -translate-x-1/2 pointer-events-none opacity-40 mix-blend-screen"
+        className="absolute top-0 left-1/2 w-[200vw] h-screen -translate-x-1/2 pointer-events-none opacity-40 mix-blend-screen"
         style={{
           background: 'conic-gradient(from 180deg at 50% 0%, transparent 40deg, rgba(255,255,255,0.8) 70deg, transparent 90deg, rgba(255,255,255,0.6) 110deg, transparent 150deg, rgba(255,255,255,0.5) 210deg, transparent 250deg, rgba(255,255,255,0.8) 290deg, transparent 320deg)',
           filter: 'blur(30px)'
@@ -99,13 +99,13 @@ export function BrandedSplashScreen() {
 
       {/* Cloud framing (CSS approximations, heavily blurred blobs) */}
       {/* Top Left */}
-      <div className="absolute -left-[10%] -top-[10%] h-[60vh] w-[40vw] rounded-full bg-white/70 blur-[80px] pointer-events-none mix-blend-screen" />
+      <div className="absolute left-[-10%] top-[-10%] h-[60vh] w-[40vw] rounded-full bg-white/70 blur-[80px] pointer-events-none mix-blend-screen" />
       {/* Top Right */}
-      <div className="absolute -right-[10%] -top-[10%] h-[60vh] w-[40vw] rounded-full bg-white/70 blur-[80px] pointer-events-none mix-blend-screen" />
+      <div className="absolute right-[-10%] top-[-10%] h-[60vh] w-[40vw] rounded-full bg-white/70 blur-[80px] pointer-events-none mix-blend-screen" />
       {/* Bottom Left */}
-      <div className="absolute -left-[5%] bottom-[10%] h-[50vh] w-[35vw] rounded-full bg-white/60 blur-[70px] pointer-events-none mix-blend-screen" />
+      <div className="absolute left-[-5%] bottom-[10%] h-[50vh] w-[35vw] rounded-full bg-white/60 blur-[70px] pointer-events-none mix-blend-screen" />
       {/* Bottom Right */}
-      <div className="absolute -right-[5%] bottom-[10%] h-[50vh] w-[35vw] rounded-full bg-white/60 blur-[70px] pointer-events-none mix-blend-screen" />
+      <div className="absolute right-[-5%] bottom-[10%] h-[50vh] w-[35vw] rounded-full bg-white/60 blur-[70px] pointer-events-none mix-blend-screen" />
 
       {/* Main Content */}
       <div className="relative z-10 flex w-full max-w-4xl flex-col items-center px-6 text-center animate-in fade-in zoom-in-[0.98] duration-1000 mt-[10vh]">
@@ -128,11 +128,11 @@ export function BrandedSplashScreen() {
         
         {/* INTERNATIONAL */}
         <div className="mb-4 flex items-center justify-center gap-4 w-full">
-          <div className="h-[2px] w-12 bg-[#20AEEF] sm:w-24 md:w-32" />
+          <div className="h-0.5 w-12 bg-[#20AEEF] sm:w-24 md:w-32" />
           <h2 className="text-[10px] sm:text-xs md:text-sm font-bold uppercase tracking-[0.4em] text-[#20AEEF] whitespace-nowrap">
             INTERNATIONAL
           </h2>
-          <div className="h-[2px] w-12 bg-[#20AEEF] sm:w-24 md:w-32" />
+          <div className="h-0.5 w-12 bg-[#20AEEF] sm:w-24 md:w-32" />
         </div>
 
         {/* Tagline */}
@@ -141,7 +141,7 @@ export function BrandedSplashScreen() {
         </p>
 
         {/* Loading Section */}
-        <div className="w-full max-w-[280px] sm:max-w-[400px] md:max-w-[500px] flex flex-col items-center gap-4 mt-8">
+        <div className="w-full max-w-70 sm:max-w-100 md:max-w-125 flex flex-col items-center gap-4 mt-8">
           
           <div className="flex items-center gap-4 w-full">
             {/* Pill Bar */}
@@ -154,13 +154,13 @@ export function BrandedSplashScreen() {
             >
               {/* Fill */}
               <div 
-                className="relative h-full rounded-full bg-gradient-to-r from-[#1458B8] via-[#20AEEF] to-[#72D5FF] transition-all duration-75 ease-linear shadow-[0_0_10px_rgba(255,255,255,0.8)]"
+                className="relative h-full rounded-full bg-linear-to-r from-[#1458B8] via-[#20AEEF] to-[#72D5FF] transition-all duration-75 ease-linear shadow-[0_0_10px_rgba(255,255,255,0.8)]"
                 style={{ width: `${progress}%` }}
               >
                 {/* Top Gloss */}
-                <div className="absolute inset-x-0 top-0 h-1/2 bg-gradient-to-b from-white/70 to-transparent rounded-t-full" />
+                <div className="absolute inset-x-0 top-0 h-1/2 bg-linear-to-b from-white/70 to-transparent rounded-t-full" />
                 {/* Leading Edge Glow */}
-                <div className="absolute right-0 top-0 h-full w-6 bg-gradient-to-l from-white to-transparent blur-[2px]" />
+                <div className="absolute right-0 top-0 h-full w-6 bg-linear-to-l from-white to-transparent blur-[2px]" />
               </div>
             </div>
 
@@ -179,8 +179,8 @@ export function BrandedSplashScreen() {
 
       {/* Earth Horizon */}
       <div className="absolute bottom-0 left-0 right-0 h-[25vh] pointer-events-none">
-        <div className="absolute top-0 left-1/2 h-[500px] w-[150%] -translate-x-1/2 rounded-[100%] border-t border-cyan-200/50 bg-gradient-to-b from-[#064C88] to-[#052F5D] shadow-[0_-15px_50px_rgba(63,169,245,0.6)]" />
-        <div className="absolute top-0 left-1/2 h-[100px] w-[150%] -translate-x-1/2 rounded-[100%] bg-[radial-gradient(ellipse_at_top,rgba(255,255,255,0.4)_0%,rgba(63,169,245,0.2)_40%,transparent_70%)] blur-xl mix-blend-screen" />
+        <div className="absolute top-0 left-1/2 h-125 w-[150%] -translate-x-1/2 rounded-[100%] border-t border-cyan-200/50 bg-linear-to-b from-[#064C88] to-[#052F5D] shadow-[0_-15px_50px_rgba(63,169,245,0.6)]" />
+        <div className="absolute top-0 left-1/2 h-25 w-[150%] -translate-x-1/2 rounded-[100%] bg-[radial-gradient(ellipse_at_top,rgba(255,255,255,0.4)_0%,rgba(63,169,245,0.2)_40%,transparent_70%)] blur-xl mix-blend-screen" />
       </div>
 
       {/* Footer Brand Statement */}

@@ -6,8 +6,8 @@ export const appConfig = {
   supportedLocales: ['nl', 'en'] as const,
   themeStorageKey: 'hmi.theme',
   localeStorageKey: 'hmi.locale',
-  /** Served from /public - see public/Logo_Handelingen_Ministries_*.png */
-  logoUrl: '/Logo_Handelingen_Ministries_1757467470641_1_-removebg-preview.png',
+  /** Served from /public */
+  logoUrl: '/app-icon.png',
 } as const;
 
 export type SupportedLocale = (typeof appConfig.supportedLocales)[number];

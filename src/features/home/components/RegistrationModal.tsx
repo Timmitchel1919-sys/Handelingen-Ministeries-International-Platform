@@ -114,17 +114,11 @@ function ChurchStep({ onContinue }: ChurchStepProps) {
 
   return (
     <div className="flex flex-col gap-6">
-      <div className="text-center">
-        <div className="mx-auto mb-4 flex h-20 w-20 items-center justify-center rounded-full bg-surface/30 shadow-sm ring-2 ring-white/50 backdrop-blur">
-          <img src={appConfig.logoUrl} alt="" className="h-full w-full rounded-full object-cover" />
-        </div>
-      </div>
-
       {/* Church selector */}
-      <div className="flex flex-col gap-1.5">
+      <div className="flex flex-col gap-1.5 mt-2">
         <label
           htmlFor={selectId}
-          className="text-[13px] font-semibold text-[var(--color-text)]"
+          className="text-[13px] font-semibold text-text"
         >
           {t('public.landing.church')}
         </label>
@@ -141,7 +135,7 @@ function ChurchStep({ onContinue }: ChurchStepProps) {
             <button
               type="button"
               onClick={load}
-              className="text-xs font-semibold text-[var(--color-primary)] underline"
+              className="text-xs font-semibold text-primary underline"
             >
               {t('common.retry')}
             </button>
@@ -149,7 +143,7 @@ function ChurchStep({ onContinue }: ChurchStepProps) {
         )}
 
         {loadState === 'success' && churches.length === 0 && (
-          <div className="rounded-2xl border border-white/60 bg-surface/25 p-5 text-center text-sm text-[var(--color-text-muted)]">
+          <div className="rounded-2xl border border-white/60 bg-surface/25 p-5 text-center text-sm text-text-muted">
             {t('auth.selectChurch.emptyTitle')}
           </div>
         )}
@@ -166,7 +160,7 @@ function ChurchStep({ onContinue }: ChurchStepProps) {
               aria-invalid={showError || undefined}
               aria-describedby={showError ? `${selectId}-error` : undefined}
               className={[
-                'h-12 w-full appearance-none rounded-2xl border bg-surface/30 px-4 pr-10 text-sm text-[var(--color-text)] outline-none backdrop-blur-md transition duration-200',
+                'h-12 w-full appearance-none rounded-2xl border bg-surface/30 px-4 pr-10 text-sm text-text outline-none backdrop-blur-md transition duration-200',
                 'focus:border-[#3FA9F5] focus:bg-surface/45 focus:ring-2 focus:ring-[#3FA9F5]/20',
                 showError ? 'border-[#d9485f]' : 'border-white/70',
               ].join(' ')}
@@ -185,7 +179,7 @@ function ChurchStep({ onContinue }: ChurchStepProps) {
             {/* Custom chevron */}
             <span
               aria-hidden="true"
-              className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-[var(--color-primary)]"
+              className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-primary"
             >
               <Icon name="chevron-down" size={17} />
             </span>
@@ -208,7 +202,7 @@ function ChurchStep({ onContinue }: ChurchStepProps) {
         <Button
           type="button"
           size="lg"
-          className="w-full"
+          className="w-full bg-linear-to-b from-[#3FA9F5] to-[#1458B8] border border-white/20 text-white shadow-[0_10px_28px_rgba(20,88,184,0.4),inset_0_2px_4px_rgba(255,255,255,0.4)] hover:from-[#5BC0FF] hover:to-[#0f4798]"
           disabled={loadState !== 'success' || churches.length === 0}
           onClick={handleContinue}
         >
@@ -359,7 +353,7 @@ function AccountStep({ church, onClose }: AccountStepProps) {
   };
 
   return (
-    <div className="flex flex-col gap-5 pb-12">
+    <div className="flex flex-col gap-5 pb-12 mt-2">
       <form className="flex flex-col gap-4" onSubmit={handleSubmit} noValidate>
         {/* Name row */}
         <div className="grid gap-4 sm:grid-cols-2">
@@ -387,12 +381,12 @@ function AccountStep({ church, onClose }: AccountStepProps) {
             onChange={(e) => setDob(e.target.value)}
           />
           <div className="flex flex-col gap-1.5">
-            <label className="text-[13px] font-semibold text-[var(--color-text)]">Gender</label>
+            <label className="text-[13px] font-semibold text-text">Gender</label>
             <div className="relative">
               <select
                 value={gender}
                 onChange={(e) => setGender(e.target.value)}
-                className="h-12 w-full appearance-none rounded-2xl border border-white/70 bg-surface/30 px-4 text-sm text-[var(--color-text)] outline-none backdrop-blur-md transition duration-200 focus:border-[#3FA9F5] focus:bg-surface/45 focus:ring-2 focus:ring-[#3FA9F5]/20"
+                className="h-12 w-full appearance-none rounded-2xl border border-white/70 bg-surface/30 px-4 text-sm text-text outline-none backdrop-blur-md transition duration-200 focus:border-[#3FA9F5] focus:bg-surface/45 focus:ring-2 focus:ring-[#3FA9F5]/20"
               >
                 <option value="" className="bg-white text-black"></option>
                 <option value="male" className="bg-white text-black">Male</option>
@@ -405,12 +399,12 @@ function AccountStep({ church, onClose }: AccountStepProps) {
 
         <div className="grid gap-4 sm:grid-cols-2">
           <div className="flex flex-col gap-1.5">
-            <label className="text-[13px] font-semibold text-[var(--color-text)]">Country</label>
+            <label className="text-[13px] font-semibold text-text">Country</label>
             <div className="relative">
               <select
                 value={country}
                 onChange={handleCountryChange}
-                className="h-12 w-full appearance-none rounded-2xl border border-white/70 bg-surface/30 px-4 text-sm text-[var(--color-text)] outline-none backdrop-blur-md transition duration-200 focus:border-[#3FA9F5] focus:bg-surface/45 focus:ring-2 focus:ring-[#3FA9F5]/20"
+                className="h-12 w-full appearance-none rounded-2xl border border-white/70 bg-surface/30 px-4 text-sm text-text outline-none backdrop-blur-md transition duration-200 focus:border-[#3FA9F5] focus:bg-surface/45 focus:ring-2 focus:ring-[#3FA9F5]/20"
               >
                 <option value="" className="bg-white text-black">Select Country</option>
                 <option value="Suriname" className="bg-white text-black">Suriname</option>
@@ -431,12 +425,12 @@ function AccountStep({ church, onClose }: AccountStepProps) {
         <div className="grid gap-4 sm:grid-cols-2">
           {country === 'Suriname' || country === 'Netherlands' ? (
             <div className="flex flex-col gap-1.5">
-              <label className="text-[13px] font-semibold text-[var(--color-text)]">District / City</label>
+              <label className="text-[13px] font-semibold text-text">District / City</label>
               <div className="relative">
                 <select
                   value={district}
                   onChange={(e) => setDistrict(e.target.value)}
-                  className="h-12 w-full appearance-none rounded-2xl border border-white/70 bg-surface/30 px-4 text-sm text-[var(--color-text)] outline-none backdrop-blur-md transition duration-200 focus:border-[#3FA9F5] focus:bg-surface/45 focus:ring-2 focus:ring-[#3FA9F5]/20"
+                  className="h-12 w-full appearance-none rounded-2xl border border-white/70 bg-surface/30 px-4 text-sm text-text outline-none backdrop-blur-md transition duration-200 focus:border-[#3FA9F5] focus:bg-surface/45 focus:ring-2 focus:ring-[#3FA9F5]/20"
                 >
                   <option value="" className="bg-white text-black"></option>
                   {country === 'Suriname' ? (
@@ -494,12 +488,12 @@ function AccountStep({ church, onClose }: AccountStepProps) {
           )}
 
           <div className="flex flex-col gap-1.5">
-            <label className="text-[13px] font-semibold text-[var(--color-text)]">Marital Status</label>
+            <label className="text-[13px] font-semibold text-text">Marital Status</label>
             <div className="relative">
               <select
                 value={maritalStatus}
                 onChange={(e) => setMaritalStatus(e.target.value)}
-                className="h-12 w-full appearance-none rounded-2xl border border-white/70 bg-surface/30 px-4 text-sm text-[var(--color-text)] outline-none backdrop-blur-md transition duration-200 focus:border-[#3FA9F5] focus:bg-surface/45 focus:ring-2 focus:ring-[#3FA9F5]/20"
+                className="h-12 w-full appearance-none rounded-2xl border border-white/70 bg-surface/30 px-4 text-sm text-text outline-none backdrop-blur-md transition duration-200 focus:border-[#3FA9F5] focus:bg-surface/45 focus:ring-2 focus:ring-[#3FA9F5]/20"
               >
                 <option value="" className="bg-white text-black"></option>
                 <option value="single" className="bg-white text-black">Single</option>
@@ -514,12 +508,12 @@ function AccountStep({ church, onClose }: AccountStepProps) {
 
         <div className="grid gap-4 sm:grid-cols-2">
           <div className="flex flex-col gap-1.5">
-            <label className="text-[13px] font-semibold text-[var(--color-text)]">Member Type</label>
+            <label className="text-[13px] font-semibold text-text">Member Type</label>
             <div className="relative">
               <select
                 value={memberType}
                 onChange={(e) => setMemberType(e.target.value)}
-                className="h-12 w-full appearance-none rounded-2xl border border-white/70 bg-surface/30 px-4 text-sm text-[var(--color-text)] outline-none backdrop-blur-md transition duration-200 focus:border-[#3FA9F5] focus:bg-surface/45 focus:ring-2 focus:ring-[#3FA9F5]/20"
+                className="h-12 w-full appearance-none rounded-2xl border border-white/70 bg-surface/30 px-4 text-sm text-text outline-none backdrop-blur-md transition duration-200 focus:border-[#3FA9F5] focus:bg-surface/45 focus:ring-2 focus:ring-[#3FA9F5]/20"
               >
                 <option value="" className="bg-white text-black"></option>
                 <option value="member" className="bg-white text-black">Member</option>
@@ -642,7 +636,7 @@ function AccountStep({ church, onClose }: AccountStepProps) {
           Continue with Google
         </Button>
 
-        <Button type="submit" size="lg" isLoading={isSubmitting} className="w-full">
+        <Button type="submit" size="lg" isLoading={isSubmitting} className="w-full bg-gradient-to-b from-[#3FA9F5] to-[#1458B8] border border-white/20 text-white shadow-[0_10px_28px_rgba(20,88,184,0.4),inset_0_2px_4px_rgba(255,255,255,0.4)] hover:from-[#5BC0FF] hover:to-[#0f4798]">
           Register
           <Icon name="arrow-right" size={17} />
         </Button>
@@ -749,8 +743,15 @@ export function RegistrationModal({ open, onClose }: RegistrationModalProps) {
           step === 'church' ? 'max-w-md' : 'max-w-lg',
         ].join(' ')}
       >
+        {/* Modal Logo */}
+        <div className="text-center pt-8 pb-2">
+          <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-surface/30 shadow-sm ring-2 ring-white/50 backdrop-blur">
+            <img src={appConfig.logoUrl} alt="" className="h-full w-full rounded-full object-cover" />
+          </div>
+        </div>
+
         {/* Modal header */}
-        <div className="relative flex items-center justify-center px-6 pt-6 pb-2">
+        <div className="relative flex items-center justify-center px-6 pb-2">
           {step === 'account' && (
             <button
               type="button"
@@ -766,8 +767,8 @@ export function RegistrationModal({ open, onClose }: RegistrationModalProps) {
           </h2>
         </div>
 
-        {/* Divider */}
-        <div className="mx-6 my-3 h-px bg-surface/40" />
+        {/* Divider - White like glasscard outline */}
+        <div className="mx-6 my-3 h-px bg-white/55" />
 
         {/* Step content */}
         <div className="px-6 pb-6">

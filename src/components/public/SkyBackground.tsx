@@ -1,5 +1,4 @@
 import { useRef, type ReactNode } from 'react';
-import { ReactiveCloudLight } from './ReactiveCloudLight';
 
 interface SkyBackgroundProps {
   children: ReactNode;
@@ -14,9 +13,7 @@ export function SkyBackground({
 
   return (
     <div ref={containerRef} className="relative min-h-screen overflow-hidden" style={{ background: 'var(--sky-background)' }}>
-      {/* Interactive Cloud Light Layer */}
-      <ReactiveCloudLight containerRef={containerRef} />
-      
+      {/* Interactive Cloud Light Layer (removed) */}
 
 
       <div
