@@ -37,6 +37,7 @@ import { GoogleIcon } from '@/components/ui/icons/GoogleIcon';
 import { logAuditEvent } from '@/services/audit-service';
 import {
   registerWithEmail,
+  signInWithGoogle,
 } from '@/services/auth-service';
 import { appConfig } from '@/app/config/app.config';
 
@@ -265,9 +266,26 @@ function AccountStep({ church, onBack, onClose }: AccountStepProps) {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [termsAccepted, setTermsAccepted] = useState(false);
 
-  const [fieldErrors, setFieldErrors] = useState<Record<string, string | undefined>>({});
-  const [formError, setFormError] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isGoogleLoading, setIsGoogleLoading] = useState(false);
+  const [formError, setFormError] = useState<string | null>(null);
+  const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
+
+  const handleGoogle = async () => {
+    try {
+      setIsGoogleLoading(true);
+      setFormError(null);
+      await signInWithGoogle(church.id);
+      void logAuditEvent('auth_success', { provider: 'google', context: 'modal_registration', churchId: church.id });
+      navigate('/dashboard');
+    } catch (err: unknown) {
+      const e = err as AuthAppError;
+      setFormError(t(e.messageKey));
+      void logAuditEvent('auth_error', { provider: 'google', context: 'modal_registration', churchId: church.id, errorCode: e.code });
+    } finally {
+      setIsGoogleLoading(false);
+    }
+  };
 
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
@@ -322,7 +340,7 @@ function AccountStep({ church, onBack, onClose }: AccountStepProps) {
   };
 
   return (
-    <div className="flex flex-col gap-5">
+    <div className="flex flex-col gap-5 pb-12">
       <form className="flex flex-col gap-4" onSubmit={handleSubmit} noValidate>
         {/* Name row */}
         <div className="grid gap-4 sm:grid-cols-2">
@@ -422,6 +440,25 @@ function AccountStep({ church, onBack, onClose }: AccountStepProps) {
                       <option value="The Hague" className="bg-white text-black">The Hague</option>
                       <option value="Utrecht" className="bg-white text-black">Utrecht</option>
                       <option value="Eindhoven" className="bg-white text-black">Eindhoven</option>
+                      <option value="Tilburg" className="bg-white text-black">Tilburg</option>
+                      <option value="Groningen" className="bg-white text-black">Groningen</option>
+                      <option value="Almere" className="bg-white text-black">Almere</option>
+                      <option value="Breda" className="bg-white text-black">Breda</option>
+                      <option value="Nijmegen" className="bg-white text-black">Nijmegen</option>
+                      <option value="Apeldoorn" className="bg-white text-black">Apeldoorn</option>
+                      <option value="Haarlem" className="bg-white text-black">Haarlem</option>
+                      <option value="Enschede" className="bg-white text-black">Enschede</option>
+                      <option value="Arnhem" className="bg-white text-black">Arnhem</option>
+                      <option value="Amersfoort" className="bg-white text-black">Amersfoort</option>
+                      <option value="Zaanstad" className="bg-white text-black">Zaanstad</option>
+                      <option value="'s-Hertogenbosch" className="bg-white text-black">'s-Hertogenbosch</option>
+                      <option value="Haarlemmermeer" className="bg-white text-black">Haarlemmermeer</option>
+                      <option value="Zwolle" className="bg-white text-black">Zwolle</option>
+                      <option value="Zoetermeer" className="bg-white text-black">Zoetermeer</option>
+                      <option value="Leiden" className="bg-white text-black">Leiden</option>
+                      <option value="Maastricht" className="bg-white text-black">Maastricht</option>
+                      <option value="Dordrecht" className="bg-white text-black">Dordrecht</option>
+                      <option value="Ede" className="bg-white text-black">Ede</option>
                       <option value="Other" className="bg-white text-black">Other</option>
                     </>
                   )}
@@ -574,30 +611,21 @@ function AccountStep({ church, onBack, onClose }: AccountStepProps) {
           </p>
         )}
 
-        <Button type="submit" size="lg" isLoading={isSubmitting} className="w-full">
-          Register
-          <Icon name="arrow-right" size={17} />
-        </Button>
-
-        <div className="flex items-center gap-3 py-1">
-          <div className="h-px flex-1 bg-surface/70" />
-          <span className="text-xs font-medium text-[var(--color-text)]/55">{t('auth.or')}</span>
-          <div className="h-px flex-1 bg-surface/70" />
-        </div>
-
         <Button
           type="button"
           variant="outline"
           size="lg"
-          onClick={() => {
-            setEmail('user@gmail.com');
-            setPassword('••••••••');
-            setConfirmPassword('••••••••');
-          }}
+          onClick={handleGoogle}
+          isLoading={isGoogleLoading}
           className="w-full"
         >
           <GoogleIcon className="mr-2 h-5 w-5" />
           Continue with Google
+        </Button>
+
+        <Button type="submit" size="lg" isLoading={isSubmitting} className="w-full">
+          Register
+          <Icon name="arrow-right" size={17} />
         </Button>
       </form>
     </div>

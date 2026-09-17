@@ -55,7 +55,7 @@ export function GlobalPublicHeader({ onRegister }: GlobalPublicHeaderProps) {
             <span className="block text-sm font-bold text-[var(--color-text)]">
               Handelingen Ministries
             </span>
-            <span className="mt-0.5 flex w-full justify-between text-[10px] font-bold text-[#3FA9F5]">
+            <span className="mt-1.5 flex w-full justify-between text-[10px] font-extrabold text-[#3FA9F5]">
               {"INTERNATIONAL".split('').map((char, i) => <span key={i}>{char}</span>)}
             </span>
           </span>
@@ -155,7 +155,7 @@ export function GlobalPublicHeader({ onRegister }: GlobalPublicHeaderProps) {
           {/* Sign In / Dashboard */}
           <Link
             to={authenticated ? '/dashboard' : '/login'}
-            className="hidden rounded-xl border border-[#1458B8]/15 bg-surface/35 px-4 py-2 text-sm font-semibold text-[var(--color-primary)] backdrop-blur-md transition hover:bg-surface/55 sm:inline-flex"
+            className="hidden rounded-xl border border-white/60 bg-surface/35 px-4 py-2 text-sm font-semibold text-[var(--color-text)] backdrop-blur-md transition hover:bg-surface/55 sm:inline-flex"
           >
             {authenticated ? t('navigation.dashboard') : t('auth.signIn')}
           </Link>
