@@ -12,7 +12,7 @@ export function CurvedTransition() {
       >
         <path
           d="M0 48C280 112 470 112 720 60C970 8 1160 8 1440 58V120H0V48Z"
-          fill="var(--color-background)"
+          fill="white"
         />
 
         <path

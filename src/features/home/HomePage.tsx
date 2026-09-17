@@ -36,7 +36,7 @@ export function HomePage() {
             />
 
             <div className="mx-auto w-max">
-              <h1 className="text-4xl font-extrabold tracking-tight text-[var(--color-text)] sm:text-6xl lg:text-7xl">
+              <h1 className="text-4xl font-extrabold tracking-tight text-text sm:text-6xl lg:text-7xl">
                 Handelingen Ministries
               </h1>
               <div className="mt-8 flex w-full justify-between text-sm font-extrabold uppercase text-[#1458B8] dark:text-[#3FA9F5]">
@@ -47,20 +47,20 @@ export function HomePage() {
             </div>
 
             <div className="mx-auto my-7 flex max-w-md items-center gap-4">
-              <div className="h-[2px] flex-1 bg-white" />
+              <div className="h-0.5 flex-1 bg-white" />
               <div className="relative h-6 w-6 text-white flex items-center justify-center">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" className="h-6 w-4">
                   <path d="M12 2v20M6 8h12" strokeWidth="2" strokeLinecap="round" />
                 </svg>
               </div>
-              <div className="h-[2px] flex-1 bg-white" />
+              <div className="h-0.5lex-1 bg-white" />
             </div>
 
-            <p className="text-xl font-semibold text-[var(--color-primary-dark)] sm:text-2xl">
+            <p className="text-xl font-semibold text-primary-dark sm:text-2xl">
               {t('public.landing.tagline')}
             </p>
 
-            <p className="mx-auto mt-6 max-w-2xl text-base leading-7 text-[var(--color-text)]/80 sm:text-lg">
+            <p className="mx-auto mt-6 max-w-2xl text-base leading-7 text-text/80 sm:text-lg">
               {t('public.landing.description')}
             </p>
 
@@ -73,7 +73,7 @@ export function HomePage() {
                 type="button"
                 id="hero-register-btn"
                 onClick={() => setRegistrationOpen(true)}
-                className="inline-flex h-12 items-center justify-center gap-2 rounded-2xl bg-gradient-to-b from-[#3FA9F5] to-[#1458B8] border border-white/20 px-8 text-sm font-bold text-white shadow-[0_10px_28px_rgba(20,88,184,0.4),inset_0_2px_4px_rgba(255,255,255,0.4)] transition duration-200 hover:from-[#5BC0FF] hover:to-[#0f4798] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#3FA9F5]"
+                className="inline-flex h-12 items-center justify-center gap-2 rounded-2xl bg-[#1458B8] hover:bg-[#0f4798] px-8 text-sm font-bold text-white shadow-[0_10px_28px_rgba(20,88,184,0.28)] transition duration-200 hover:shadow-[0_14px_35px_rgba(20,88,184,0.34)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#3FA9F5]"
               >
                 {t('public.landing.register')}
                 <Icon name="arrow-right" size={17} />
@@ -81,7 +81,7 @@ export function HomePage() {
 
               <a
                 href="#features"
-                className="inline-flex h-12 items-center justify-center rounded-2xl border border-white/70 bg-surface/30 px-8 text-sm font-bold text-[var(--color-primary)] shadow-sm backdrop-blur-xl transition duration-200 hover:bg-surface/50"
+                className="inline-flex h-12 items-center justify-center rounded-2xl border border-white/70 bg-surface/30 px-8 text-sm font-bold text-primary shadow-sm backdrop-blur-xl transition duration-200 hover:bg-surface/50"
               >
                 {t('public.landing.learnMore')}
               </a>
