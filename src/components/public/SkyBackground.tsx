@@ -1,4 +1,5 @@
-import type { ReactNode } from 'react';
+import { useRef, type ReactNode } from 'react';
+import { ReactiveCloudLight } from './ReactiveCloudLight';
 
 interface SkyBackgroundProps {
   children: ReactNode;
@@ -9,12 +10,14 @@ export function SkyBackground({
   children,
   dove,
 }: SkyBackgroundProps) {
+  const containerRef = useRef<HTMLDivElement>(null);
+
   return (
-    <div className="relative min-h-screen overflow-hidden" style={{ background: 'var(--sky-background)' }}>
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(255,255,255,0.85),transparent_35%)] dark:opacity-10"
-      />
+    <div ref={containerRef} className="relative min-h-screen overflow-hidden" style={{ background: 'var(--sky-background)' }}>
+      {/* Interactive Cloud Light Layer */}
+      <ReactiveCloudLight containerRef={containerRef} />
+      
+
 
       <div
         aria-hidden="true"
