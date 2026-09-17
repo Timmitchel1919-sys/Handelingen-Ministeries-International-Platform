@@ -240,6 +240,10 @@
           "description": "Wij staan klaar om voor jou te bidden."
         }
       }
+    },
+    "splash": {
+      "loading": "EEN STRALENDE TOEKOMST WORDT GELADEN...",
+      "footer": "MENSEN | KERKEN | GEMEENSCHAPPEN | VOOR EEN STRALENDE TOEKOMST"
     }
   }
 }

@@ -240,6 +240,10 @@
           "description": "We are ready to pray with you."
         }
       }
+    },
+    "splash": {
+      "loading": "LOADING A BRIGHTER TOMORROW...",
+      "footer": "PEOPLE | CHURCHES | COMMUNITIES | FOR A BRIGHTER TOMORROW"
     }
   }
 }
