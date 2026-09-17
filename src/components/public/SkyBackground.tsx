@@ -13,17 +13,17 @@ export function SkyBackground({
     <div className="relative min-h-screen overflow-hidden" style={{ background: 'var(--sky-background)' }}>
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(255,255,255,0.85),transparent_35%)]"
+        className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(255,255,255,0.85),transparent_35%)] dark:hidden"
       />
 
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute -left-32 -top-40 h-128 w-lg rounded-full bg-white/25 blur-[90px]"
+        className="pointer-events-none absolute -left-32 -top-40 h-128 w-lg rounded-full bg-white/25 blur-[90px] dark:hidden"
       />
 
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute -right-32 -bottom-48 h-144 w-xl rounded-full bg-[#1458B8]/25 blur-[100px]"
+        className="pointer-events-none absolute -right-32 -bottom-48 h-144 w-xl rounded-full bg-[#1458B8]/25 blur-[100px] dark:hidden"
       />
 
       <div
@@ -40,12 +40,12 @@ export function SkyBackground({
 
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute left-[8%] top-[12%] h-24 w-52 rounded-full bg-white/55 blur-2xl"
+        className="pointer-events-none absolute left-[8%] top-[12%] h-24 w-52 rounded-full bg-white/55 blur-2xl dark:hidden"
       />
 
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute right-[8%] top-[28%] h-28 w-64 rounded-full bg-white/45 blur-3xl"
+        className="pointer-events-none absolute right-[8%] top-[28%] h-28 w-64 rounded-full bg-white/45 blur-3xl dark:hidden"
       />
 
       {dove}
