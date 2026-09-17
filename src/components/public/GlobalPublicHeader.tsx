@@ -7,6 +7,7 @@ import { useTheme } from '@/app/providers/ThemeProvider';
 import { Dropdown } from '@/components/ui/Dropdown';
 import { Icon } from '@/components/ui/icons';
 import { useAuth } from '@/features/auth/AuthContext';
+import { usePWAInstall } from '@/hooks/usePWAInstall';
 
 interface GlobalPublicHeaderProps {
   /** Called when the "Register" button is clicked. When omitted the button
@@ -20,6 +21,7 @@ export function GlobalPublicHeader({ onRegister }: GlobalPublicHeaderProps) {
   const { status } = useAuth();
   const location = useLocation();
   const registerBtnRef = useRef<HTMLButtonElement>(null);
+  const { isInstallable, installPWA } = usePWAInstall();
 
   const authenticated = status === 'authenticated';
 
@@ -151,6 +153,18 @@ export function GlobalPublicHeader({ onRegister }: GlobalPublicHeaderProps) {
               },
             ]}
           />
+
+          {/* Download App Button (Visible when PWA is installable) */}
+          {isInstallable && (
+            <button
+              onClick={installPWA}
+              className="flex items-center gap-2 rounded-full bg-[#1458B8] px-3 py-2 text-xs font-semibold text-white shadow-md transition hover:bg-[#0f4798] whitespace-nowrap"
+            >
+              <Icon name="monitor" size={14} />
+              <span className="hidden sm:inline">Download App</span>
+              <span className="sm:hidden">App</span>
+            </button>
+          )}
 
           {/* Sign In / Dashboard */}
           <Link

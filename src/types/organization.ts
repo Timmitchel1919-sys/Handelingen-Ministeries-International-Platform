@@ -37,3 +37,4 @@ export interface LeadershipAssignment extends BaseEntity {
   
   assignedBy?: string;
 }
+

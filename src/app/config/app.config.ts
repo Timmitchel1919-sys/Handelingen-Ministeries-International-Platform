@@ -7,7 +7,7 @@ export const appConfig = {
   themeStorageKey: 'hmi.theme',
   localeStorageKey: 'hmi.locale',
   /** Served from /public */
-  logoUrl: '/Logo_Handelingen_Ministries_1757467470641_1_-removebg-preview.png',
+  logoUrl: '/app-icon.png',
 } as const;
 
 export type SupportedLocale = (typeof appConfig.supportedLocales)[number];

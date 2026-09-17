@@ -15,3 +15,4 @@ export interface Team extends BaseEntity {
 
   archivedAt?: FirestoreTimestamp | null;
 }
+
