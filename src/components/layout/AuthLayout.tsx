@@ -28,29 +28,7 @@ export function AuthLayout({
     <SkyBackground>
       <div className="min-h-screen px-4 py-5 sm:px-6">
         <div className="mx-auto flex min-h-[calc(100vh-2.5rem)] max-w-7xl flex-col">
-          <div className="flex items-center justify-between">
-            <Link
-              to="/"
-              className="flex items-center gap-3"
-              aria-label={t('appName')}
-            >
-              <img
-                src={appConfig.logoUrl}
-                alt=""
-                className="h-10 w-10 rounded-full object-cover shadow-md ring-2 ring-white/50"
-              />
-
-              <span className="hidden sm:block w-max">
-                <span className="block text-sm font-bold text-[var(--color-text)]">
-                  Handelingen Ministries
-                </span>
-
-                <span className="flex w-full justify-between text-[10px] font-semibold text-[var(--color-primary)]">
-                  {"INTERNATIONAL".split('').map((char, i) => <span key={i}>{char}</span>)}
-                </span>
-              </span>
-            </Link>
-
+          <div className="flex items-center justify-end">
             <div className="flex items-center gap-2">
               <Dropdown
                 align="end"
@@ -127,26 +105,6 @@ export function AuthLayout({
                     alt=""
                     className="mx-auto mb-5 h-20 w-20 rounded-full object-cover shadow-lg ring-4 ring-white/30"
                   />
-
-                  <div className="mx-auto w-max">
-                    <h2 className="text-sm font-bold text-[var(--color-primary)]">
-                      Handelingen Ministries
-                    </h2>
-
-                    <div className="mt-0.5 flex w-full justify-between text-xs font-medium uppercase text-[var(--color-primary-dark)]">
-                      {"International".split('').map((char, i) => <span key={i}>{char}</span>)}
-                    </div>
-                  </div>
-
-                  <div className="mx-auto my-4 flex max-w-47.5 items-center gap-3">
-                    <div className="h-px flex-1 bg-surface/70" />
-                    <span className="text-sm text-[#1458B5]">+</span>
-                    <div className="h-px flex-1 bg-surface/70" />
-                  </div>
-
-                  <p className="text-sm font-semibold text-[var(--color-primary-dark)]">
-                    {t('public.landing.tagline')}
-                  </p>
 
                   <h1 className="mt-7 text-2xl font-bold text-[var(--color-text)] sm:text-3xl">
                     {title}

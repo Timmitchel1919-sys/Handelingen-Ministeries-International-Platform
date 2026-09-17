@@ -282,17 +282,6 @@ export function LoginPage() {
         </Button>
       </form>
 
-      <p className="mt-7 text-center text-sm text-[var(--color-text)]/70">
-        {t('auth.noAccount')}{' '}
-        <Link
-          to="/signup"
-          className="font-bold text-[var(--color-primary)] hover:underline"
-        >
-          {t(
-            'auth.createAccount',
-          )}
-        </Link>
-      </p>
     </AuthLayout>
   );
 }
