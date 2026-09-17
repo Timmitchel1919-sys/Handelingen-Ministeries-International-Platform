@@ -57,80 +57,96 @@ export function BrandedSplashScreen() {
       className={`fixed inset-0 z-[99999] flex flex-col items-center justify-center overflow-hidden transition-opacity duration-500 ${
         phase === 'fading' ? 'opacity-0 pointer-events-none' : 'opacity-100'
       }`}
-      style={{ background: '#091c33' }}
+      style={{
+        background: 'linear-gradient(to bottom, #87CEF5 0%, #63B8EE 20%, #4FA9E8 40%, #1676D2 80%, #052F5D 100%)',
+      }}
     >
-      {/* Background - deep blue atmosphere */}
-      <div className="absolute inset-0 bg-gradient-to-b from-[#0e3a6a] via-[#091c33] to-[#040e1a]" />
+      {/* Volumetric sunlight & haze */}
+      <div className="absolute top-[-20%] left-1/2 w-[150vw] h-[80vh] -translate-x-1/2 bg-[radial-gradient(ellipse_at_top_center,rgba(255,255,255,1)_0%,rgba(217,242,255,0.8)_20%,rgba(184,228,250,0)_60%)] mix-blend-screen pointer-events-none" />
       
-      {/* Sunlight glow top center */}
-      <div className="absolute -top-32 left-1/2 h-[600px] w-[800px] -translate-x-1/2 rounded-full bg-[radial-gradient(ellipse_at_center,rgba(255,255,255,0.25)_0%,rgba(63,169,245,0.1)_40%,transparent_70%)] blur-[60px]" />
-      
-      {/* Subtle World Map Background */}
+      {/* Light rays */}
       <div 
-        className="absolute inset-0 bg-center bg-no-repeat opacity-[0.08]"
+        className="absolute top-0 left-1/2 w-[200vw] h-[100vh] -translate-x-1/2 pointer-events-none opacity-40 mix-blend-screen"
         style={{
-          backgroundImage: 'url("/world-map.svg")',
-          backgroundSize: '120% auto'
+          background: 'conic-gradient(from 180deg at 50% 0%, transparent 40deg, rgba(255,255,255,0.8) 70deg, transparent 90deg, rgba(255,255,255,0.6) 110deg, transparent 150deg, rgba(255,255,255,0.5) 210deg, transparent 250deg, rgba(255,255,255,0.8) 290deg, transparent 320deg)',
+          filter: 'blur(30px)'
         }}
       />
-      
-      {/* Global Horizon Curve at Bottom */}
-      <div className="absolute -bottom-64 left-1/2 h-[500px] w-[150%] -translate-x-1/2 rounded-[100%] bg-[radial-gradient(ellipse_at_top,rgba(63,169,245,0.15)_0%,transparent_60%)] blur-2xl" />
-      <div className="absolute -bottom-[800px] left-1/2 h-[1000px] w-[200%] -translate-x-1/2 rounded-[100%] border-t border-white/5 bg-[#040e1a] shadow-[0_-20px_60px_rgba(63,169,245,0.1)]" />
 
-      {/* Clouds framing */}
-      <div className="absolute -left-32 -top-20 h-[500px] w-[500px] rounded-full bg-white/5 blur-[100px]" />
-      <div className="absolute -right-32 top-40 h-[600px] w-[600px] rounded-full bg-white/5 blur-[120px]" />
-      <div className="absolute bottom-10 left-1/4 h-[400px] w-[600px] rounded-full bg-[#1458b8]/10 blur-[100px]" />
+      {/* World Map */}
+      <div 
+        className="absolute inset-0 bg-center bg-no-repeat opacity-[0.15] mix-blend-screen pointer-events-none"
+        style={{
+          backgroundImage: 'url("/world-map.svg")',
+          backgroundSize: '110% auto',
+          backgroundPosition: 'center 20%'
+        }}
+      />
 
-      {/* Network Lines */}
-      <svg className="absolute inset-0 h-full w-full opacity-30" viewBox="0 0 1000 1000" preserveAspectRatio="xMidYMid slice" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M 200 600 Q 400 400 500 300 T 800 200" stroke="rgba(255,255,255,0.2)" strokeWidth="1" />
-        <path d="M 100 400 Q 300 500 500 300 T 900 500" stroke="rgba(255,255,255,0.2)" strokeWidth="1" />
-        <circle cx="200" cy="600" r="2" fill="white" className="drop-shadow-[0_0_4px_white]" />
-        <circle cx="500" cy="300" r="3" fill="white" className="drop-shadow-[0_0_6px_white]" />
-        <circle cx="800" cy="200" r="2" fill="white" className="drop-shadow-[0_0_4px_white]" />
-        <circle cx="100" cy="400" r="1.5" fill="white" className="drop-shadow-[0_0_3px_white]" />
-        <circle cx="900" cy="500" r="2.5" fill="white" className="drop-shadow-[0_0_5px_white]" />
+      {/* Network Connections */}
+      <svg className="absolute inset-0 h-full w-full opacity-40 pointer-events-none" viewBox="0 0 1000 1000" preserveAspectRatio="xMidYMid slice" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M 150 350 Q 350 250 500 300 T 850 250" stroke="rgba(255,255,255,0.6)" strokeWidth="1" className="mix-blend-screen" />
+        <path d="M 200 450 Q 400 350 500 300 T 750 400" stroke="rgba(63,169,245,0.6)" strokeWidth="1.5" className="mix-blend-screen" />
+        <path d="M 300 200 Q 450 300 500 300 T 700 200" stroke="rgba(255,255,255,0.4)" strokeWidth="1" className="mix-blend-screen" />
+        <circle cx="150" cy="350" r="2" fill="white" className="drop-shadow-[0_0_8px_cyan]" />
+        <circle cx="500" cy="300" r="3" fill="white" className="drop-shadow-[0_0_12px_cyan]" />
+        <circle cx="850" cy="250" r="2" fill="white" className="drop-shadow-[0_0_8px_cyan]" />
+        <circle cx="200" cy="450" r="1.5" fill="#3FA9F5" className="drop-shadow-[0_0_6px_white]" />
+        <circle cx="750" cy="400" r="1.5" fill="#3FA9F5" className="drop-shadow-[0_0_6px_white]" />
+        <circle cx="300" cy="200" r="2" fill="white" className="drop-shadow-[0_0_6px_cyan]" />
+        <circle cx="700" cy="200" r="2" fill="white" className="drop-shadow-[0_0_6px_cyan]" />
       </svg>
 
-      {/* Main Content Container */}
-      <div className="relative z-10 flex w-full max-w-3xl flex-col items-center px-6 text-center animate-in fade-in zoom-in-95 slide-in-from-bottom-2 duration-1000 motion-reduce:animate-none">
+      {/* Cloud framing (CSS approximations, heavily blurred blobs) */}
+      {/* Top Left */}
+      <div className="absolute -left-[10%] -top-[10%] h-[60vh] w-[40vw] rounded-full bg-white/70 blur-[80px] pointer-events-none mix-blend-screen" />
+      {/* Top Right */}
+      <div className="absolute -right-[10%] -top-[10%] h-[60vh] w-[40vw] rounded-full bg-white/70 blur-[80px] pointer-events-none mix-blend-screen" />
+      {/* Bottom Left */}
+      <div className="absolute -left-[5%] bottom-[10%] h-[50vh] w-[35vw] rounded-full bg-white/60 blur-[70px] pointer-events-none mix-blend-screen" />
+      {/* Bottom Right */}
+      <div className="absolute -right-[5%] bottom-[10%] h-[50vh] w-[35vw] rounded-full bg-white/60 blur-[70px] pointer-events-none mix-blend-screen" />
+
+      {/* Main Content */}
+      <div className="relative z-10 flex w-full max-w-4xl flex-col items-center px-6 text-center animate-in fade-in zoom-in-[0.98] duration-1000 mt-[10vh]">
         
         {/* Logo */}
-        <img
-          src={appConfig.logoUrl}
-          alt={t('appName')}
-          className="mb-8 w-28 drop-shadow-[0_15px_30px_rgba(0,0,0,0.4)] sm:w-40 md:w-48 lg:w-56"
-          style={{ objectFit: 'contain' }}
-        />
+        <div className="relative mb-6">
+          <div className="absolute inset-0 bg-white/20 blur-3xl rounded-full scale-125" />
+          <img
+            src={appConfig.logoUrl}
+            alt={t('appName')}
+            className="relative w-48 sm:w-56 md:w-64 lg:w-72 drop-shadow-[0_20px_40px_rgba(0,0,0,0.3)]"
+            style={{ objectFit: 'contain' }}
+          />
+        </div>
 
-        {/* Title */}
-        <h1 className="mb-1 text-3xl font-extrabold tracking-tight text-[#173B70] sm:text-4xl md:text-5xl" style={{ color: '#ffffff' }}>
+        {/* Brand Name */}
+        <h1 className="mb-2 text-4xl sm:text-5xl md:text-6xl font-bold text-[#082D64] tracking-tight drop-shadow-md" style={{ fontFamily: 'Georgia, serif' }}>
           Handelingen Ministries
         </h1>
         
-        {/* Subtitle */}
-        <div className="mb-6 flex items-center justify-center gap-4 w-full">
-          <div className="h-px w-12 bg-[#3FA9F5]/40 sm:w-20" />
-          <h2 className="text-sm font-bold uppercase tracking-[0.3em] text-[#3FA9F5] sm:text-base">
-            International
+        {/* INTERNATIONAL */}
+        <div className="mb-4 flex items-center justify-center gap-4 w-full">
+          <div className="h-[2px] w-12 bg-[#20AEEF] sm:w-24 md:w-32" />
+          <h2 className="text-[10px] sm:text-xs md:text-sm font-bold uppercase tracking-[0.4em] text-[#20AEEF] whitespace-nowrap">
+            INTERNATIONAL
           </h2>
-          <div className="h-px w-12 bg-[#3FA9F5]/40 sm:w-20" />
+          <div className="h-[2px] w-12 bg-[#20AEEF] sm:w-24 md:w-32" />
         </div>
 
         {/* Tagline */}
-        <p className="mb-14 text-lg font-medium text-white/90 sm:text-xl">
-          {t('public.landing.tagline')}
+        <p className="mb-12 text-xl sm:text-2xl md:text-3xl text-[#0A3B78] font-medium drop-shadow-sm italic" style={{ fontFamily: 'Georgia, serif' }}>
+          {t('public.landing.tagline', { defaultValue: 'Zie alleen op Jezus' })}
         </p>
 
-        {/* Progress Section */}
-        <div className="w-full max-w-[420px] sm:max-w-md md:max-w-xl">
+        {/* Loading Section */}
+        <div className="w-full max-w-[280px] sm:max-w-[400px] md:max-w-[500px] flex flex-col items-center gap-4 mt-8">
           
-          <div className="flex items-center gap-4">
-            {/* Glossy Loading Bar */}
+          <div className="flex items-center gap-4 w-full">
+            {/* Pill Bar */}
             <div 
-              className="relative h-5 flex-1 overflow-hidden rounded-full border border-white/20 bg-black/20 p-0.5 shadow-[inset_0_2px_10px_rgba(0,0,0,0.3),0_0_15px_rgba(63,169,245,0.1)] backdrop-blur-md sm:h-6"
+              className="relative h-4 sm:h-5 flex-1 overflow-hidden rounded-full border border-white/60 bg-blue-900/20 shadow-[0_0_15px_rgba(63,169,245,0.4)] backdrop-blur-md"
               role="progressbar"
               aria-valuemin={0}
               aria-valuemax={100}
@@ -138,33 +154,39 @@ export function BrandedSplashScreen() {
             >
               {/* Fill */}
               <div 
-                className="relative h-full rounded-full bg-gradient-to-r from-[#1458B8] via-[#20C8FF] to-[#8BE8FF] transition-all duration-75 ease-linear"
+                className="relative h-full rounded-full bg-gradient-to-r from-[#1458B8] via-[#20AEEF] to-[#72D5FF] transition-all duration-75 ease-linear shadow-[0_0_10px_rgba(255,255,255,0.8)]"
                 style={{ width: `${progress}%` }}
               >
                 {/* Top Gloss */}
-                <div className="absolute inset-x-0 top-0 h-1/2 bg-gradient-to-b from-white/40 to-transparent rounded-t-full" />
+                <div className="absolute inset-x-0 top-0 h-1/2 bg-gradient-to-b from-white/70 to-transparent rounded-t-full" />
                 {/* Leading Edge Glow */}
-                <div className="absolute right-0 top-0 h-full w-4 bg-gradient-to-r from-transparent to-white/60 blur-[2px]" />
+                <div className="absolute right-0 top-0 h-full w-6 bg-gradient-to-l from-white to-transparent blur-[2px]" />
               </div>
             </div>
 
             {/* Percentage */}
-            <div className="w-12 text-right text-lg font-bold text-white shadow-black drop-shadow-md sm:text-xl">
+            <div className="w-12 text-right text-base sm:text-lg font-bold text-[#D9F2FF] drop-shadow-md">
               {Math.round(progress)}%
             </div>
           </div>
 
           {/* Loading Message */}
-          <div className="mt-4 text-xs font-semibold tracking-widest text-[#3FA9F5]/80 sm:text-sm">
-            {t('splash.loading')}
+          <div className="text-[10px] sm:text-xs tracking-[0.2em] font-semibold text-white/90 drop-shadow-md uppercase">
+            {t('public.splash.loading', { defaultValue: 'LOADING A BRIGHTER TOMORROW...' })}
           </div>
         </div>
       </div>
 
+      {/* Earth Horizon */}
+      <div className="absolute bottom-0 left-0 right-0 h-[25vh] pointer-events-none">
+        <div className="absolute top-0 left-1/2 h-[500px] w-[150%] -translate-x-1/2 rounded-[100%] border-t border-cyan-200/50 bg-gradient-to-b from-[#064C88] to-[#052F5D] shadow-[0_-15px_50px_rgba(63,169,245,0.6)]" />
+        <div className="absolute top-0 left-1/2 h-[100px] w-[150%] -translate-x-1/2 rounded-[100%] bg-[radial-gradient(ellipse_at_top,rgba(255,255,255,0.4)_0%,rgba(63,169,245,0.2)_40%,transparent_70%)] blur-xl mix-blend-screen" />
+      </div>
+
       {/* Footer Brand Statement */}
-      <div className="absolute bottom-6 w-full text-center px-4">
-        <p className="text-[10px] font-medium tracking-[0.2em] text-white/40 sm:text-xs">
-          {t('splash.footer')}
+      <div className="absolute bottom-8 w-full text-center px-4 z-20">
+        <p className="text-[9px] sm:text-[10px] md:text-xs font-semibold tracking-[0.25em] text-white/70 uppercase drop-shadow-md">
+          {t('public.splash.footer', { defaultValue: 'PEOPLE | CHURCHES | COMMUNITIES | FOR HIS KINGDOM' })}
         </p>
       </div>
     </div>
