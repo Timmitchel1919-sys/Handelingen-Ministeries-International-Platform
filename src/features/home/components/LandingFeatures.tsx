@@ -30,7 +30,7 @@ export function LandingFeatures() {
   return (
     <section
       id="features"
-      className="relative bg-background/95 px-4 py-20 sm:px-6 lg:px-8"
+      className="relative bg-[var(--color-background)] px-4 py-20 sm:px-6 lg:px-8"
     >
       <div className="mx-auto max-w-7xl">
         <div className="mb-12 text-center">

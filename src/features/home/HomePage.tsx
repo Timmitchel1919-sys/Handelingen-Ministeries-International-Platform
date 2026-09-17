@@ -39,7 +39,7 @@ export function HomePage() {
               <h1 className="text-4xl font-extrabold tracking-tight text-[var(--color-text)] sm:text-6xl lg:text-7xl">
                 Handelingen Ministries
               </h1>
-              <div className="mt-2 flex w-full justify-between text-sm font-bold uppercase text-[var(--color-primary)]">
+              <div className="mt-3 flex w-full justify-between text-sm font-bold uppercase text-[#3FA9F5]">
                 {"INTERNATIONAL".split('').map((char, i) => (
                   <span key={i}>{char}</span>
                 ))}
@@ -89,8 +89,8 @@ export function HomePage() {
 
         <LandingFeatures />
 
-        <footer className="bg-[#dff2ff] px-4 pb-8 text-center sm:px-6">
-          <div className="mx-auto max-w-7xl border-t border-[#1458B8]/10 pt-7 text-sm text-[var(--color-text-muted)]">
+        <footer className="bg-[var(--color-background)] px-4 pb-8 text-center sm:px-6">
+          <div className="mx-auto max-w-7xl border-t border-[#1458B8]/10 pt-7 text-sm font-medium text-[#173b70] dark:text-[var(--color-text-muted)]">
             {t('appName')} — {t('public.landing.tagline')} — ©{' '}
             {new Date().getFullYear()}
           </div>
