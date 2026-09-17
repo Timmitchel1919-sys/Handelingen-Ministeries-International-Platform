@@ -36,8 +36,8 @@ import { Icon } from '@/components/ui/icons';
 import { logAuditEvent } from '@/services/audit-service';
 import {
   registerWithEmail,
-  signInWithGoogle,
 } from '@/services/auth-service';
+import { appConfig } from '@/app/config/app.config';
 import { getActiveChurches } from '@/services/church-service';
 
 import type { AuthAppError } from '@/lib/auth-errors';
@@ -104,17 +104,10 @@ function ChurchStep({ onContinue, onClose }: ChurchStepProps) {
 
   return (
     <div className="flex flex-col gap-6">
-      {/* Step header */}
       <div className="text-center">
-        <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-surface/30 text-[var(--color-primary)] shadow-sm ring-2 ring-white/50 backdrop-blur">
-          <Icon name="ministries" size={26} />
+        <div className="mx-auto mb-4 flex h-20 w-20 items-center justify-center rounded-full bg-surface/30 shadow-sm ring-2 ring-white/50 backdrop-blur">
+          <img src={appConfig.logoUrl} alt="" className="h-full w-full rounded-full object-cover" />
         </div>
-        <h3 className="text-lg font-bold text-[var(--color-text)]">
-          {t('public.landing.selectChurchFirst')}
-        </h3>
-        <p className="mt-1 text-sm text-[var(--color-text-muted)]">
-          {t('auth.selectChurch.description')}
-        </p>
       </div>
 
       {/* Church selector */}
@@ -213,18 +206,6 @@ function ChurchStep({ onContinue, onClose }: ChurchStepProps) {
           <Icon name="arrow-right" size={17} />
         </Button>
 
-        <button
-          type="button"
-          onClick={() => { onClose(); navigate('/login'); }}
-          className="text-sm font-medium text-[var(--color-text)]/60 transition hover:text-[var(--color-text)]"
-        >
-          {t('auth.alreadyHaveAccount')}{' '}
-          <span
-            className="font-bold text-[var(--color-primary)] hover:underline"
-          >
-            {t('auth.signIn')}
-          </span>
-        </button>
       </div>
     </div>
   );
@@ -246,6 +227,19 @@ function AccountStep({ church, onBack, onClose }: AccountStepProps) {
 
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
+  const [dob, setDob] = useState('');
+  const [gender, setGender] = useState('');
+  const [country, setCountry] = useState('');
+  const [phone, setPhone] = useState('');
+  const [district, setDistrict] = useState('');
+  const [maritalStatus, setMaritalStatus] = useState('');
+  const [memberType, setMemberType] = useState('');
+  const [hearAbout, setHearAbout] = useState('');
+  const [emergency1, setEmergency1] = useState('');
+  const [emergency2, setEmergency2] = useState('');
+  const [emergencyRel, setEmergencyRel] = useState('');
+  const [ministryInterest, setMinistryInterest] = useState('');
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -254,7 +248,6 @@ function AccountStep({ church, onBack, onClose }: AccountStepProps) {
   const [fieldErrors, setFieldErrors] = useState<Record<string, string | undefined>>({});
   const [formError, setFormError] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isGoogleLoading, setIsGoogleLoading] = useState(false);
 
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
@@ -308,28 +301,6 @@ function AccountStep({ church, onBack, onClose }: AccountStepProps) {
     }
   };
 
-  const handleGoogle = async () => {
-    setFormError(null);
-    setIsGoogleLoading(true);
-    try {
-      const user = await signInWithGoogle(church.id);
-      void logAuditEvent({
-        actorUid: user.uid,
-        actorRole: 'member',
-        action: 'sign-up',
-        resource: 'auth',
-        resourceId: user.uid,
-        churchId: church.id,
-      });
-      onClose();
-      navigate('/dashboard', { replace: true });
-    } catch (cause) {
-      setFormError(t((cause as AuthAppError).messageKey));
-    } finally {
-      setIsGoogleLoading(false);
-    }
-  };
-
   return (
     <div className="flex flex-col gap-5">
       {/* Church context banner */}
@@ -369,6 +340,136 @@ function AccountStep({ church, onBack, onClose }: AccountStepProps) {
             onChange={(e) => setLastName(e.target.value)}
             error={fieldErrors.lastName ? t(fieldErrors.lastName) : undefined}
           />
+        </div>
+
+        <div className="grid gap-4 sm:grid-cols-2">
+          <Input
+            label="Date of Birth"
+            type="date"
+            value={dob}
+            onChange={(e) => setDob(e.target.value)}
+          />
+          <div className="flex flex-col gap-1.5">
+            <label className="text-[13px] font-semibold text-[var(--color-text)]">Gender</label>
+            <div className="relative">
+              <select
+                value={gender}
+                onChange={(e) => setGender(e.target.value)}
+                className="h-12 w-full appearance-none rounded-2xl border border-white/70 bg-surface/30 px-4 text-sm text-[var(--color-text)] outline-none backdrop-blur-md transition duration-200 focus:border-[#3FA9F5] focus:bg-surface/45 focus:ring-2 focus:ring-[#3FA9F5]/20"
+              >
+                <option value=""></option>
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+                <option value="other">Other</option>
+              </select>
+              <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-[var(--color-primary)]"><Icon name="chevron-down" size={17} /></span>
+            </div>
+          </div>
+        </div>
+
+        <div className="grid gap-4 sm:grid-cols-2">
+          <Input
+            label="Country"
+            value={country}
+            onChange={(e) => setCountry(e.target.value)}
+            placeholder="e.g. +1 US"
+          />
+          <Input
+            label="Phone Number"
+            type="tel"
+            value={phone}
+            onChange={(e) => setPhone(e.target.value)}
+          />
+        </div>
+
+        <div className="grid gap-4 sm:grid-cols-2">
+          <Input
+            label="District"
+            value={district}
+            onChange={(e) => setDistrict(e.target.value)}
+          />
+          <div className="flex flex-col gap-1.5">
+            <label className="text-[13px] font-semibold text-[var(--color-text)]">Marital Status</label>
+            <div className="relative">
+              <select
+                value={maritalStatus}
+                onChange={(e) => setMaritalStatus(e.target.value)}
+                className="h-12 w-full appearance-none rounded-2xl border border-white/70 bg-surface/30 px-4 text-sm text-[var(--color-text)] outline-none backdrop-blur-md transition duration-200 focus:border-[#3FA9F5] focus:bg-surface/45 focus:ring-2 focus:ring-[#3FA9F5]/20"
+              >
+                <option value=""></option>
+                <option value="single">Single</option>
+                <option value="married">Married</option>
+                <option value="divorced">Divorced</option>
+                <option value="widowed">Widowed</option>
+              </select>
+              <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-[var(--color-primary)]"><Icon name="chevron-down" size={17} /></span>
+            </div>
+          </div>
+        </div>
+
+        <div className="grid gap-4 sm:grid-cols-2">
+          <div className="flex flex-col gap-1.5">
+            <label className="text-[13px] font-semibold text-[var(--color-text)]">Member Type</label>
+            <div className="relative">
+              <select
+                value={memberType}
+                onChange={(e) => setMemberType(e.target.value)}
+                className="h-12 w-full appearance-none rounded-2xl border border-white/70 bg-surface/30 px-4 text-sm text-[var(--color-text)] outline-none backdrop-blur-md transition duration-200 focus:border-[#3FA9F5] focus:bg-surface/45 focus:ring-2 focus:ring-[#3FA9F5]/20"
+              >
+                <option value=""></option>
+                <option value="member">Member</option>
+                <option value="guest">Guest</option>
+                <option value="partner">Partner</option>
+              </select>
+              <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-[var(--color-primary)]"><Icon name="chevron-down" size={17} /></span>
+            </div>
+          </div>
+          <Input
+            label="How did you hear about us?"
+            value={hearAbout}
+            onChange={(e) => setHearAbout(e.target.value)}
+          />
+        </div>
+
+        <div className="grid gap-4 sm:grid-cols-2">
+          <Input
+            label="Emergency Contact 1"
+            value={emergency1}
+            onChange={(e) => setEmergency1(e.target.value)}
+          />
+          <Input
+            label="Emergency Contact 2"
+            value={emergency2}
+            onChange={(e) => setEmergency2(e.target.value)}
+          />
+        </div>
+
+        <div className="grid gap-4 sm:grid-cols-2">
+          <Input
+            label="Relationship of Emergency Contact"
+            value={emergencyRel}
+            onChange={(e) => setEmergencyRel(e.target.value)}
+          />
+          <div className="flex flex-col gap-1.5">
+            <label className="text-[13px] font-semibold text-[var(--color-text)]">Ministry Interest</label>
+            <div className="relative">
+              <select
+                value={ministryInterest}
+                onChange={(e) => setMinistryInterest(e.target.value)}
+                className="h-12 w-full appearance-none rounded-2xl border border-white/70 bg-surface/30 px-4 text-sm text-[var(--color-text)] outline-none backdrop-blur-md transition duration-200 focus:border-[#3FA9F5] focus:bg-surface/45 focus:ring-2 focus:ring-[#3FA9F5]/20"
+              >
+                <option value=""></option>
+                <option value="choir">Choir</option>
+                <option value="usher">Usher</option>
+                <option value="media">Media & Tech</option>
+                <option value="youth">Youth Ministry</option>
+                <option value="children">Children's Ministry</option>
+                <option value="evangelism">Evangelism</option>
+                <option value="facility">Facility</option>
+              </select>
+              <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-[var(--color-primary)]"><Icon name="chevron-down" size={17} /></span>
+            </div>
+          </div>
         </div>
 
         <Input
@@ -417,39 +518,11 @@ function AccountStep({ church, onBack, onClose }: AccountStepProps) {
         )}
 
         <Button type="submit" size="lg" isLoading={isSubmitting} className="w-full">
-          {t('auth.createAccount')}
+          {t('public.landing.continue')}
           <Icon name="arrow-right" size={17} />
         </Button>
 
-        <div className="flex items-center gap-3 py-1">
-          <div className="h-px flex-1 bg-surface/70" />
-          <span className="text-xs font-medium text-[var(--color-text)]/55">{t('auth.or')}</span>
-          <div className="h-px flex-1 bg-surface/70" />
-        </div>
-
-        <Button
-          type="button"
-          variant="outline"
-          size="lg"
-          isLoading={isGoogleLoading}
-          onClick={handleGoogle}
-          className="w-full"
-        >
-          <span className="font-extrabold text-[#4285F4]">G</span>
-          {t('auth.continueWithGoogle')}
-        </Button>
       </form>
-
-      <p className="text-center text-sm text-[var(--color-text)]/70">
-        {t('auth.alreadyHaveAccount')}{' '}
-        <button
-          type="button"
-          onClick={() => { onClose(); navigate('/login'); }}
-          className="font-bold text-[var(--color-primary)] hover:underline"
-        >
-          {t('auth.signIn')}
-        </button>
-      </p>
     </div>
   );
 }
@@ -557,34 +630,27 @@ export function RegistrationModal({ open, onClose }: RegistrationModalProps) {
         ].join(' ')}
       >
         {/* Modal header */}
-        <div className="flex items-start justify-between gap-4 px-6 pt-6 pb-2">
-          <div className="min-w-0">
-            <h2 id={titleId} className="text-xl font-extrabold tracking-tight text-[var(--color-text)]">
-              {t('public.landing.registerModalTitle')}
-            </h2>
-            <p className="mt-0.5 text-xs font-medium text-[var(--color-primary)]">{stepLabel}</p>
-          </div>
+        <div className="relative flex items-center justify-center px-6 pt-6 pb-2">
+          {step === 'account' && (
+            <button
+              type="button"
+              onClick={() => setStep('church')}
+              className="absolute left-6 flex h-9 w-9 items-center justify-center rounded-xl border border-white/60 bg-surface/30 text-[var(--color-text)]/60 transition hover:bg-surface/50 hover:text-[var(--color-text)]"
+            >
+              <Icon name="arrow-left" size={17} />
+            </button>
+          )}
 
-          {/* Step indicator pills */}
-          <div className="flex shrink-0 items-center gap-1.5 pt-0.5">
-            <span
-              className={`h-2 w-6 rounded-full transition-all duration-300 ${
-                step === 'church' ? 'bg-[#1458B8]' : 'bg-[#1458B8]/30'
-              }`}
-            />
-            <span
-              className={`h-2 w-6 rounded-full transition-all duration-300 ${
-                step === 'account' ? 'bg-[#1458B8]' : 'bg-[#1458B8]/30'
-              }`}
-            />
-          </div>
+          <h2 id={titleId} className="text-xl font-extrabold tracking-tight text-[var(--color-text)]">
+            {t('public.landing.registerModalTitle')}
+          </h2>
 
           {/* Close button */}
           <button
             type="button"
             onClick={onClose}
             aria-label={t('public.landing.closeRegistration')}
-            className="ml-2 flex h-9 w-9 shrink-0 items-center justify-center rounded-xl border border-white/60 bg-surface/30 text-[var(--color-text)]/60 transition hover:bg-surface/50 hover:text-[var(--color-text)]"
+            className="absolute right-6 flex h-9 w-9 shrink-0 items-center justify-center rounded-xl border border-white/60 bg-surface/30 text-[var(--color-text)]/60 transition hover:bg-surface/50 hover:text-[var(--color-text)]"
           >
             <Icon name="close" size={17} />
           </button>
