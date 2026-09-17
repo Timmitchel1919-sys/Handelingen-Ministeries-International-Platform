@@ -37,7 +37,8 @@
     "closeMenu": "Close navigation menu",
     "mobileNavigation": "Mobile navigation",
     "more": "More",
-    "pageActions": "Page actions"
+    "pageActions": "Page actions",
+    "hrm": "HRM"
   },
   "search": {
     "title": "Search",
@@ -93,9 +94,18 @@
     "getConnectedSubtitle": "Find your place in our church family",
     "footerTagline": "Zie alleen op Jezus",
     "cards": {
-      "sermons": { "title": "Sermons & teaching", "description": "Catch up on the latest messages, Bible studies, and devotionals from our pastors and guest speakers." },
-      "missions": { "title": "Missions abroad", "description": "Follow our outreach across Suriname, the Netherlands, and beyond as we carry the Gospel to the nations." },
-      "community": { "title": "Community & care", "description": "Join a small group, request prayer, or volunteer - find your place to belong and to serve." }
+      "sermons": {
+        "title": "Sermons & teaching",
+        "description": "Catch up on the latest messages, Bible studies, and devotionals from our pastors and guest speakers."
+      },
+      "missions": {
+        "title": "Missions abroad",
+        "description": "Follow our outreach across Suriname, the Netherlands, and beyond as we carry the Gospel to the nations."
+      },
+      "community": {
+        "title": "Community & care",
+        "description": "Join a small group, request prayer, or volunteer - find your place to belong and to serve."
+      }
     }
   },
   "auth": {

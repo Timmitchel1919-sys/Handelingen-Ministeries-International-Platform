@@ -30,6 +30,9 @@ const ALL_RESOURCES: PermissionResource[] = [
   'hrm',
   'church',
   'users',
+  'registrations',
+  'households',
+  'transfers',
 ];
 const ALL_ACTIONS: PermissionAction[] = ['read', 'create', 'update', 'delete', 'manage'];
 
@@ -79,6 +82,9 @@ export const ROLE_PERMISSIONS: Record<RoleName, Permission[]> = {
     ...perms('notifications', ['manage']),
     ...perms('settings', ['manage']),
     ...perms('hrm', ['manage']),
+    ...perms('registrations', ['manage']),
+    ...perms('households', ['manage']),
+    ...perms('transfers', ['manage']),
     ...perms('church', ['manage']),
     ...perms('users', ['manage']),
   ],
@@ -95,6 +101,9 @@ export const ROLE_PERMISSIONS: Record<RoleName, Permission[]> = {
     ...perms('notifications', ['manage']),
     ...perms('settings', ['manage']),
     ...perms('hrm', ['manage']),
+    ...perms('registrations', ['manage']),
+    ...perms('households', ['manage']),
+    ...perms('transfers', ['manage']),
     ...perms('church', ['manage']),
     ...perms('users', ['manage']),
   ],

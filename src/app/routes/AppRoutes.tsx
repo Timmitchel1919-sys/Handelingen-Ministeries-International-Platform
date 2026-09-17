@@ -22,6 +22,7 @@ import { ReportsPage } from '@/features/reports/ReportsPage';
 import { NotificationsPage } from '@/features/notifications/NotificationsPage';
 import { SettingsPage } from '@/features/settings/SettingsPage';
 import { NotFoundPage } from '@/app/routes/NotFoundPage';
+import { HRMRoutes } from '@/features/hrm/HRMRoutes';
 
 /**
  * Central route table.
@@ -75,6 +76,7 @@ export function AppRoutes() {
             <Route path="/reports" element={<ReportsPage />} />
             <Route path="/notifications" element={<NotificationsPage />} />
             <Route path="/settings" element={<SettingsPage />} />
+            <Route path="/hrm/*" element={<HRMRoutes />} />
           </Route>
         </Route>
       </Route>

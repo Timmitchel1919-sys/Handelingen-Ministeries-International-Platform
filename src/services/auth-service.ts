@@ -21,6 +21,8 @@ import { getFirebaseAuth } from '@/lib/firebase';
 import { createUserProfile, getUserProfile } from '@/services/user-profile-service';
 import { validateActiveChurch } from '@/services/church-service';
 import { validateDisplayName, validateEmail, validatePassword } from '@/lib/validation';
+import { createMemberRegistration } from '@/services/registration-service';
+import type { MemberRegistration } from '@/types/registration';
 
 /**
  * Thin, error-normalizing wrapper around Firebase Authentication.
@@ -61,15 +63,17 @@ export async function signInWithGoogle(churchId?: string, rememberMe = true): Pr
   }
 }
 
-export async function registerWithEmail(params: {
+export type RegistrationFormPayload = {
   email: string;
   password: string;
-  displayName: string;
   churchId: string;
-}): Promise<FirebaseUser> {
+} & Omit<MemberRegistration, 'id' | 'uid' | 'churchId' | 'status' | 'createdAt' | 'updatedAt' | 'submittedAt' | 'schemaVersion' | 'email'>;
+
+export async function registerWithEmail(params: RegistrationFormPayload): Promise<FirebaseUser> {
   const auth = requireAuth();
   try {
-    for (const result of [validateEmail(params.email), validatePassword(params.password), validateDisplayName(params.displayName)]) {
+    const displayName = `${params.firstName} ${params.lastName}`.trim();
+    for (const result of [validateEmail(params.email), validatePassword(params.password), validateDisplayName(displayName)]) {
       if (!result.valid) throw { kind: 'validation', messageKey: result.errorKey };
     }
     if (!await validateActiveChurch(params.churchId)) {
@@ -79,13 +83,36 @@ export async function registerWithEmail(params: {
     const credential = existingUser?.email?.toLowerCase() === params.email.trim().toLowerCase()
       ? { user: existingUser }
       : await createUserWithEmailAndPassword(auth, params.email.trim(), params.password);
-    await updateProfile(credential.user, { displayName: params.displayName });
-    if (!await getUserProfile(credential.user.uid)) await createUserProfile({
+    await updateProfile(credential.user, { displayName });
+    if (!await getUserProfile(credential.user.uid)) {
+      await createUserProfile({
+        uid: credential.user.uid,
+        email: credential.user.email,
+        displayName,
+        churchId: params.churchId,
+      });
+    }
+    
+    // Create member registration
+    await createMemberRegistration({
       uid: credential.user.uid,
-      email: credential.user.email,
-      displayName: params.displayName,
       churchId: params.churchId,
+      email: params.email.trim(),
+      firstName: params.firstName,
+      lastName: params.lastName,
+      dateOfBirth: params.dateOfBirth,
+      gender: params.gender,
+      maritalStatus: params.maritalStatus,
+      memberType: params.memberType,
+      country: params.country,
+      district: params.district,
+      phone: params.phone,
+      emergencyContact1: params.emergencyContact1,
+      emergencyContact2: params.emergencyContact2,
+      ministryInterest: params.ministryInterest,
+      howDidYouHear: params.howDidYouHear,
     });
+
     await sendEmailVerification(credential.user);
     return credential.user;
   } catch (cause) {

@@ -1,7 +1,5 @@
 import type { ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Link } from 'react-router-dom';
-
 import { appConfig } from '@/app/config/app.config';
 import { Dropdown } from '@/components/ui/Dropdown';
 import { Icon } from '@/components/ui/icons';

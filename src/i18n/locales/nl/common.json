@@ -37,7 +37,8 @@
     "closeMenu": "Navigatiemenu sluiten",
     "mobileNavigation": "Mobiele navigatie",
     "more": "Meer",
-    "pageActions": "Pagina-acties"
+    "pageActions": "Pagina-acties",
+    "hrm": "HRM"
   },
   "search": {
     "title": "Zoeken",
@@ -93,9 +94,18 @@
     "getConnectedSubtitle": "Vind jouw plek in onze kerkfamilie",
     "footerTagline": "Zie alleen op Jezus",
     "cards": {
-      "sermons": { "title": "Preken & onderwijs", "description": "Bekijk de laatste boodschappen, Bijbelstudies en overdenkingen van onze voorgangers en gastsprekers." },
-      "missions": { "title": "Zending in het buitenland", "description": "Volg onze uitreiking in Suriname, Nederland en daarbuiten terwijl we het Evangelie naar de naties brengen." },
-      "community": { "title": "Gemeenschap & zorg", "description": "Sluit je aan bij een kleine groep, vraag om gebed of word vrijwilliger - vind jouw plek om te horen en te dienen." }
+      "sermons": {
+        "title": "Preken & onderwijs",
+        "description": "Bekijk de laatste boodschappen, Bijbelstudies en overdenkingen van onze voorgangers en gastsprekers."
+      },
+      "missions": {
+        "title": "Zending in het buitenland",
+        "description": "Volg onze uitreiking in Suriname, Nederland en daarbuiten terwijl we het Evangelie naar de naties brengen."
+      },
+      "community": {
+        "title": "Gemeenschap & zorg",
+        "description": "Sluit je aan bij een kleine groep, vraag om gebed of word vrijwilliger - vind jouw plek om te horen en te dienen."
+      }
     }
   },
   "auth": {

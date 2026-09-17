@@ -5,6 +5,7 @@ import { createContext, type ReactNode, useCallback, useContext, useEffect, useM
 import { can } from '@/lib/authorization';
 import { getFirebaseAuth, getFirebaseFirestore } from '@/lib/firebase';
 import { activateVerifiedAccount, getUserProfile, toAuthUser, type UserProfileDoc } from '@/services/user-profile-service';
+import { markRegistrationVerified } from '@/services/registration-service';
 import type { AuthState, AuthUser, Permission } from '@/types/auth';
 
 /**
@@ -40,6 +41,7 @@ async function loadAuthUser(firebaseUser: FirebaseUser): Promise<AuthUser> {
   if (profile && profile.accountStatus === 'pending' && firebaseUser.emailVerified) {
     try {
       await activateVerifiedAccount(firebaseUser.uid);
+      await markRegistrationVerified(firebaseUser.uid);
       profile = { ...profile, accountStatus: 'active' };
     } catch (cause) {
       console.error('[auth] Failed to activate verified account', cause);

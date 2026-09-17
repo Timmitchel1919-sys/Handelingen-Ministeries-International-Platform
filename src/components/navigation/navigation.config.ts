@@ -81,6 +81,16 @@ export const navigationItems: NavigationItem[] = [
     mobileVisibility: true,
     desktopVisibility: true,
   },
+  {
+    id: 'hrm',
+    labelKey: 'navigation.hrm',
+    route: '/hrm',
+    icon: 'members', // reuse members icon
+    section: 'churchManagement',
+    permission: 'hrm.manage', // Requires hrm manage permission
+    mobileVisibility: true,
+    desktopVisibility: true,
+  },
 
   // OPERATIONS
   {

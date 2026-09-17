@@ -145,8 +145,6 @@ export function RegisterPage() {
     );
   }
 
-  const displayName =
-    `${firstName.trim()} ${lastName.trim()}`.trim();
 
   const handleSubmit =
     async (
@@ -230,9 +228,20 @@ export function RegisterPage() {
           await registerWithEmail({
             email,
             password,
-            displayName,
-            churchId:
-              selectedChurch.id,
+            churchId: selectedChurch.id,
+            firstName,
+            lastName,
+            dateOfBirth: '',
+            gender: '',
+            maritalStatus: '',
+            memberType: '',
+            country: '',
+            district: '',
+            phone: '',
+            emergencyContact1: null,
+            emergencyContact2: null,
+            ministryInterest: '',
+            howDidYouHear: '',
           });
 
         void logAuditEvent({

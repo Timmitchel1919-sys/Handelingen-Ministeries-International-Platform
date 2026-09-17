@@ -69,23 +69,58 @@ service cloud.firestore {
       );
       allow delete: if false;
     }
+    match /memberRegistrations/{registrationId} {
+      allow create: if signedIn() 
+        && request.resource.data.uid == request.auth.uid
+        && request.resource.data.status in ['draft', 'submitted', 'email_verification_pending']
+        && request.resource.data.keys().hasAll(['uid', 'churchId', 'status', 'createdAt'])
+        && request.resource.data.createdAt == request.time
+        && (!request.resource.data.keys().hasAny(['reviewedBy', 'reviewedAt', 'decisionReason']));
+      
+      allow read: if signedIn() && (
+        request.auth.uid == resource.data.uid 
+        || staff(resource.data.churchId)
+      );
+      
+      allow update: if signedIn() && (
+        // Member updating their own registration
+        (request.auth.uid == resource.data.uid 
+          && request.resource.data.status == resource.data.status
+          && request.resource.data.get('reviewedBy', null) == resource.data.get('reviewedBy', null)
+          && request.resource.data.get('reviewedAt', null) == resource.data.get('reviewedAt', null)
+          && request.resource.data.get('decisionReason', null) == resource.data.get('decisionReason', null)
+          && request.resource.data.uid == resource.data.uid
+          && request.resource.data.churchId == resource.data.churchId)
+        || 
+        // Admin updating status
+        (staff(resource.data.churchId)
+          && request.resource.data.uid == resource.data.uid
+          && request.resource.data.churchId == resource.data.churchId)
+      );
+      
+      allow delete: if false;
+    }
+    
     // Existing member repository is read-only. Intake writes require the next layer.
     match /members/{memberId} {
       allow read: if staff(resource.data.churchId)
         || (sameChurch(resource.data.churchId)
           && (resource.data.userId == request.auth.uid || profile().role in ['leader', 'ministry_leader']));
-      allow write: if false;
+      allow create: if staff(request.resource.data.churchId);
+      allow update: if staff(resource.data.churchId) && request.resource.data.churchId == resource.data.churchId;
+      allow delete: if superAdmin();
     }
     // Client events are untrusted activity reports, never authoritative admin audit records.
     match /auditLogs/{id} {
       allow create: if signedIn()
-        && request.resource.data.keys().hasOnly(['actorUid', 'actorRole', 'action', 'resource', 'resourceId', 'churchId', 'createdAt'])
         && request.resource.data.actorUid == request.auth.uid
         && request.resource.data.actorRole == profile().role
         && request.resource.data.churchId == profile().churchId
-        && request.resource.data.resource == 'auth'
-        && request.resource.data.resourceId == request.auth.uid
-        && request.resource.data.action in ['sign-up', 'sign-in', 'sign-out']
+        && request.resource.data.action in [
+          'sign-up', 'sign-in', 'sign-out', 
+          'registration-approved', 'registration-rejected', 'registration-review-started',
+          'member-created', 'member-updated'
+        ]
         && request.resource.data.createdAt == request.time;
       allow read: if staff(resource.data.churchId);
       allow update, delete: if false;

@@ -12,7 +12,7 @@ vi.mock('firebase/auth', () => ({
   confirmPasswordReset: vi.fn(), sendPasswordResetEmail: vi.fn(), signOut: vi.fn(), verifyPasswordResetCode: vi.fn(),
 }));
 const user = { uid: 'uid', email: 'person@example.com', displayName: 'Test Person', getIdToken: vi.fn() };
-const input = { email: user.email, password: 'Password123', displayName: user.displayName, churchId: 'church-a' };
+const input = { email: user.email, password: 'Password123', firstName: 'Test', lastName: 'Person', dateOfBirth: '', gender: '', country: '', district: '', phone: '', maritalStatus: '', memberType: '', emergencyContact1: null, emergencyContact2: null, ministryInterest: '', howDidYouHear: '', churchId: 'church-a' };
 describe('authentication service', () => {
   beforeEach(() => {
     vi.clearAllMocks(); mocks.auth.currentUser = null;

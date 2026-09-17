@@ -55,7 +55,10 @@ export type PermissionResource =
   | 'settings'
   | 'hrm'
   | 'church'
-  | 'users';
+  | 'users'
+  | 'registrations'
+  | 'households'
+  | 'transfers';
 
 /** Actions are the verbs permissions are checked against. */
 export type PermissionAction = 'read' | 'create' | 'update' | 'delete' | 'manage';

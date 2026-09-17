@@ -72,9 +72,8 @@ interface ChurchStepProps {
   onClose: () => void;
 }
 
-function ChurchStep({ onContinue, onClose }: ChurchStepProps) {
+function ChurchStep({ onContinue }: ChurchStepProps) {
   const { t } = useTranslation();
-  const navigate = useNavigate();
   const selectId = useId();
 
   const [churches, setChurches] = useState<Church[]>([]);
@@ -232,7 +231,7 @@ interface AccountStepProps {
   onClose: () => void;
 }
 
-function AccountStep({ church, onBack, onClose }: AccountStepProps) {
+function AccountStep({ church, onClose }: AccountStepProps) {
   const { t } = useTranslation();
   const navigate = useNavigate();
 
@@ -275,13 +274,19 @@ function AccountStep({ church, onBack, onClose }: AccountStepProps) {
     try {
       setIsGoogleLoading(true);
       setFormError(null);
-      await signInWithGoogle(church.id);
-      void logAuditEvent('auth_success', { provider: 'google', context: 'modal_registration', churchId: church.id });
-      navigate('/dashboard');
+      const user = await signInWithGoogle(church.id);
+      void logAuditEvent({
+        actorUid: user.uid,
+        actorRole: 'member',
+        action: 'sign-up',
+        resource: 'auth',
+        resourceId: user.uid,
+        churchId: church.id,
+      });
+      onClose(); // ensure modal closes
     } catch (err: unknown) {
       const e = err as AuthAppError;
       setFormError(t(e.messageKey));
-      void logAuditEvent('auth_error', { provider: 'google', context: 'modal_registration', churchId: church.id, errorCode: e.code });
     } finally {
       setIsGoogleLoading(false);
     }
@@ -295,16 +300,19 @@ function AccountStep({ church, onBack, onClose }: AccountStepProps) {
     const passwordResult = validatePassword(password);
     const confirmResult = validatePasswordConfirmation(password, confirmPassword);
 
-    const nextErrors: Record<string, string | undefined> = {
+    const nextErrors = Object.entries({
       firstName: firstName.trim() ? undefined : 'auth.validation.displayNameRequired',
       lastName: lastName.trim() ? undefined : 'auth.validation.displayNameRequired',
       email: emailResult.errorKey,
       password: passwordResult.errorKey,
       confirmPassword: confirmResult.errorKey,
-    };
+    }).reduce((acc, [k, v]) => {
+      if (v) acc[k] = v;
+      return acc;
+    }, {} as Record<string, string>);
 
     setFieldErrors(nextErrors);
-    if (Object.values(nextErrors).some(Boolean)) return;
+    if (Object.keys(nextErrors).length > 0) return;
 
     if (!termsAccepted) {
       setFormError(t('auth.validation.termsRequired', { defaultValue: t('auth.terms') }));
@@ -313,12 +321,23 @@ function AccountStep({ church, onBack, onClose }: AccountStepProps) {
 
     setIsSubmitting(true);
     try {
-      const displayName = `${firstName.trim()} ${lastName.trim()}`.trim();
       const user = await registerWithEmail({
         email,
         password,
-        displayName,
         churchId: church.id,
+        firstName,
+        lastName,
+        dateOfBirth: dob,
+        gender,
+        maritalStatus,
+        memberType,
+        country,
+        district,
+        phone,
+        emergencyContact1: emergency1 ? { firstName: emergency1.split(' ')[0] || '', lastName: emergency1.split(' ').slice(1).join(' '), phone: '', relationship: emergencyRel1 } : null,
+        emergencyContact2: emergency2 ? { firstName: emergency2.split(' ')[0] || '', lastName: emergency2.split(' ').slice(1).join(' '), phone: '', relationship: emergencyRel2 } : null,
+        ministryInterest,
+        howDidYouHear: hearAbout,
       });
 
       void logAuditEvent({
@@ -702,11 +721,6 @@ export function RegistrationModal({ open, onClose }: RegistrationModalProps) {
     setStep('account');
   };
 
-  const stepLabel =
-    step === 'church'
-      ? `${t('public.landing.step')} 1 ${t('public.landing.of')} 2 — ${t('public.landing.selectChurchFirst')}`
-      : `${t('public.landing.step')} 2 ${t('public.landing.of')} 2 — ${t('public.landing.accountDetails')}`;
-
   return createPortal(
     <div
       role="presentation"
@@ -743,7 +757,7 @@ export function RegistrationModal({ open, onClose }: RegistrationModalProps) {
               onClick={() => setStep('church')}
               className="absolute left-6 flex h-9 w-9 items-center justify-center text-[var(--color-text)]/60 transition hover:text-[var(--color-text)]"
             >
-              <Icon name="arrow-left" size={20} />
+              <Icon name="chevron-left" size={20} />
             </button>
           )}
 

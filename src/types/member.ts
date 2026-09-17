@@ -1,54 +1,58 @@
-import type {
-  BaseEntity,
-  Gender,
-  MembershipStatus,
-} from './common';
+export type MembershipStatus =
+  | 'prospective'
+  | 'active'
+  | 'inactive'
+  | 'transferred'
+  | 'former'
+  | 'deceased';
 
-export interface Member extends BaseEntity {
-  churchId: string;
-
-  userId?: string;
-
+export interface EmergencyContact {
   firstName: string;
-
-  middleName?: string;
-
   lastName: string;
+  phone: string;
+  relationship: string;
+}
 
-  displayName: string;
+export interface Member {
+  id: string;
+  userId?: string; // Links to Auth Profile (users/{uid})
+  churchId: string;
+  registrationId?: string; // If created from registration intake
 
-  email: string;
-
-  phone?: string;
-
-  dateOfBirth?: string;
-
-  gender?: Gender;
-
-  address?: {
-    street?: string;
-    city?: string;
-    district?: string;
-    country?: string;
+  personal: {
+    firstName: string;
+    lastName: string;
+    dateOfBirth: string;
+    gender: string;
+    maritalStatus: string;
   };
 
-  membershipStatus: MembershipStatus;
-
-  membershipDate?: string;
-
-  baptismDate?: string;
-
-  ministryIds: string[];
-
-  departmentIds: string[];
-
-  photoUrl?: string;
-
-  emergencyContact?: {
-    name: string;
-    relationship?: string;
+  contact: {
+    email: string;
     phone: string;
   };
 
-  notes?: string;
+  address: {
+    country: string;
+    district: string;
+    addressLine?: string;
+  };
+
+  membership: {
+    status: MembershipStatus;
+    memberType: string;
+    joinedAt: any;
+  };
+
+  householdId?: string;
+  householdRole?: 'head' | 'spouse' | 'child' | 'dependent' | 'other';
+
+  ministryInterests: string[];
+
+  emergencyContacts: EmergencyContact[];
+
+  createdAt: any;
+  updatedAt: any;
+  createdBy?: string;
+  updatedBy?: string;
 }

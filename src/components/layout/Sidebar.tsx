@@ -25,7 +25,7 @@ export function Sidebar({
 }: SidebarProps) {
   const { t } = useTranslation();
   const location = useLocation();
-  const { user } = useAuth();
+  const { user, hasPermission } = useAuth();
 
   const isDrawer = variant === 'drawer';
   const isCollapsed = collapsed && !isDrawer;
@@ -103,7 +103,7 @@ export function Sidebar({
           .filter((section) => section.id !== 'profile')
           .map((section) => {
             const items = navigationItems.filter(
-              (item) => item.section === section.id,
+              (item) => item.section === section.id && (!item.permission || (user && hasPermission(item.permission as any))),
             );
 
             if (!items.length) return null;
