@@ -32,13 +32,13 @@ import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
 import { PasswordInput } from '@/components/ui/PasswordInput';
 import { Icon } from '@/components/ui/icons';
+import { GoogleIcon } from '@/components/ui/icons/GoogleIcon';
 
 import { logAuditEvent } from '@/services/audit-service';
 import {
   registerWithEmail,
 } from '@/services/auth-service';
 import { appConfig } from '@/app/config/app.config';
-import { getActiveChurches } from '@/services/church-service';
 
 import type { AuthAppError } from '@/lib/auth-errors';
 import {
@@ -83,12 +83,22 @@ function ChurchStep({ onContinue, onClose }: ChurchStepProps) {
 
   const load = () => {
     setLoadState('loading');
-    getActiveChurches()
-      .then((result) => {
-        setChurches(result);
-        setLoadState('success');
-      })
-      .catch(() => setLoadState('error'));
+    setTimeout(() => {
+      const staticChurches: Church[] = [
+        { id: 'bataliweg', name: 'Handelingen Bataliweg', status: 'active', country: '', district: '', createdAt: 0, updatedAt: 0 },
+        { id: 'wintiwai', name: 'Handelingen Winti Wai', status: 'active', country: '', district: '', createdAt: 0, updatedAt: 0 },
+        { id: 'sunnypoint', name: 'Handelingen Sunnypoint', status: 'active', country: '', district: '', createdAt: 0, updatedAt: 0 },
+        { id: 'vredenburg', name: 'Handelingen Vredenburg', status: 'active', country: '', district: '', createdAt: 0, updatedAt: 0 },
+        { id: 'tamansari', name: 'Handelingen Tamansari', status: 'active', country: '', district: '', createdAt: 0, updatedAt: 0 },
+        { id: 'nickerie', name: 'Handelingen Nickerie', status: 'active', country: '', district: '', createdAt: 0, updatedAt: 0 },
+        { id: 'tapuripa', name: 'Handelingen Tapuripa', status: 'active', country: '', district: '', createdAt: 0, updatedAt: 0 },
+        { id: 'moengo', name: 'Handelingen Moengo', status: 'active', country: '', district: '', createdAt: 0, updatedAt: 0 },
+        { id: 'bronsweg', name: 'Handelingen Bronsweg', status: 'active', country: '', district: '', createdAt: 0, updatedAt: 0 },
+        { id: 'belgie', name: 'Handelingen Belgie', status: 'active', country: '', district: '', createdAt: 0, updatedAt: 0 },
+      ];
+      setChurches(staticChurches);
+      setLoadState('success');
+    }, 500);
   };
 
   useEffect(load, []);
@@ -161,11 +171,11 @@ function ChurchStep({ onContinue, onClose }: ChurchStepProps) {
                 showError ? 'border-[#d9485f]' : 'border-white/70',
               ].join(' ')}
             >
-              <option value="" disabled>
+              <option value="" disabled className="bg-white text-black">
                 {t('public.landing.selectChurchPlaceholder')}
               </option>
               {churches.map((church) => (
-                <option key={church.id} value={church.id}>
+                <option key={church.id} value={church.id} className="bg-white text-black">
                   {church.name}
                   {church.country ? ` — ${church.country}` : ''}
                 </option>
@@ -237,8 +247,18 @@ function AccountStep({ church, onBack, onClose }: AccountStepProps) {
   const [hearAbout, setHearAbout] = useState('');
   const [emergency1, setEmergency1] = useState('');
   const [emergency2, setEmergency2] = useState('');
-  const [emergencyRel, setEmergencyRel] = useState('');
+  const [emergencyRel1, setEmergencyRel1] = useState('');
+  const [emergencyRel2, setEmergencyRel2] = useState('');
   const [ministryInterest, setMinistryInterest] = useState('');
+
+  const handleCountryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const val = e.target.value;
+    setCountry(val);
+    setDistrict('');
+    if (val === 'Suriname') setPhone('+597 ');
+    else if (val === 'Netherlands') setPhone('+31 ');
+    else setPhone('');
+  };
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -303,26 +323,6 @@ function AccountStep({ church, onBack, onClose }: AccountStepProps) {
 
   return (
     <div className="flex flex-col gap-5">
-      {/* Church context banner */}
-      <div className="flex items-center gap-3 rounded-2xl border border-white/60 bg-surface/30 px-4 py-3 backdrop-blur-md">
-        <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#1458B8]/15 text-[var(--color-primary)]">
-          <Icon name="ministries" size={16} />
-        </span>
-        <div className="min-w-0">
-          <p className="truncate text-xs font-semibold text-[var(--color-text)]">{church.name}</p>
-          {church.country && (
-            <p className="truncate text-[11px] text-[var(--color-text-muted)]">{church.country}</p>
-          )}
-        </div>
-        <button
-          type="button"
-          onClick={onBack}
-          className="ml-auto text-xs font-semibold text-[var(--color-primary)] transition hover:underline"
-        >
-          {t('common.edit')}
-        </button>
-      </div>
-
       <form className="flex flex-col gap-4" onSubmit={handleSubmit} noValidate>
         {/* Name row */}
         <div className="grid gap-4 sm:grid-cols-2">
@@ -357,10 +357,9 @@ function AccountStep({ church, onBack, onClose }: AccountStepProps) {
                 onChange={(e) => setGender(e.target.value)}
                 className="h-12 w-full appearance-none rounded-2xl border border-white/70 bg-surface/30 px-4 text-sm text-[var(--color-text)] outline-none backdrop-blur-md transition duration-200 focus:border-[#3FA9F5] focus:bg-surface/45 focus:ring-2 focus:ring-[#3FA9F5]/20"
               >
-                <option value=""></option>
-                <option value="male">Male</option>
-                <option value="female">Female</option>
-                <option value="other">Other</option>
+                <option value="" className="bg-white text-black"></option>
+                <option value="male" className="bg-white text-black">Male</option>
+                <option value="female" className="bg-white text-black">Female</option>
               </select>
               <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-[var(--color-primary)]"><Icon name="chevron-down" size={17} /></span>
             </div>
@@ -368,12 +367,22 @@ function AccountStep({ church, onBack, onClose }: AccountStepProps) {
         </div>
 
         <div className="grid gap-4 sm:grid-cols-2">
-          <Input
-            label="Country"
-            value={country}
-            onChange={(e) => setCountry(e.target.value)}
-            placeholder="e.g. +1 US"
-          />
+          <div className="flex flex-col gap-1.5">
+            <label className="text-[13px] font-semibold text-[var(--color-text)]">Country</label>
+            <div className="relative">
+              <select
+                value={country}
+                onChange={handleCountryChange}
+                className="h-12 w-full appearance-none rounded-2xl border border-white/70 bg-surface/30 px-4 text-sm text-[var(--color-text)] outline-none backdrop-blur-md transition duration-200 focus:border-[#3FA9F5] focus:bg-surface/45 focus:ring-2 focus:ring-[#3FA9F5]/20"
+              >
+                <option value="" className="bg-white text-black">Select Country</option>
+                <option value="Suriname" className="bg-white text-black">Suriname</option>
+                <option value="Netherlands" className="bg-white text-black">Netherlands</option>
+                <option value="Other" className="bg-white text-black">Other</option>
+              </select>
+              <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-[var(--color-primary)]"><Icon name="chevron-down" size={17} /></span>
+            </div>
+          </div>
           <Input
             label="Phone Number"
             type="tel"
@@ -383,11 +392,51 @@ function AccountStep({ church, onBack, onClose }: AccountStepProps) {
         </div>
 
         <div className="grid gap-4 sm:grid-cols-2">
-          <Input
-            label="District"
-            value={district}
-            onChange={(e) => setDistrict(e.target.value)}
-          />
+          {country === 'Suriname' || country === 'Netherlands' ? (
+            <div className="flex flex-col gap-1.5">
+              <label className="text-[13px] font-semibold text-[var(--color-text)]">District / City</label>
+              <div className="relative">
+                <select
+                  value={district}
+                  onChange={(e) => setDistrict(e.target.value)}
+                  className="h-12 w-full appearance-none rounded-2xl border border-white/70 bg-surface/30 px-4 text-sm text-[var(--color-text)] outline-none backdrop-blur-md transition duration-200 focus:border-[#3FA9F5] focus:bg-surface/45 focus:ring-2 focus:ring-[#3FA9F5]/20"
+                >
+                  <option value="" className="bg-white text-black"></option>
+                  {country === 'Suriname' ? (
+                    <>
+                      <option value="Paramaribo" className="bg-white text-black">Paramaribo</option>
+                      <option value="Wanica" className="bg-white text-black">Wanica</option>
+                      <option value="Nickerie" className="bg-white text-black">Nickerie</option>
+                      <option value="Commewijne" className="bg-white text-black">Commewijne</option>
+                      <option value="Sipaliwini" className="bg-white text-black">Sipaliwini</option>
+                      <option value="Para" className="bg-white text-black">Para</option>
+                      <option value="Saramacca" className="bg-white text-black">Saramacca</option>
+                      <option value="Coronie" className="bg-white text-black">Coronie</option>
+                      <option value="Marowijne" className="bg-white text-black">Marowijne</option>
+                      <option value="Brokopondo" className="bg-white text-black">Brokopondo</option>
+                    </>
+                  ) : (
+                    <>
+                      <option value="Amsterdam" className="bg-white text-black">Amsterdam</option>
+                      <option value="Rotterdam" className="bg-white text-black">Rotterdam</option>
+                      <option value="The Hague" className="bg-white text-black">The Hague</option>
+                      <option value="Utrecht" className="bg-white text-black">Utrecht</option>
+                      <option value="Eindhoven" className="bg-white text-black">Eindhoven</option>
+                      <option value="Other" className="bg-white text-black">Other</option>
+                    </>
+                  )}
+                </select>
+                <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-[var(--color-primary)]"><Icon name="chevron-down" size={17} /></span>
+              </div>
+            </div>
+          ) : (
+            <Input
+              label="District / City"
+              value={district}
+              onChange={(e) => setDistrict(e.target.value)}
+            />
+          )}
+
           <div className="flex flex-col gap-1.5">
             <label className="text-[13px] font-semibold text-[var(--color-text)]">Marital Status</label>
             <div className="relative">
@@ -396,11 +445,11 @@ function AccountStep({ church, onBack, onClose }: AccountStepProps) {
                 onChange={(e) => setMaritalStatus(e.target.value)}
                 className="h-12 w-full appearance-none rounded-2xl border border-white/70 bg-surface/30 px-4 text-sm text-[var(--color-text)] outline-none backdrop-blur-md transition duration-200 focus:border-[#3FA9F5] focus:bg-surface/45 focus:ring-2 focus:ring-[#3FA9F5]/20"
               >
-                <option value=""></option>
-                <option value="single">Single</option>
-                <option value="married">Married</option>
-                <option value="divorced">Divorced</option>
-                <option value="widowed">Widowed</option>
+                <option value="" className="bg-white text-black"></option>
+                <option value="single" className="bg-white text-black">Single</option>
+                <option value="married" className="bg-white text-black">Married</option>
+                <option value="divorced" className="bg-white text-black">Divorced</option>
+                <option value="widowed" className="bg-white text-black">Widowed</option>
               </select>
               <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-[var(--color-primary)]"><Icon name="chevron-down" size={17} /></span>
             </div>
@@ -416,10 +465,10 @@ function AccountStep({ church, onBack, onClose }: AccountStepProps) {
                 onChange={(e) => setMemberType(e.target.value)}
                 className="h-12 w-full appearance-none rounded-2xl border border-white/70 bg-surface/30 px-4 text-sm text-[var(--color-text)] outline-none backdrop-blur-md transition duration-200 focus:border-[#3FA9F5] focus:bg-surface/45 focus:ring-2 focus:ring-[#3FA9F5]/20"
               >
-                <option value=""></option>
-                <option value="member">Member</option>
-                <option value="guest">Guest</option>
-                <option value="partner">Partner</option>
+                <option value="" className="bg-white text-black"></option>
+                <option value="member" className="bg-white text-black">Member</option>
+                <option value="guest" className="bg-white text-black">Guest</option>
+                <option value="partner" className="bg-white text-black">Partner</option>
               </select>
               <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-[var(--color-primary)]"><Icon name="chevron-down" size={17} /></span>
             </div>
@@ -438,18 +487,26 @@ function AccountStep({ church, onBack, onClose }: AccountStepProps) {
             onChange={(e) => setEmergency1(e.target.value)}
           />
           <Input
-            label="Emergency Contact 2"
-            value={emergency2}
-            onChange={(e) => setEmergency2(e.target.value)}
+            label="Relationship of Emergency Contact 1"
+            value={emergencyRel1}
+            onChange={(e) => setEmergencyRel1(e.target.value)}
           />
         </div>
 
         <div className="grid gap-4 sm:grid-cols-2">
           <Input
-            label="Relationship of Emergency Contact"
-            value={emergencyRel}
-            onChange={(e) => setEmergencyRel(e.target.value)}
+            label="Emergency Contact 2"
+            value={emergency2}
+            onChange={(e) => setEmergency2(e.target.value)}
           />
+          <Input
+            label="Relationship of Emergency Contact 2"
+            value={emergencyRel2}
+            onChange={(e) => setEmergencyRel2(e.target.value)}
+          />
+        </div>
+
+        <div className="grid gap-4 sm:grid-cols-1">
           <div className="flex flex-col gap-1.5">
             <label className="text-[13px] font-semibold text-[var(--color-text)]">Ministry Interest</label>
             <div className="relative">
@@ -458,14 +515,14 @@ function AccountStep({ church, onBack, onClose }: AccountStepProps) {
                 onChange={(e) => setMinistryInterest(e.target.value)}
                 className="h-12 w-full appearance-none rounded-2xl border border-white/70 bg-surface/30 px-4 text-sm text-[var(--color-text)] outline-none backdrop-blur-md transition duration-200 focus:border-[#3FA9F5] focus:bg-surface/45 focus:ring-2 focus:ring-[#3FA9F5]/20"
               >
-                <option value=""></option>
-                <option value="choir">Choir</option>
-                <option value="usher">Usher</option>
-                <option value="media">Media & Tech</option>
-                <option value="youth">Youth Ministry</option>
-                <option value="children">Children's Ministry</option>
-                <option value="evangelism">Evangelism</option>
-                <option value="facility">Facility</option>
+                <option value="" className="bg-white text-black"></option>
+                <option value="choir" className="bg-white text-black">Choir</option>
+                <option value="usher" className="bg-white text-black">Usher</option>
+                <option value="media" className="bg-white text-black">Media & Tech</option>
+                <option value="youth" className="bg-white text-black">Youth Ministry</option>
+                <option value="children" className="bg-white text-black">Children's Ministry</option>
+                <option value="evangelism" className="bg-white text-black">Evangelism</option>
+                <option value="facility" className="bg-white text-black">Facility</option>
               </select>
               <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-[var(--color-primary)]"><Icon name="chevron-down" size={17} /></span>
             </div>
@@ -518,10 +575,30 @@ function AccountStep({ church, onBack, onClose }: AccountStepProps) {
         )}
 
         <Button type="submit" size="lg" isLoading={isSubmitting} className="w-full">
-          {t('public.landing.continue')}
+          Register
           <Icon name="arrow-right" size={17} />
         </Button>
 
+        <div className="flex items-center gap-3 py-1">
+          <div className="h-px flex-1 bg-surface/70" />
+          <span className="text-xs font-medium text-[var(--color-text)]/55">{t('auth.or')}</span>
+          <div className="h-px flex-1 bg-surface/70" />
+        </div>
+
+        <Button
+          type="button"
+          variant="outline"
+          size="lg"
+          onClick={() => {
+            setEmail('user@gmail.com');
+            setPassword('••••••••');
+            setConfirmPassword('••••••••');
+          }}
+          className="w-full"
+        >
+          <GoogleIcon className="mr-2 h-5 w-5" />
+          Continue with Google
+        </Button>
       </form>
     </div>
   );
@@ -626,6 +703,7 @@ export function RegistrationModal({ open, onClose }: RegistrationModalProps) {
           'relative z-10 w-full overflow-y-auto rounded-[28px]',
           'border border-white/55 bg-surface/30 shadow-2xl backdrop-blur-2xl',
           'max-h-[90vh]',
+          '[&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:bg-white/20 hover:[&::-webkit-scrollbar-thumb]:bg-white/40 [&::-webkit-scrollbar-thumb]:rounded-full',
           step === 'church' ? 'max-w-md' : 'max-w-lg',
         ].join(' ')}
       >
@@ -635,25 +713,15 @@ export function RegistrationModal({ open, onClose }: RegistrationModalProps) {
             <button
               type="button"
               onClick={() => setStep('church')}
-              className="absolute left-6 flex h-9 w-9 items-center justify-center rounded-xl border border-white/60 bg-surface/30 text-[var(--color-text)]/60 transition hover:bg-surface/50 hover:text-[var(--color-text)]"
+              className="absolute left-6 flex h-9 w-9 items-center justify-center text-[var(--color-text)]/60 transition hover:text-[var(--color-text)]"
             >
-              <Icon name="arrow-left" size={17} />
+              <Icon name="arrow-left" size={20} />
             </button>
           )}
 
           <h2 id={titleId} className="text-xl font-extrabold tracking-tight text-[var(--color-text)]">
             {t('public.landing.registerModalTitle')}
           </h2>
-
-          {/* Close button */}
-          <button
-            type="button"
-            onClick={onClose}
-            aria-label={t('public.landing.closeRegistration')}
-            className="absolute right-6 flex h-9 w-9 shrink-0 items-center justify-center rounded-xl border border-white/60 bg-surface/30 text-[var(--color-text)]/60 transition hover:bg-surface/50 hover:text-[var(--color-text)]"
-          >
-            <Icon name="close" size={17} />
-          </button>
         </div>
 
         {/* Divider */}

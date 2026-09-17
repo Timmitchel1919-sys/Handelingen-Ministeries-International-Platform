@@ -89,8 +89,8 @@ export function HomePage() {
 
         <LandingFeatures />
 
-        <footer className="bg-[var(--color-background)] px-4 pb-8 text-center sm:px-6">
-          <div className="mx-auto max-w-7xl border-t border-[#1458B8]/10 pt-7 text-sm font-medium text-[#173b70] dark:text-[var(--color-text-muted)]">
+        <footer className="bg-[var(--color-background)] dark:bg-white px-4 pb-8 text-center sm:px-6">
+          <div className="mx-auto max-w-7xl border-t border-[#1458B8]/20 pt-7 text-sm font-medium text-[#173b70] dark:text-[#081b31]">
             {t('appName')} — {t('public.landing.tagline')} — ©{' '}
             {new Date().getFullYear()}
           </div>

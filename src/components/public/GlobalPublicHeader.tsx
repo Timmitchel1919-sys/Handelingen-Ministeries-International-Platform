@@ -34,7 +34,7 @@ export function GlobalPublicHeader({ onRegister }: GlobalPublicHeaderProps) {
      * - backdrop-blur + semi-transparent bg gives the glass effect.
      * - pt-3 pb-3 with px matches the landing-page horizontal rhythm.
      */
-    <header className="fixed inset-x-0 top-0 z-50 w-full px-4 pt-0 pb-3 sm:px-6 lg:px-8">
+    <header className="fixed inset-x-0 top-0 z-50 w-full px-1 pt-0 pb-3 sm:px-2 lg:px-2">
       <nav
         aria-label={t('public.navigation.home')}
         className="flex min-h-16 items-center justify-between gap-4 rounded-[22px] border border-white/55 bg-surface/20 px-4 shadow-lg backdrop-blur-2xl sm:px-6"
