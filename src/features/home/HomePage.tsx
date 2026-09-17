@@ -39,7 +39,7 @@ export function HomePage() {
               <h1 className="text-4xl font-extrabold tracking-tight text-text sm:text-6xl lg:text-7xl">
                 Handelingen Ministries
               </h1>
-              <div className="mt-8 flex w-full justify-between text-sm font-extrabold uppercase text-[#1458B8] dark:text-[#3FA9F5]">
+              <div className="mt-4 flex w-full justify-between text-sm font-extrabold uppercase text-[#1458B8] dark:text-[#3FA9F5]">
                 {"INTERNATIONAL".split('').map((char, i) => (
                   <span key={i}>{char}</span>
                 ))}
@@ -47,13 +47,9 @@ export function HomePage() {
             </div>
 
             <div className="mx-auto my-7 flex max-w-md items-center gap-4">
-              <div className="h-0.5 flex-1 bg-white" />
-              <div className="relative h-6 w-6 text-white flex items-center justify-center">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" className="h-6 w-4">
-                  <path d="M12 2v20M6 8h12" strokeWidth="2" strokeLinecap="round" />
-                </svg>
-              </div>
-              <div className="h-0.5lex-1 bg-white" />
+              <div className="h-px flex-1 bg-surface/75" />
+              <span className="text-xl font-light text-[var(--color-primary)]">+</span>
+              <div className="h-px flex-1 bg-surface/75" />
             </div>
 
             <p className="text-xl font-semibold text-primary-dark sm:text-2xl">
@@ -93,8 +89,8 @@ export function HomePage() {
 
         <LandingFeatures />
 
-        <footer className="bg-[#081b31] px-4 py-8 text-center sm:px-6">
-          <div className="mx-auto max-w-7xl text-sm font-medium text-white/90">
+        <footer className="bg-[var(--color-background)] dark:bg-white px-4 pb-8 text-center sm:px-6">
+          <div className="mx-auto max-w-7xl border-t border-[#1458B8]/20 pt-7 text-sm font-medium text-[#173b70] dark:text-[#081b31]">
             {t('appName')} — {t('public.landing.tagline')} — ©{' '}
             {new Date().getFullYear()}
           </div>
