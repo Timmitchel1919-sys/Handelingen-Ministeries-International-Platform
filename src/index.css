@@ -54,6 +54,23 @@ body {
   transition:
     background-color var(--transition-base),
     color var(--transition-base);
+  overflow-wrap: break-word;
+  word-break: break-word;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+span,
+a,
+button,
+div {
+  overflow-wrap: break-word;
+  word-break: break-word;
 }
 
 h1,

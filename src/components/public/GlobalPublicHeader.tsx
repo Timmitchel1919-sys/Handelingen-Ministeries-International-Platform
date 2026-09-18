@@ -119,7 +119,7 @@ export function GlobalPublicHeader({ onRegister }: GlobalPublicHeaderProps) {
             className="h-8 w-8 sm:h-10 sm:w-10 shrink-0 rounded-full object-cover"
           />
 
-          <span className="hidden leading-tight md:block w-max">
+          <span className="hidden leading-tight md:block w-full max-w-fit">
             <span className="block text-sm font-bold text-text">
               Handelingen Ministries
             </span>
@@ -214,7 +214,7 @@ export function GlobalPublicHeader({ onRegister }: GlobalPublicHeaderProps) {
           {isInstallable && (
             <button
               onClick={installPWA}
-              className="hidden lg:flex items-center gap-2 rounded-full bg-linear-to-t from-[#1458B8] to-[#3FA9F5] px-3 py-2 text-xs font-semibold text-white shadow-[inset_0_1px_1px_rgba(255,255,255,0.4),0_10px_28px_rgba(20,88,184,0.28)] hover:brightness-110 transition whitespace-nowrap"
+              className="hidden lg:flex items-center gap-2 rounded-full bg-linear-to-t from-[#1458B8] to-[#3FA9F5] px-3 py-2 text-xs font-semibold text-white shadow-[inset_0_1px_1px_rgba(255,255,255,0.4),0_10px_28px_rgba(20,88,184,0.28)] hover:brightness-110 transition text-wrap-balance text-center"
             >
               <Icon name="monitor" size={14} />
               <span>Download App</span>
@@ -224,7 +224,7 @@ export function GlobalPublicHeader({ onRegister }: GlobalPublicHeaderProps) {
           {/* Sign In / Dashboard (Always visible) */}
           <Link
             to={authenticated ? '/dashboard' : '/login'}
-            className="rounded-xl border border-white/60 bg-surface/35 px-3 py-1.5 sm:px-4 sm:py-2 text-xs sm:text-sm font-semibold text-text backdrop-blur-md transition hover:bg-surface/55 whitespace-nowrap"
+            className="rounded-xl border border-white/60 bg-surface/35 px-3 py-1.5 sm:px-4 sm:py-2 text-xs sm:text-sm font-semibold text-text backdrop-blur-md transition hover:bg-surface/55 text-wrap-balance text-center"
           >
             {authenticated ? t('navigation.dashboard', 'Dashboard') : t('auth.signIn', 'Sign In')}
           </Link>
@@ -239,7 +239,7 @@ export function GlobalPublicHeader({ onRegister }: GlobalPublicHeaderProps) {
                   id="landing-register-btn"
                   aria-label={t('public.landing.register')}
                   onClick={onRegister}
-                  className="rounded-xl bg-linear-to-t from-[#1458B8] to-[#3FA9F5] px-3 py-1.5 sm:px-4 sm:py-2 text-xs sm:text-sm font-semibold text-white shadow-[inset_0_1px_1px_rgba(255,255,255,0.4),0_10px_28px_rgba(20,88,184,0.28)] hover:brightness-110 transition focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#3FA9F5] whitespace-nowrap"
+                  className="rounded-xl bg-linear-to-t from-[#1458B8] to-[#3FA9F5] px-3 py-1.5 sm:px-4 sm:py-2 text-xs sm:text-sm font-semibold text-white shadow-[inset_0_1px_1px_rgba(255,255,255,0.4),0_10px_28px_rgba(20,88,184,0.28)] hover:brightness-110 transition focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#3FA9F5] text-wrap-balance text-center"
                 >
                   {t('public.landing.register', 'Register')}
                 </button>
@@ -247,7 +247,7 @@ export function GlobalPublicHeader({ onRegister }: GlobalPublicHeaderProps) {
                 <Link
                   to="/select-church"
                   id="landing-register-btn"
-                  className="rounded-xl bg-linear-to-t from-[#1458B8] to-[#3FA9F5] px-3 py-1.5 sm:px-4 sm:py-2 text-xs sm:text-sm font-semibold text-white shadow-[inset_0_1px_1px_rgba(255,255,255,0.4),0_10px_28px_rgba(20,88,184,0.28)] hover:brightness-110 transition whitespace-nowrap"
+                  className="rounded-xl bg-linear-to-t from-[#1458B8] to-[#3FA9F5] px-3 py-1.5 sm:px-4 sm:py-2 text-xs sm:text-sm font-semibold text-white shadow-[inset_0_1px_1px_rgba(255,255,255,0.4),0_10px_28px_rgba(20,88,184,0.28)] hover:brightness-110 transition text-wrap-balance text-center"
                 >
                   {t('public.landing.register', 'Register')}
                 </Link>

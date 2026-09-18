@@ -35,11 +35,11 @@ export function HomePage() {
               className="mx-auto mb-7 h-24 w-24 rounded-full object-cover sm:h-28 sm:w-28"
             />
 
-            <div className="mx-auto w-max">
-              <h1 className="text-4xl font-extrabold tracking-tight text-text sm:text-6xl lg:text-7xl">
+            <div className="mx-auto w-full max-w-fit">
+              <h1 className="text-4xl font-extrabold tracking-tight text-text sm:text-6xl lg:text-7xl break-words whitespace-normal text-wrap-balance">
                 Handelingen Ministries
               </h1>
-              <div className="mt-4 flex w-full justify-between text-sm font-extrabold uppercase text-[#1458B8] dark:text-[#3FA9F5]">
+              <div className="mt-4 flex flex-wrap w-full justify-between text-sm font-extrabold uppercase text-[#1458B8] dark:text-[#3FA9F5]">
                 {"INTERNATIONAL".split('').map((char, i) => (
                   <span key={i}>{char}</span>
                 ))}
