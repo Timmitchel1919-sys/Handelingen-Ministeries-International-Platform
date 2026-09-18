@@ -158,7 +158,7 @@ export function GlobalPublicHeader({ onRegister }: GlobalPublicHeaderProps) {
           {isInstallable && (
             <button
               onClick={installPWA}
-              className="flex items-center gap-2 rounded-full bg-[#1458B8] px-3 py-2 text-xs font-semibold text-white shadow-md transition hover:bg-[#0f4798] whitespace-nowrap"
+              className="flex items-center gap-2 rounded-full bg-gradient-to-t from-[#1458B8] to-[#3FA9F5] px-3 py-2 text-xs font-semibold text-white shadow-[inset_0_1px_1px_rgba(255,255,255,0.4),0_10px_28px_rgba(20,88,184,0.28)] hover:brightness-110 transition whitespace-nowrap"
             >
               <Icon name="monitor" size={14} />
               <span className="hidden sm:inline">Download App</span>
@@ -184,7 +184,7 @@ export function GlobalPublicHeader({ onRegister }: GlobalPublicHeaderProps) {
                   id="landing-register-btn"
                   aria-label={t('public.landing.register')}
                   onClick={onRegister}
-                  className="hidden rounded-xl bg-[#1458B8] px-4 py-2 text-sm font-semibold text-white shadow-md transition hover:bg-[#0f4798] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#3FA9F5] sm:inline-flex"
+                  className="hidden rounded-xl bg-gradient-to-t from-[#1458B8] to-[#3FA9F5] px-4 py-2 text-sm font-semibold text-white shadow-[inset_0_1px_1px_rgba(255,255,255,0.4),0_10px_28px_rgba(20,88,184,0.28)] hover:brightness-110 transition focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#3FA9F5] sm:inline-flex"
                 >
                   {t('public.landing.register')}
                 </button>
@@ -192,7 +192,7 @@ export function GlobalPublicHeader({ onRegister }: GlobalPublicHeaderProps) {
                 <Link
                   to="/select-church"
                   id="landing-register-btn"
-                  className="hidden rounded-xl bg-[#1458B8] px-4 py-2 text-sm font-semibold text-white shadow-md transition hover:bg-[#0f4798] sm:inline-flex"
+                  className="hidden rounded-xl bg-gradient-to-t from-[#1458B8] to-[#3FA9F5] px-4 py-2 text-sm font-semibold text-white shadow-[inset_0_1px_1px_rgba(255,255,255,0.4),0_10px_28px_rgba(20,88,184,0.28)] hover:brightness-110 transition sm:inline-flex"
                 >
                   {t('public.landing.register')}
                 </Link>
