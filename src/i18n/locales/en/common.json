@@ -206,7 +206,40 @@
       "passwordsDoNotMatch": "Passwords do not match.",
       "displayNameRequired": "Full name is required.",
       "displayNameTooShort": "Full name is too short.",
-      "displayNameTooLong": "Full name is too long."
+      "displayNameTooLong": "Full name is too long.",
+      "dob": "Date of Birth",
+      "gender": "Gender",
+      "maritalStatus": "Marital Status",
+      "emergencyContact1": "Emergency Contact 1",
+      "relationship1": "Relationship 1",
+      "emergencyContact2": "Emergency Contact 2",
+      "relationship2": "Relationship 2",
+      "country": "Country",
+      "districtCity": "District / City",
+      "address": "Address",
+      "phone": "Phone Number"
+    },
+    "registerWizard": {
+      "step1": "Personal Info",
+      "step2": "Background",
+      "step3": "Ministry Interest",
+      "step4": "Contact",
+      "previous": "Previous",
+      "next": "Next",
+      "submit": "Register",
+      "success": {
+        "title": "VERIFY YOUR EMAIL IN GMAIL",
+        "subtitle": "We've sent a verification link to your email."
+      },
+      "ministries": {
+        "media": "Media & Technology",
+        "praise": "Praise Team",
+        "youth": "Youth Ministry",
+        "children": "Children Ministry",
+        "evangelism": "Evangelism Team",
+        "usher": "Usher",
+        "facility": "Facility Team"
+      }
     }
   },
   "public": {

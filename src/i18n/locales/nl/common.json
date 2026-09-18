@@ -206,7 +206,40 @@
       "passwordsDoNotMatch": "Wachtwoorden komen niet overeen.",
       "displayNameRequired": "Volledige naam is verplicht.",
       "displayNameTooShort": "Volledige naam is te kort.",
-      "displayNameTooLong": "Volledige naam is te lang."
+      "displayNameTooLong": "Volledige naam is te lang.",
+      "dob": "Geboortedatum",
+      "gender": "Geslacht",
+      "maritalStatus": "Burgerlijke staat",
+      "emergencyContact1": "Contactpersoon nood 1",
+      "relationship1": "Relatie 1",
+      "emergencyContact2": "Contactpersoon nood 2",
+      "relationship2": "Relatie 2",
+      "country": "Land",
+      "districtCity": "District / Stad",
+      "address": "Adres",
+      "phone": "Telefoonnummer"
+    },
+    "registerWizard": {
+      "step1": "Persoonlijke gegevens",
+      "step2": "Achtergrond",
+      "step3": "Bediening",
+      "step4": "Contact",
+      "previous": "Vorige",
+      "next": "Volgende",
+      "submit": "Registreren",
+      "success": {
+        "title": "BEVESTIG JE EMAIL IN GMAIL",
+        "subtitle": "We hebben een verificatielink naar je e-mailadres gestuurd."
+      },
+      "ministries": {
+        "media": "Media & Technology",
+        "praise": "Praise Team",
+        "youth": "Youth Ministry",
+        "children": "Children Ministry",
+        "evangelism": "Evangelism Team",
+        "usher": "Usher",
+        "facility": "Facility Team"
+      }
     }
   },
   "public": {

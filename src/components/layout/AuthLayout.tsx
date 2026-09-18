@@ -34,7 +34,7 @@ export function AuthLayout({
               onClick={() => navigate(-1)}
               className="flex items-center gap-1.5 rounded-full border border-white/65 bg-surface/30 px-3 py-2 text-xs font-semibold text-[var(--color-text)] shadow-sm backdrop-blur-xl hover:bg-surface/40 transition"
             >
-              <Icon name="arrow-left" size={15} />
+              <Icon name="chevron-left" size={15} />
               {t('common.back', 'Back')}
             </button>
             <div className="flex items-center gap-2">
