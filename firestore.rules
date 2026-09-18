@@ -168,6 +168,36 @@ service cloud.firestore {
       allow read, update, delete: if sameChurch(resource.data.churchId) && staff(resource.data.churchId);
       allow create: if sameChurch(request.resource.data.churchId) && staff(request.resource.data.churchId);
     }
+    match /groups/{id} {
+      allow read: if sameChurch(resource.data.churchId);
+      allow create: if staff(request.resource.data.churchId);
+      allow update, delete: if staff(resource.data.churchId);
+    }
+    match /groupMemberships/{id} {
+      allow read: if sameChurch(resource.data.churchId);
+      allow create: if staff(request.resource.data.churchId);
+      allow update, delete: if staff(resource.data.churchId);
+    }
+    match /servingTeams/{id} {
+      allow read: if sameChurch(resource.data.churchId);
+      allow create: if staff(request.resource.data.churchId);
+      allow update, delete: if staff(resource.data.churchId);
+    }
+    match /servingRoles/{id} {
+      allow read: if sameChurch(resource.data.churchId);
+      allow create: if staff(request.resource.data.churchId);
+      allow update, delete: if staff(resource.data.churchId);
+    }
+    match /volunteerProfiles/{id} {
+      allow read: if sameChurch(resource.data.churchId);
+      allow create: if sameChurch(request.resource.data.churchId) && (staff(request.resource.data.churchId) || request.auth.uid == request.resource.data.memberId);
+      allow update, delete: if sameChurch(resource.data.churchId) && (staff(resource.data.churchId) || request.auth.uid == resource.data.memberId);
+    }
+    match /serviceAssignments/{id} {
+      allow read: if sameChurch(resource.data.churchId);
+      allow create: if sameChurch(request.resource.data.churchId) && (staff(request.resource.data.churchId) || request.auth.uid == request.resource.data.memberId);
+      allow update, delete: if sameChurch(resource.data.churchId) && (staff(resource.data.churchId) || request.auth.uid == resource.data.memberId);
+    }
     match /{document=**} { allow read, write: if false; }
   }
 }

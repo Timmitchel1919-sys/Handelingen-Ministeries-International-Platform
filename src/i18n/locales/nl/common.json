@@ -40,7 +40,9 @@
     "pageActions": "Pagina-acties",
     "hrm": "HRM",
     "organization": "Organisatie",
-    "teams": "Teams"
+    "teams": "Teams",
+    "scheduling": "Planning",
+    "myServing": "Mijn Diensten"
   },
   "search": {
     "title": "Zoeken",
@@ -380,6 +382,113 @@
       "CANCELLED": "Geannuleerd",
       "ATTENDED": "Aanwezig",
       "NO_SHOW": "Niet Verschenen"
+    }
+  },
+  "groups": {
+    "dashboard": {
+      "title": "Groepen",
+      "description": "Beheer kerkgroepen en bedieningen",
+      "newGroup": "Groep Aanmaken",
+      "emptyTitle": "Geen Groepen Gevonden",
+      "emptyDescription": "Begin met het aanmaken van uw eerste groep.",
+      "name": "Naam",
+      "type": "Type",
+      "status": "Status"
+    },
+    "create": {
+      "title": "Groep Aanmaken",
+      "description": "Voeg een nieuwe groep of bediening toe aan uw kerk.",
+      "submit": "Groep Aanmaken"
+    },
+    "edit": {
+      "title": "Groep Bewerken",
+      "description": "Bewerk groepsgegevens.",
+      "loading": "Laden...",
+      "error": "Fout"
+    },
+    "details": {
+      "loading": "Groep Laden...",
+      "error": "Fout",
+      "noDescription": "Geen beschrijving opgegeven",
+      "edit": "Groep Bewerken",
+      "overview": "Overzicht",
+      "members": "Leden",
+      "addMember": "Toevoegen",
+      "noMembers": "Nog geen leden."
+    },
+    "fields": {
+      "name": "Groepsnaam",
+      "description": "Beschrijving",
+      "type": "Groepstype",
+      "status": "Status",
+      "location": "Locatie",
+      "schedule": "Bijeenkomstschema",
+      "capacity": "Capaciteit",
+      "visibility": "Zichtbaarheid"
+    },
+    "types": {
+      "bibleStudy": "Bijbelstudie",
+      "prayer": "Gebedsgroep",
+      "home": "Huisgroep",
+      "youth": "Jeugd",
+      "youngAdults": "Jongvolwassenen",
+      "men": "Mannen",
+      "women": "Vrouwen",
+      "marriage": "Huwelijk",
+      "discipleship": "Discipelschap",
+      "leadership": "Leiderschap",
+      "other": "Overig"
+    },
+    "visibility": {
+      "public": "Openbaar (Zichtbaar voor iedereen)",
+      "private": "Privé (Alleen op uitnodiging)"
+    },
+    "status": {
+      "active": "Actief",
+      "inactive": "Inactief",
+      "archived": "Gearchiveerd"
+    },
+    "loading": "Groepen laden..."
+  },
+  "scheduling": {
+    "title": "Planningsbord",
+    "description": "Beheer vrijwilligersplanningen en teamaanwijzingen.",
+    "board": "Bord",
+    "teamLeader": "Teamleider Dashboard",
+    "openRoles": "Open Rollen",
+    "assigned": "Toegewezen",
+    "unassigned": "Niet Toegewezen",
+    "assign": "Vrijwilliger Toewijzen",
+    "noEvents": "Geen evenementen gevonden."
+  },
+  "myServing": {
+    "title": "Mijn Diensten",
+    "description": "Bekijk en beheer je dienstrooster.",
+    "upcoming": "Aankomende Diensten",
+    "accept": "Accepteren",
+    "decline": "Weigeren",
+    "availability": "Beschikbaarheid Beheren",
+    "unavailableDates": "Onbeschikbare Data",
+    "noAssignments": "Geen aankomende diensten."
+  },
+  "servingTeams": {
+    "title": "Serving Teams",
+    "create": "Create Serving Team",
+    "edit": "Edit Team",
+    "dashboard": "Dashboard",
+    "roles": "Roles",
+    "members": "Members"
+  },
+  "volunteers": {
+    "title": "Volunteers",
+    "directory": "Directory",
+    "profile": "Volunteer Profile",
+    "status": {
+      "INTERESTED": "Interested",
+      "PENDING": "Pending",
+      "ACTIVE": "Active",
+      "PAUSED": "Paused",
+      "INACTIVE": "Inactive"
     }
   }
 }

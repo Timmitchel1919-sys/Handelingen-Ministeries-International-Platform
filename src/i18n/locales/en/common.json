@@ -40,7 +40,9 @@
     "pageActions": "Page actions",
     "hrm": "HRM",
     "organization": "Organization",
-    "teams": "Teams"
+    "teams": "Teams",
+    "scheduling": "Scheduling",
+    "myServing": "My Serving"
   },
   "search": {
     "title": "Search",
@@ -380,6 +382,113 @@
       "CANCELLED": "Cancelled",
       "ATTENDED": "Attended",
       "NO_SHOW": "No Show"
+    }
+  },
+  "groups": {
+    "dashboard": {
+      "title": "Groups",
+      "description": "Manage church groups and ministries",
+      "newGroup": "Create Group",
+      "emptyTitle": "No Groups Found",
+      "emptyDescription": "Get started by creating your first group.",
+      "name": "Name",
+      "type": "Type",
+      "status": "Status"
+    },
+    "create": {
+      "title": "Create Group",
+      "description": "Add a new group or ministry to your church.",
+      "submit": "Create Group"
+    },
+    "edit": {
+      "title": "Edit Group",
+      "description": "Update group details.",
+      "loading": "Loading...",
+      "error": "Error"
+    },
+    "details": {
+      "loading": "Loading Group...",
+      "error": "Error",
+      "noDescription": "No description provided",
+      "edit": "Edit Group",
+      "overview": "Overview",
+      "members": "Members",
+      "addMember": "Add",
+      "noMembers": "No members yet."
+    },
+    "fields": {
+      "name": "Group Name",
+      "description": "Description",
+      "type": "Group Type",
+      "status": "Status",
+      "location": "Location",
+      "schedule": "Meeting Schedule",
+      "capacity": "Capacity",
+      "visibility": "Visibility"
+    },
+    "types": {
+      "bibleStudy": "Bible Study",
+      "prayer": "Prayer Group",
+      "home": "Home Group",
+      "youth": "Youth",
+      "youngAdults": "Young Adults",
+      "men": "Men",
+      "women": "Women",
+      "marriage": "Marriage",
+      "discipleship": "Discipleship",
+      "leadership": "Leadership",
+      "other": "Other"
+    },
+    "visibility": {
+      "public": "Public (Visible to all)",
+      "private": "Private (Invite only)"
+    },
+    "status": {
+      "active": "Active",
+      "inactive": "Inactive",
+      "archived": "Archived"
+    },
+    "loading": "Loading groups..."
+  },
+  "scheduling": {
+    "title": "Scheduling Board",
+    "description": "Manage volunteer schedules and team assignments.",
+    "board": "Board",
+    "teamLeader": "Team Leader Dashboard",
+    "openRoles": "Open Roles",
+    "assigned": "Assigned",
+    "unassigned": "Unassigned",
+    "assign": "Assign Volunteer",
+    "noEvents": "No events found."
+  },
+  "myServing": {
+    "title": "My Serving",
+    "description": "View and manage your serving schedule.",
+    "upcoming": "Upcoming Assignments",
+    "accept": "Accept",
+    "decline": "Decline",
+    "availability": "Manage Availability",
+    "unavailableDates": "Unavailable Dates",
+    "noAssignments": "No upcoming assignments."
+  },
+  "servingTeams": {
+    "title": "Serving Teams",
+    "create": "Create Serving Team",
+    "edit": "Edit Team",
+    "dashboard": "Dashboard",
+    "roles": "Roles",
+    "members": "Members"
+  },
+  "volunteers": {
+    "title": "Volunteers",
+    "directory": "Directory",
+    "profile": "Volunteer Profile",
+    "status": {
+      "INTERESTED": "Interested",
+      "PENDING": "Pending",
+      "ACTIVE": "Active",
+      "PAUSED": "Paused",
+      "INACTIVE": "Inactive"
     }
   }
 }

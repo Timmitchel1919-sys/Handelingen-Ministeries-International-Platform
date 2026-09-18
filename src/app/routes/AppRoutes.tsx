@@ -22,6 +22,11 @@ import { SettingsPage } from '@/features/settings/SettingsPage';
 import { NotFoundPage } from '@/app/routes/NotFoundPage';
 import { HRMRoutes } from '@/features/hrm/HRMRoutes';
 import { OrganizationRoutes } from '@/features/organization/OrganizationRoutes';
+import { ServingTeamsRoutes } from '@/features/serving-teams/ServingTeamsRoutes';
+import { VolunteersRoutes } from '@/features/volunteers/VolunteersRoutes';
+import { GroupsRoutes } from '@/features/groups/GroupsRoutes';
+import { SchedulingRoutes } from '@/features/scheduling/SchedulingRoutes';
+import { MyServingRoutes } from '@/features/my-serving/MyServingRoutes';
 
 /**
  * Central route table.
@@ -67,6 +72,7 @@ export function AppRoutes() {
             <Route path="/dashboard" element={<DashboardPage />} />
             <Route path="/members" element={<MembersPage />} />
             <Route path="/leaders" element={<LeadersPage />} />
+            <Route path="/groups/*" element={<GroupsRoutes />} />
             <Route path="/events/*" element={<EventsRoutes />} />
             <Route path="/documents" element={<DocumentsPage />} />
             <Route path="/tasks" element={<TasksPage />} />
@@ -74,7 +80,11 @@ export function AppRoutes() {
             <Route path="/notifications" element={<NotificationsPage />} />
             <Route path="/settings" element={<SettingsPage />} />
             <Route path="/organization/*" element={<OrganizationRoutes />} />
+            <Route path="/serving-teams/*" element={<ServingTeamsRoutes />} />
+            <Route path="/volunteers/*" element={<VolunteersRoutes />} />
             <Route path="/hrm/*" element={<HRMRoutes />} />
+            <Route path="/scheduling/*" element={<SchedulingRoutes />} />
+            <Route path="/my-serving/*" element={<MyServingRoutes />} />
           </Route>
         </Route>
       </Route>
