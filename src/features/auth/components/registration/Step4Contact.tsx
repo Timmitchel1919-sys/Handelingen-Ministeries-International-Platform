@@ -35,16 +35,12 @@ export function Step4Contact({ data, updateData, onSubmit, onPrev, isSubmitting,
   return (
     <form onSubmit={handleSubmit} className="flex flex-col gap-5">
       <div className="relative">
-        {prefix && (
-          <span className="absolute left-3 top-[34px] -translate-y-1/2 text-sm text-[var(--color-text)]/50 z-10">
-            {prefix}
-          </span>
-        )}
         <Input
           label={t('auth.validation.phone')}
           value={data.phone || ''}
           onChange={(e) => updateData({ phone: e.target.value })}
-          className={prefix ? 'pl-14' : ''}
+          className={prefix ? 'pl-16' : ''}
+          icon={prefix ? <span className="font-bold text-text-muted">{prefix}</span> : undefined}
           required
           error={errors.phone ? t(errors.phone) : undefined}
         />
@@ -80,7 +76,7 @@ export function Step4Contact({ data, updateData, onSubmit, onPrev, isSubmitting,
         <Button type="button" variant="outline" size="lg" onClick={onPrev} className="flex-1" disabled={isSubmitting}>
           {t('auth.registerWizard.previous')}
         </Button>
-        <Button type="submit" size="lg" className="flex-1" isLoading={isSubmitting}>
+        <Button type="submit" size="lg" className="flex-1 bg-linear-to-b from-[#3FA9F5] to-[#1458B8] border border-white/20 text-white shadow-[0_10px_28px_rgba(20,88,184,0.4),inset_0_2px_4px_rgba(255,255,255,0.4)] hover:from-[#5BC0FF] hover:to-[#0f4798]" isLoading={isSubmitting}>
           {t('auth.registerWizard.submit')}
         </Button>
       </div>

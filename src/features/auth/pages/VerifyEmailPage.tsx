@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Navigate } from 'react-router-dom';
 
@@ -8,6 +8,7 @@ import { Icon } from '@/components/ui/icons';
 import { useAuth } from '@/features/auth/AuthContext';
 import type { AuthAppError } from '@/lib/auth-errors';
 import { refreshCurrentUser, resendVerificationEmail, signOutCurrentUser } from '@/services/auth-service';
+import { activateVerifiedAccount } from '@/services/user-profile-service';
 
 /**
  * Email-verification gate (Layer 1 spec section 8).
@@ -26,7 +27,13 @@ export function VerifyEmailPage() {
   const [isChecking, setIsChecking] = useState(false);
   const [message, setMessage] = useState<{ tone: 'success' | 'error'; text: string } | null>(null);
 
-  if (user?.emailVerified) {
+  useEffect(() => {
+    if (user?.emailVerified && user?.accountStatus === 'pending') {
+      activateVerifiedAccount(user.id).then(() => refreshProfile());
+    }
+  }, [user?.emailVerified, user?.accountStatus, user?.id, refreshProfile]);
+
+  if (user?.emailVerified && user?.accountStatus !== 'pending') {
     return <Navigate to="/dashboard" replace />;
   }
 
@@ -51,10 +58,15 @@ export function VerifyEmailPage() {
     setIsChecking(true);
     setMessage(null);
     try {
-      await refreshCurrentUser(firebaseUser);
-      await refreshProfile();
-      if (!firebaseUser.emailVerified) {
+      const refreshedUser = await refreshCurrentUser(firebaseUser);
+      if (!refreshedUser.emailVerified) {
         setMessage({ tone: 'error', text: t('auth.verifyEmail.stillNotVerified') });
+      } else {
+        // If verified, activate account if it is still pending
+        if (user && user.accountStatus === 'pending') {
+          await activateVerifiedAccount(user.id);
+          await refreshProfile();
+        }
       }
     } catch (cause) {
       setMessage({ tone: 'error', text: t((cause as AuthAppError).messageKey) });

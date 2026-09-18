@@ -1,5 +1,5 @@
-import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router-dom';
 
 import { appConfig } from '@/app/config/app.config';
 import { GlobalPublicHeader } from '@/components/public/GlobalPublicHeader';
@@ -8,22 +8,19 @@ import { Icon } from '@/components/ui/icons';
 
 import { CurvedTransition } from './components/CurvedTransition';
 import { LandingFeatures } from './components/LandingFeatures';
-import { RegistrationModal } from './components/RegistrationModal';
 
 export function HomePage() {
   const { t } = useTranslation();
-  const [registrationOpen, setRegistrationOpen] = useState(false);
+  const navigate = useNavigate();
 
   return (
     <SkyBackground>
       {/*
-       * The header is now position:fixed so we do NOT render it inside the
-       * normal flow. It is rendered outside SkyBackground's z-10 wrapper so
-       * the fixed positioning is not clipped by a transform ancestor.
-       * We add pt-28 (≈ header height 64px + 12px top padding × 2 + 4px gap)
+       * GlobalPublicHeader is fixed to the top and is ~64px tall.
+       * We add pt-28 (≈ header height 64px + 12px top padding * 2 + 4px gap)
        * to the hero section to compensate.
        */}
-      <GlobalPublicHeader onRegister={() => setRegistrationOpen(true)} />
+      <GlobalPublicHeader onRegister={() => navigate('/select-church')} />
 
       <main>
         {/* Hero section — pt-28 compensates for the fixed header height */}
@@ -65,43 +62,56 @@ export function HomePage() {
                * Primary CTA — opens the in-page registration modal.
                * The Get Started link now mirrors the Register button behavior.
                */}
-              <button
-                type="button"
-                id="hero-register-btn"
-                onClick={() => setRegistrationOpen(true)}
-                className="inline-flex h-12 items-center justify-center gap-2 rounded-2xl bg-gradient-to-t from-[#1458B8] to-[#3FA9F5] px-8 text-sm font-bold text-white shadow-[inset_0_1px_1px_rgba(255,255,255,0.4),0_10px_28px_rgba(20,88,184,0.28)] transition duration-200 hover:brightness-110 hover:shadow-[0_14px_35px_rgba(20,88,184,0.34)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#3FA9F5]"
-              >
-                {t('public.landing.register')}
-                <Icon name="arrow-right" size={17} />
-              </button>
-
-              <a
-                href="#features"
-                className="inline-flex h-12 items-center justify-center rounded-2xl border border-white/70 bg-surface/30 px-8 text-sm font-bold text-primary shadow-sm backdrop-blur-xl transition duration-200 hover:bg-surface/50"
-              >
-                {t('public.landing.learnMore')}
-              </a>
+              <div className="mt-8 flex justify-center gap-4">
+                <button
+                  type="button"
+                  id="hero-register-btn"
+                  onClick={() => navigate('/select-church')}
+                  className="inline-flex h-12 items-center justify-center gap-2 rounded-2xl bg-gradient-to-t from-[#1458B8] to-[#3FA9F5] px-8 text-sm font-bold text-white shadow-[inset_0_1px_1px_rgba(255,255,255,0.4),0_10px_28px_rgba(20,88,184,0.28)] transition duration-200 hover:brightness-110 hover:shadow-[0_14px_35px_rgba(20,88,184,0.34)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#3FA9F5]"
+                >
+                  {t('public.landing.register')}
+                  <Icon name="arrow-right" size={17} />
+                </button>
+              </div>
             </div>
           </div>
         </section>
 
-        <CurvedTransition />
-
         <LandingFeatures />
 
-        <footer className="bg-[var(--color-background)] dark:bg-white px-4 pb-8 text-center sm:px-6">
-          <div className="mx-auto max-w-7xl border-t border-[#1458B8]/20 pt-7 text-sm font-medium text-[#173b70] dark:text-[#081b31]">
-            {t('appName')} — {t('public.landing.tagline')} — ©{' '}
-            {new Date().getFullYear()}
+        {/* Diagonal transition back to white */}
+        <CurvedTransition />
+
+        {/* Light theme features or footer area */}
+        <section className="relative z-10 bg-surface pb-24 pt-16">
+          <div className="mx-auto max-w-7xl px-4 sm:px-6">
+            <div className="rounded-3xl border border-white/55 bg-gradient-to-br from-[#1458B8]/5 to-transparent p-8 text-center sm:p-12">
+              <h2 className="text-2xl font-bold tracking-tight text-text sm:text-3xl">
+                {t('public.landing.readyToJoin')}
+              </h2>
+              <p className="mx-auto mt-4 max-w-2xl text-[var(--color-text)]/70">
+                {t('public.landing.joinDescription')}
+              </p>
+              <button
+                type="button"
+                onClick={() => navigate('/select-church')}
+                className="mt-8 inline-flex h-12 items-center justify-center gap-2 rounded-2xl bg-[#1458B8] px-8 text-sm font-bold text-white shadow-lg transition hover:bg-[#0f4798]"
+              >
+                {t('public.landing.createAccount')}
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <footer className="relative z-10 border-t border-border bg-surface py-12">
+          <div className="mx-auto max-w-7xl px-4 text-center sm:px-6">
+            <p className="text-sm text-[var(--color-text)]/60">
+              © {new Date().getFullYear()} Handelingen Ministries International.
+              All rights reserved.
+            </p>
           </div>
         </footer>
       </main>
-
-      {/* In-page registration modal */}
-      <RegistrationModal
-        open={registrationOpen}
-        onClose={() => setRegistrationOpen(false)}
-      />
     </SkyBackground>
   );
 }
