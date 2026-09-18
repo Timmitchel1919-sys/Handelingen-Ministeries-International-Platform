@@ -248,7 +248,11 @@
     "navigation": {
       "home": "Home",
       "community": "Community",
-      "bible": "Bible Center"
+      "bible": "Bible Center",
+      "services": "Services",
+      "churches": "Churches",
+      "aboutUs": "About Us",
+      "contact": "Contact"
     },
     "landing": {
       "international": "International",

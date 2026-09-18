@@ -32,7 +32,7 @@ export function AuthLayout({
             <button
               type="button"
               onClick={() => navigate(-1)}
-              className="flex items-center gap-1.5 rounded-full border border-white/65 bg-surface/30 px-3 py-2 text-xs font-semibold text-[var(--color-text)] shadow-sm backdrop-blur-xl hover:bg-surface/40 transition"
+              className="flex items-center gap-1.5 rounded-full border border-white/65 bg-surface/30 px-3 py-2 text-xs font-semibold text-text shadow-sm backdrop-blur-xl hover:bg-surface/40 transition"
             >
               <Icon name="chevron-left" size={15} />
               {t('common.back', 'Back')}
@@ -44,7 +44,7 @@ export function AuthLayout({
                   <button
                     type="button"
                     aria-label={t('common.language')}
-                    className="flex items-center gap-1.5 rounded-full border border-white/65 bg-surface/30 px-3 py-2 text-xs font-semibold text-[var(--color-text)] shadow-sm backdrop-blur-xl"
+                    className="flex items-center gap-1.5 rounded-full border border-white/65 bg-surface/30 px-3 py-2 text-xs font-semibold text-text shadow-sm backdrop-blur-xl"
                   >
                     <Icon name="globe" size={15} />
                     {i18n.language.toUpperCase()}
@@ -64,7 +64,7 @@ export function AuthLayout({
                   <button
                     type="button"
                     aria-label={t('common.theme')}
-                    className="flex h-9 w-9 items-center justify-center rounded-full border border-white/65 bg-surface/30 text-[var(--color-text)] shadow-sm backdrop-blur-xl"
+                    className="flex h-9 w-9 items-center justify-center rounded-full border border-white/65 bg-surface/30 text-text shadow-sm backdrop-blur-xl"
                   >
                     <Icon
                       name={
@@ -114,12 +114,12 @@ export function AuthLayout({
                     className="mx-auto mb-5 h-20 w-20 rounded-full object-cover"
                   />
 
-                  <h1 className="mt-7 text-2xl font-bold text-[var(--color-text)] sm:text-3xl">
+                  <h1 className="mt-7 text-2xl font-bold text-text sm:text-3xl">
                     {title}
                   </h1>
 
                   {description && (
-                    <p className="mx-auto mt-2 max-w-md text-sm leading-6 text-[var(--color-text)]/70">
+                    <p className="mx-auto mt-2 max-w-md text-sm leading-6 text-text/70">
                       {description}
                     </p>
                   )}

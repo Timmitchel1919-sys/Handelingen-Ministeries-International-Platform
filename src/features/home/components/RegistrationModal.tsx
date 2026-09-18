@@ -392,7 +392,7 @@ function AccountStep({ church, onClose }: AccountStepProps) {
                 <option value="male" className="bg-white text-black">Male</option>
                 <option value="female" className="bg-white text-black">Female</option>
               </select>
-              <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-[var(--color-primary)]"><Icon name="chevron-down" size={17} /></span>
+              <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-primary"><Icon name="chevron-down" size={17} /></span>
             </div>
           </div>
         </div>
@@ -411,7 +411,7 @@ function AccountStep({ church, onClose }: AccountStepProps) {
                 <option value="Netherlands" className="bg-white text-black">Netherlands</option>
                 <option value="Other" className="bg-white text-black">Other</option>
               </select>
-              <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-[var(--color-primary)]"><Icon name="chevron-down" size={17} /></span>
+              <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-primary"><Icon name="chevron-down" size={17} /></span>
             </div>
           </div>
           <Input
@@ -476,7 +476,7 @@ function AccountStep({ church, onClose }: AccountStepProps) {
                     </>
                   )}
                 </select>
-                <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-[var(--color-primary)]"><Icon name="chevron-down" size={17} /></span>
+                <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-primary"><Icon name="chevron-down" size={17} /></span>
               </div>
             </div>
           ) : (
@@ -501,7 +501,7 @@ function AccountStep({ church, onClose }: AccountStepProps) {
                 <option value="divorced" className="bg-white text-black">Divorced</option>
                 <option value="widowed" className="bg-white text-black">Widowed</option>
               </select>
-              <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-[var(--color-primary)]"><Icon name="chevron-down" size={17} /></span>
+              <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-primary"><Icon name="chevron-down" size={17} /></span>
             </div>
           </div>
         </div>
@@ -520,7 +520,7 @@ function AccountStep({ church, onClose }: AccountStepProps) {
                 <option value="guest" className="bg-white text-black">Guest</option>
                 <option value="partner" className="bg-white text-black">Partner</option>
               </select>
-              <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-[var(--color-primary)]"><Icon name="chevron-down" size={17} /></span>
+              <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-primary"><Icon name="chevron-down" size={17} /></span>
             </div>
           </div>
           <Input
@@ -558,12 +558,12 @@ function AccountStep({ church, onClose }: AccountStepProps) {
 
         <div className="grid gap-4 sm:grid-cols-1">
           <div className="flex flex-col gap-1.5">
-            <label className="text-[13px] font-semibold text-[var(--color-text)]">Ministry Interest</label>
+            <label className="text-[13px] font-semibold text-text">Ministry Interest</label>
             <div className="relative">
               <select
                 value={ministryInterest}
                 onChange={(e) => setMinistryInterest(e.target.value)}
-                className="h-12 w-full appearance-none rounded-2xl border border-white/70 bg-surface/30 px-4 text-sm text-[var(--color-text)] outline-none backdrop-blur-md transition duration-200 focus:border-[#3FA9F5] focus:bg-surface/45 focus:ring-2 focus:ring-[#3FA9F5]/20"
+                className="h-12 w-full appearance-none rounded-2xl border border-white/70 bg-surface/30 px-4 text-sm text-text outline-none backdrop-blur-md transition duration-200 focus:border-[#3FA9F5] focus:bg-surface/45 focus:ring-2 focus:ring-[#3FA9F5]/20"
               >
                 <option value="" className="bg-white text-black"></option>
                 <option value="choir" className="bg-white text-black">Choir</option>
@@ -574,7 +574,7 @@ function AccountStep({ church, onClose }: AccountStepProps) {
                 <option value="evangelism" className="bg-white text-black">Evangelism</option>
                 <option value="facility" className="bg-white text-black">Facility</option>
               </select>
-              <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-[var(--color-primary)]"><Icon name="chevron-down" size={17} /></span>
+              <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-primary"><Icon name="chevron-down" size={17} /></span>
             </div>
           </div>
         </div>
@@ -605,7 +605,7 @@ function AccountStep({ church, onClose }: AccountStepProps) {
           error={fieldErrors.confirmPassword ? t(fieldErrors.confirmPassword) : undefined}
         />
 
-        <label className="flex cursor-pointer items-start gap-3 text-sm text-[var(--color-text)]/75">
+        <label className="flex cursor-pointer items-start gap-3 text-sm text-text/75">
           <input
             type="checkbox"
             checked={termsAccepted}
@@ -636,7 +636,7 @@ function AccountStep({ church, onClose }: AccountStepProps) {
           Continue with Google
         </Button>
 
-        <Button type="submit" size="lg" isLoading={isSubmitting} className="w-full bg-gradient-to-b from-[#3FA9F5] to-[#1458B8] border border-white/20 text-white shadow-[0_10px_28px_rgba(20,88,184,0.4),inset_0_2px_4px_rgba(255,255,255,0.4)] hover:from-[#5BC0FF] hover:to-[#0f4798]">
+        <Button type="submit" size="lg" isLoading={isSubmitting} className="w-full bg-linear-to-b from-[#3FA9F5] to-[#1458B8] border border-white/20 text-white shadow-[0_10px_28px_rgba(20,88,184,0.4),inset_0_2px_4px_rgba(255,255,255,0.4)] hover:from-[#5BC0FF] hover:to-[#0f4798]">
           Register
           <Icon name="arrow-right" size={17} />
         </Button>
@@ -718,7 +718,7 @@ export function RegistrationModal({ open, onClose }: RegistrationModalProps) {
   return createPortal(
     <div
       role="presentation"
-      className="fixed inset-0 z-[200] flex items-center justify-center p-4"
+      className="fixed inset-0 z-200 flex items-center justify-center p-4"
       onMouseDown={(e) => {
         if (e.target === e.currentTarget) onClose();
       }}
@@ -756,13 +756,13 @@ export function RegistrationModal({ open, onClose }: RegistrationModalProps) {
             <button
               type="button"
               onClick={() => setStep('church')}
-              className="absolute left-6 flex h-9 w-9 items-center justify-center text-[var(--color-text)]/60 transition hover:text-[var(--color-text)]"
+              className="absolute left-6 flex h-9 w-9 items-center justify-center text-text/60 transition hover:text-text"
             >
               <Icon name="chevron-left" size={20} />
             </button>
           )}
 
-          <h2 id={titleId} className="text-xl font-extrabold tracking-tight text-[var(--color-text)]">
+          <h2 id={titleId} className="text-xl font-extrabold tracking-tight text-text">
             {t('public.landing.registerModalTitle')}
           </h2>
         </div>

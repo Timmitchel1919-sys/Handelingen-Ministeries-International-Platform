@@ -27,13 +27,17 @@ import { VolunteersRoutes } from '@/features/volunteers/VolunteersRoutes';
 import { GroupsRoutes } from '@/features/groups/GroupsRoutes';
 import { SchedulingRoutes } from '@/features/scheduling/SchedulingRoutes';
 import { MyServingRoutes } from '@/features/my-serving/MyServingRoutes';
+import { ServicesPage } from '@/features/public/pages/ServicesPage';
+import { ChurchesPage } from '@/features/public/pages/ChurchesPage';
+import { AboutUsPage } from '@/features/public/pages/AboutUsPage';
+import { ContactPage } from '@/features/public/pages/ContactPage';
 
 /**
  * Central route table.
  *
  * Route categories, per the Layer 1 spec (section 19):
  *  - Public: "/", "/select-church", "/register", "/login",
- *    "/forgot-password", "/reset-password" - no guard.
+ *    "/forgot-password", "/reset-password", "/services", "/churches", "/about-us", "/contact" - no guard.
  *  - Authenticated: "/profile" - behind `RequireAuth` only.
  *  - Verified authenticated: every route inside `AppShell` (dashboard and
  *    the other navigation destinations) - behind `RequireAuth` AND
@@ -54,6 +58,10 @@ export function AppRoutes() {
     <Routes>
       {/* Public */}
       <Route path="/" element={<HomePage />} />
+      <Route path="/services" element={<ServicesPage />} />
+      <Route path="/churches" element={<ChurchesPage />} />
+      <Route path="/about-us" element={<AboutUsPage />} />
+      <Route path="/contact" element={<ContactPage />} />
       <Route path="/select-church" element={<SelectChurchPage />} />
       <Route path="/register" element={<RegisterPage />} />
       <Route path="/login" element={<LoginPage />} />

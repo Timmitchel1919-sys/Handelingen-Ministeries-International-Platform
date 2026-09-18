@@ -54,9 +54,9 @@ export function RegisterPage() {
     >
       <RegistrationWizard churchId={selectedChurch.id} />
 
-      <p className="mt-7 text-center text-sm text-[var(--color-text)]/70">
+      <p className="mt-7 text-center text-sm text-text/70">
         {t('auth.alreadyHaveAccount')}{' '}
-        <Link to="/login" className="font-bold text-[var(--color-primary)] hover:underline">
+        <Link to="/login" className="font-bold text-primary hover:underline">
           {t('auth.signIn')}
         </Link>
       </p>

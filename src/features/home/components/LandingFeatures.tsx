@@ -30,15 +30,15 @@ export function LandingFeatures() {
   return (
     <section
       id="features"
-      className="relative bg-[var(--color-background)] dark:bg-white px-4 py-20 sm:px-6 lg:px-8"
+      className="relative bg-background dark:bg-white px-4 py-20 sm:px-6 lg:px-8"
     >
       <div className="mx-auto max-w-7xl">
         <div className="mb-12 text-center">
-          <p className="text-xs font-bold uppercase tracking-[0.22em] text-[var(--color-primary)]">
+          <p className="text-xs font-bold uppercase tracking-[0.22em] text-primary">
             {t('public.landing.featuresEyebrow')}
           </p>
 
-          <h2 className="mt-3 text-3xl font-bold text-[var(--color-text)] dark:text-[#081b31] sm:text-4xl">
+          <h2 className="mt-3 text-3xl font-bold text-text dark:text-[#081b31] sm:text-4xl">
             {t('public.landing.featuresTitle')}
           </h2>
         </div>
@@ -49,15 +49,15 @@ export function LandingFeatures() {
               key={feature.key}
               className="rounded-[28px] border border-[#3FA9F5] dark:border-transparent bg-white/80 dark:bg-[#081b31] p-7 shadow-[0_12px_35px_rgba(23,59,112,0.08)] dark:shadow-xl backdrop-blur-xl transition duration-200 hover:bg-white dark:hover:bg-[#0a1a2f]"
             >
-              <div className="mb-5 flex h-14 w-14 items-center justify-center rounded-full border border-[#3FA9F5]/50 dark:border-white/20 bg-white/50 dark:bg-white/10 text-[var(--color-primary)] shadow-sm">
+              <div className="mb-5 flex h-14 w-14 items-center justify-center rounded-full border border-[#3FA9F5]/50 dark:border-white/20 bg-white/50 dark:bg-white/10 text-primary shadow-sm">
                 <Icon name={feature.icon} size={25} />
               </div>
 
-              <h3 className="text-lg font-bold text-[var(--color-text)] dark:text-white">
+              <h3 className="text-lg font-bold text-text dark:text-white">
                 {t(`public.landing.features.${feature.key}.title`)}
               </h3>
 
-              <p className="mt-2 text-sm leading-6 text-[var(--color-text-muted)] dark:text-white/70">
+              <p className="mt-2 text-sm leading-6 text-text-muted dark:text-white/70">
                 {t(`public.landing.features.${feature.key}.description`)}
               </p>
             </article>

@@ -248,7 +248,11 @@
     "navigation": {
       "home": "Home",
       "community": "Gemeenschap",
-      "bible": "Bijbel Centrum"
+      "bible": "Bijbel Centrum",
+      "services": "Diensten",
+      "churches": "Kerken",
+      "aboutUs": "Over Ons",
+      "contact": "Contact"
     },
     "landing": {
       "international": "International",
