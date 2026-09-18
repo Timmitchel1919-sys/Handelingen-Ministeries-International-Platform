@@ -284,5 +284,69 @@
   "leadership": {
     "assign": "Assign Leader",
     "change": "Change Leader"
+  },
+  "events": {
+    "title": "Events",
+    "create": "Create Event",
+    "edit": "Edit Event",
+    "cancel": "Cancel Event",
+    "details": "Event Details",
+    "calendar": "Calendar",
+    "list": "List",
+    "status": {
+      "DRAFT": "Draft",
+      "PUBLISHED": "Published",
+      "ONGOING": "Ongoing",
+      "COMPLETED": "Completed",
+      "CANCELLED": "Cancelled"
+    },
+    "type": {
+      "CHURCH_SERVICE": "Church Service",
+      "SPECIAL_SERVICE": "Special Service",
+      "PRAYER_MEETING": "Prayer Meeting",
+      "BIBLE_STUDY": "Bible Study",
+      "CONFERENCE": "Conference",
+      "MINISTRY_EVENT": "Ministry Event",
+      "DEPARTMENT_EVENT": "Department Event",
+      "LEADERSHIP_MEETING": "Leadership Meeting",
+      "TRAINING": "Training",
+      "OUTREACH": "Outreach",
+      "MISSION": "Mission",
+      "YOUTH_EVENT": "Youth Event",
+      "CHILDREN_EVENT": "Children Event",
+      "VOLUNTEER_EVENT": "Volunteer Event",
+      "COMMUNITY_EVENT": "Community Event",
+      "OTHER": "Other"
+    },
+    "visibility": {
+      "PUBLIC": "Public",
+      "MEMBERS": "Members",
+      "CHURCH_ONLY": "Church Only",
+      "MINISTRY_ONLY": "Ministry Only",
+      "DEPARTMENT_ONLY": "Department Only",
+      "LEADERSHIP_ONLY": "Leadership Only",
+      "PRIVATE": "Private"
+    }
+  },
+  "attendance": {
+    "title": "Attendance",
+    "record": "Record Attendance",
+    "status": {
+      "PRESENT": "Present",
+      "ABSENT": "Absent",
+      "LATE": "Late",
+      "EXCUSED": "Excused",
+      "CHECKED_IN": "Checked In"
+    }
+  },
+  "registrations": {
+    "title": "Registrations",
+    "status": {
+      "REGISTERED": "Registered",
+      "WAITLISTED": "Waitlisted",
+      "CANCELLED": "Cancelled",
+      "ATTENDED": "Attended",
+      "NO_SHOW": "No Show"
+    }
   }
 }

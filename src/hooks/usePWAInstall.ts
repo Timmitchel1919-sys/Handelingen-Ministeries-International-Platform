@@ -54,3 +54,4 @@ export function usePWAInstall() {
 
   return { isInstallable, installPWA };
 }
+

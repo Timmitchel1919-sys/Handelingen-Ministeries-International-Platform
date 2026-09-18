@@ -13,7 +13,7 @@ import { ProfilePage } from '@/features/auth/pages/ProfilePage';
 import { DashboardPage } from '@/features/dashboard/DashboardPage';
 import { MembersPage } from '@/features/members/MembersPage';
 import { LeadersPage } from '@/features/leaders/LeadersPage';
-import { EventsPage } from '@/features/events/EventsPage';
+import { EventsRoutes } from '@/features/events/EventsRoutes';
 import { DocumentsPage } from '@/features/documents/DocumentsPage';
 import { TasksPage } from '@/features/tasks/TasksPage';
 import { ReportsPage } from '@/features/reports/ReportsPage';
@@ -67,7 +67,7 @@ export function AppRoutes() {
             <Route path="/dashboard" element={<DashboardPage />} />
             <Route path="/members" element={<MembersPage />} />
             <Route path="/leaders" element={<LeadersPage />} />
-            <Route path="/events" element={<EventsPage />} />
+            <Route path="/events/*" element={<EventsRoutes />} />
             <Route path="/documents" element={<DocumentsPage />} />
             <Route path="/tasks" element={<TasksPage />} />
             <Route path="/reports" element={<ReportsPage />} />

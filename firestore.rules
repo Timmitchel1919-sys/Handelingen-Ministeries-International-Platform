@@ -155,6 +155,19 @@ service cloud.firestore {
       allow update: if superAdmin() || churchAdmin(resource.data.churchId);
       allow delete: if superAdmin();
     }
+    match /events/{id} {
+      allow read: if sameChurch(resource.data.churchId);
+      allow create: if staff(request.resource.data.churchId);
+      allow update, delete: if staff(resource.data.churchId);
+    }
+    match /eventRegistrations/{id} {
+      allow read, update, delete: if sameChurch(resource.data.churchId) && (staff(resource.data.churchId) || resource.data.memberId == request.auth.uid);
+      allow create: if sameChurch(request.resource.data.churchId) && (staff(request.resource.data.churchId) || request.resource.data.memberId == request.auth.uid);
+    }
+    match /attendanceRecords/{id} {
+      allow read, update, delete: if sameChurch(resource.data.churchId) && staff(resource.data.churchId);
+      allow create: if sameChurch(request.resource.data.churchId) && staff(request.resource.data.churchId);
+    }
     match /{document=**} { allow read, write: if false; }
   }
 }

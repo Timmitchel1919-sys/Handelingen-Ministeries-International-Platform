@@ -284,5 +284,69 @@
   "leadership": {
     "assign": "Leider Toewijzen",
     "change": "Leider Wijzigen"
+  },
+  "events": {
+    "title": "Evenementen",
+    "create": "Evenement Aanmaken",
+    "edit": "Evenement Bewerken",
+    "cancel": "Evenement Annuleren",
+    "details": "Evenement Details",
+    "calendar": "Kalender",
+    "list": "Lijst",
+    "status": {
+      "DRAFT": "Concept",
+      "PUBLISHED": "Gepubliceerd",
+      "ONGOING": "Aan de gang",
+      "COMPLETED": "Voltooid",
+      "CANCELLED": "Geannuleerd"
+    },
+    "type": {
+      "CHURCH_SERVICE": "Kerkdienst",
+      "SPECIAL_SERVICE": "Speciale Dienst",
+      "PRAYER_MEETING": "Gebedsbijeenkomst",
+      "BIBLE_STUDY": "Bijbelstudie",
+      "CONFERENCE": "Conferentie",
+      "MINISTRY_EVENT": "Bediening Evenement",
+      "DEPARTMENT_EVENT": "Afdeling Evenement",
+      "LEADERSHIP_MEETING": "Leiderschapsvergadering",
+      "TRAINING": "Training",
+      "OUTREACH": "Evangelisatie",
+      "MISSION": "Zending",
+      "YOUTH_EVENT": "Jeugd Evenement",
+      "CHILDREN_EVENT": "Kinder Evenement",
+      "VOLUNTEER_EVENT": "Vrijwilligers Evenement",
+      "COMMUNITY_EVENT": "Gemeenschaps Evenement",
+      "OTHER": "Overig"
+    },
+    "visibility": {
+      "PUBLIC": "Openbaar",
+      "MEMBERS": "Leden",
+      "CHURCH_ONLY": "Alleen Kerk",
+      "MINISTRY_ONLY": "Alleen Bediening",
+      "DEPARTMENT_ONLY": "Alleen Afdeling",
+      "LEADERSHIP_ONLY": "Alleen Leiderschap",
+      "PRIVATE": "Privé"
+    }
+  },
+  "attendance": {
+    "title": "Aanwezigheid",
+    "record": "Aanwezigheid Registreren",
+    "status": {
+      "PRESENT": "Aanwezig",
+      "ABSENT": "Afwezig",
+      "LATE": "Laat",
+      "EXCUSED": "Vrijgesteld",
+      "CHECKED_IN": "Ingecheckt"
+    }
+  },
+  "registrations": {
+    "title": "Registraties",
+    "status": {
+      "REGISTERED": "Geregistreerd",
+      "WAITLISTED": "Wachtlijst",
+      "CANCELLED": "Geannuleerd",
+      "ATTENDED": "Aanwezig",
+      "NO_SHOW": "Niet Verschenen"
+    }
   }
 }
