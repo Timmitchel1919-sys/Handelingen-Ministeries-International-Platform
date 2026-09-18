@@ -101,7 +101,7 @@ export function AuthLayout({
                   <img
                     src={appConfig.logoUrl}
                     alt=""
-                    className="mx-auto mb-5 h-20 w-20 rounded-full object-cover shadow-lg ring-4 ring-white/30"
+                    className="mx-auto mb-5 h-20 w-20 rounded-full object-cover"
                   />
 
                   <h1 className="mt-7 text-2xl font-bold text-[var(--color-text)] sm:text-3xl">

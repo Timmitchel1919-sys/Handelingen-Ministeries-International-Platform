@@ -32,14 +32,14 @@ export function HomePage() {
             <img
               src={appConfig.logoUrl}
               alt={t('appName')}
-              className="mx-auto mb-7 h-24 w-24 rounded-full object-cover shadow-[0_15px_45px_rgba(23,59,112,0.18)] ring-4 ring-white/40 sm:h-28 sm:w-28"
+              className="mx-auto mb-7 h-24 w-24 rounded-full object-cover sm:h-28 sm:w-28"
             />
 
             <div className="mx-auto w-max">
               <h1 className="text-4xl font-extrabold tracking-tight text-text sm:text-6xl lg:text-7xl">
                 Handelingen Ministries
               </h1>
-              <div className="mt-4 flex w-full justify-between text-sm font-extrabold uppercase text-[#1458B8] dark:text-[#3FA9F5]">
+              <div className="mt-4 flex w-full justify-between text-sm font-extrabold uppercase text-white dark:text-[#3FA9F5]">
                 {"INTERNATIONAL".split('').map((char, i) => (
                   <span key={i}>{char}</span>
                 ))}
@@ -69,7 +69,7 @@ export function HomePage() {
                 type="button"
                 id="hero-register-btn"
                 onClick={() => setRegistrationOpen(true)}
-                className="inline-flex h-12 items-center justify-center gap-2 rounded-2xl bg-[#1458B8] hover:bg-[#0f4798] px-8 text-sm font-bold text-white shadow-[0_10px_28px_rgba(20,88,184,0.28)] transition duration-200 hover:shadow-[0_14px_35px_rgba(20,88,184,0.34)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#3FA9F5]"
+                className="inline-flex h-12 items-center justify-center gap-2 rounded-2xl bg-gradient-to-t from-[#1458B8] to-[#3FA9F5] px-8 text-sm font-bold text-white shadow-[inset_0_1px_1px_rgba(255,255,255,0.4),0_10px_28px_rgba(20,88,184,0.28)] transition duration-200 hover:brightness-110 hover:shadow-[0_14px_35px_rgba(20,88,184,0.34)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#3FA9F5]"
               >
                 {t('public.landing.register')}
                 <Icon name="arrow-right" size={17} />

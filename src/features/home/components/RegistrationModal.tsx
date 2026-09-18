@@ -745,7 +745,7 @@ export function RegistrationModal({ open, onClose }: RegistrationModalProps) {
       >
         {/* Modal Logo */}
         <div className="text-center pt-8 pb-2">
-          <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-surface/30 shadow-sm ring-2 ring-white/50 backdrop-blur">
+          <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-full">
             <img src={appConfig.logoUrl} alt="" className="h-full w-full rounded-full object-cover" />
           </div>
         </div>

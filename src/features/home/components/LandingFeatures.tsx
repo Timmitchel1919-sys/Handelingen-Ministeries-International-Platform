@@ -1,4 +1,4 @@
-﻿import { useTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 
 import { Icon, type IconName } from '@/components/ui/icons';
 
@@ -30,7 +30,7 @@ export function LandingFeatures() {
   return (
     <section
       id="features"
-      className="relative bg-[var(--color-background)] px-4 py-20 sm:px-6 lg:px-8"
+      className="relative bg-[var(--color-background)] dark:bg-white px-4 py-20 sm:px-6 lg:px-8"
     >
       <div className="mx-auto max-w-7xl">
         <div className="mb-12 text-center">
@@ -38,7 +38,7 @@ export function LandingFeatures() {
             {t('public.landing.featuresEyebrow')}
           </p>
 
-          <h2 className="mt-3 text-3xl font-bold text-[var(--color-text)] sm:text-4xl">
+          <h2 className="mt-3 text-3xl font-bold text-[var(--color-text)] dark:text-[#081b31] sm:text-4xl">
             {t('public.landing.featuresTitle')}
           </h2>
         </div>
@@ -47,17 +47,17 @@ export function LandingFeatures() {
           {features.map((feature) => (
             <article
               key={feature.key}
-              className="rounded-[28px] border border-white/80 bg-surface/55 p-7 shadow-[0_12px_35px_rgba(23,59,112,0.08)] backdrop-blur-xl transition duration-200 hover:bg-surface/70"
+              className="rounded-[28px] border border-[#1458B8]/20 dark:border-transparent bg-surface/55 dark:bg-[#081b31] p-7 shadow-[0_12px_35px_rgba(23,59,112,0.08)] dark:shadow-xl backdrop-blur-xl transition duration-200 hover:bg-surface/70 dark:hover:bg-[#0a1a2f]"
             >
-              <div className="mb-5 flex h-14 w-14 items-center justify-center rounded-full border border-white/80 bg-surface/55 text-[var(--color-primary)] shadow-sm">
+              <div className="mb-5 flex h-14 w-14 items-center justify-center rounded-full border border-[#1458B8]/20 dark:border-white/20 bg-surface/55 dark:bg-white/10 text-[var(--color-primary)] shadow-sm">
                 <Icon name={feature.icon} size={25} />
               </div>
 
-              <h3 className="text-lg font-bold text-[var(--color-text)]">
+              <h3 className="text-lg font-bold text-[var(--color-text)] dark:text-white">
                 {t(`public.landing.features.${feature.key}.title`)}
               </h3>
 
-              <p className="mt-2 text-sm leading-6 text-[var(--color-text-muted)]">
+              <p className="mt-2 text-sm leading-6 text-[var(--color-text-muted)] dark:text-white/70">
                 {t(`public.landing.features.${feature.key}.description`)}
               </p>
             </article>
