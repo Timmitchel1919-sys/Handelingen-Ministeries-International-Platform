@@ -47,9 +47,9 @@ export function LandingFeatures() {
           {features.map((feature) => (
             <article
               key={feature.key}
-              className="rounded-[28px] border border-[#1458B8]/20 dark:border-transparent bg-surface/55 dark:bg-[#081b31] p-7 shadow-[0_12px_35px_rgba(23,59,112,0.08)] dark:shadow-xl backdrop-blur-xl transition duration-200 hover:bg-surface/70 dark:hover:bg-[#0a1a2f]"
+              className="rounded-[28px] border border-[#3FA9F5] dark:border-transparent bg-white/80 dark:bg-[#081b31] p-7 shadow-[0_12px_35px_rgba(23,59,112,0.08)] dark:shadow-xl backdrop-blur-xl transition duration-200 hover:bg-white dark:hover:bg-[#0a1a2f]"
             >
-              <div className="mb-5 flex h-14 w-14 items-center justify-center rounded-full border border-[#1458B8]/20 dark:border-white/20 bg-surface/55 dark:bg-white/10 text-[var(--color-primary)] shadow-sm">
+              <div className="mb-5 flex h-14 w-14 items-center justify-center rounded-full border border-[#3FA9F5]/50 dark:border-white/20 bg-white/50 dark:bg-white/10 text-[var(--color-primary)] shadow-sm">
                 <Icon name={feature.icon} size={25} />
               </div>
 
