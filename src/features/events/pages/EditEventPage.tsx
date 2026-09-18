@@ -1,116 +1,102 @@
-
+import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { PageContainer } from '@/components/layout/PageContainer';
 import { PageHeader } from '@/components/layout/PageHeader';
 import { Card } from '@/components/ui/Card';
-import { Button } from '@/components/ui/Button';
-import { Input } from '@/components/ui/Input';
-import { Select } from '@/components/ui/Select';
-import { Textarea } from '@/components/ui/Textarea';
+import { LoadingState } from '@/components/ui/LoadingState';
+import { ErrorState } from '@/components/ui/ErrorState';
+import { EventForm, type EventFormData } from '../components/EventForm';
+import { eventService } from '@/services/event-service';
+import { useAuth } from '@/features/auth/AuthContext';
+import { getSelectedChurchId } from '@/services/church-context';
+import type { ChurchEvent } from '@/types/event';
 
 export function EditEventPage() {
   const { eventId } = useParams();
   const navigate = useNavigate();
+  const { user } = useAuth();
+  
+  const [event, setEvent] = useState<ChurchEvent | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [isSaving, setIsSaving] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    // TODO: submit event update
-    navigate(`/events/${eventId}`);
+  useEffect(() => {
+    async function loadEvent() {
+      const churchId = getSelectedChurchId();
+      if (!churchId || !eventId) {
+        setError('Missing church ID or event ID');
+        setIsLoading(false);
+        return;
+      }
+      
+      try {
+        const data = await eventService.getEventById(churchId, eventId);
+        setEvent(data as ChurchEvent);
+      } catch (err) {
+        console.error(err);
+        setError('Failed to load event');
+      } finally {
+        setIsLoading(false);
+      }
+    }
+    
+    void loadEvent();
+  }, [eventId]);
+
+  const handleSubmit = async (data: EventFormData) => {
+    const churchId = getSelectedChurchId();
+    if (!churchId || !user || !eventId) {
+      alert('Missing context');
+      return;
+    }
+    
+    setIsSaving(true);
+    try {
+      await eventService.updateEvent(churchId, eventId, data, user.id);
+      navigate(`/events/${eventId}`);
+    } catch (err) {
+      console.error('Failed to update event', err);
+      alert('Failed to update event. See console for details.');
+    } finally {
+      setIsSaving(false);
+    }
   };
+
+  if (isLoading) {
+    return (
+      <PageContainer title="Events">
+        <LoadingState label="Loading event details..." />
+      </PageContainer>
+    );
+  }
+
+  if (error || !event) {
+    return (
+      <PageContainer title="Events">
+        <ErrorState 
+          title="Error" 
+          description={error || 'Event not found'} 
+          onRetry={() => navigate('/events')}
+        />
+      </PageContainer>
+    );
+  }
 
   return (
     <PageContainer title='Events'>
       <PageHeader 
         title="Edit Event" 
-        description={`Editing event ID: ${eventId}`}
+        description={`Editing event: ${event.title}`}
       />
       
       <Card className="max-w-2xl p-6">
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <Input 
-            label="Title" 
-            defaultValue="Sunday Service"
-            required 
-          />
-          
-          <Textarea 
-            label="Description" 
-            defaultValue="Weekly Sunday worship service."
-            rows={4}
-            required
-          />
-
-          <div className="grid grid-cols-2 gap-4">
-            <Select 
-              label="Event Type" 
-              defaultValue="CHURCH_SERVICE"
-              options={[
-                { label: 'Church Service', value: 'CHURCH_SERVICE' },
-                { label: 'Conference', value: 'CONFERENCE' },
-                { label: 'Prayer Meeting', value: 'PRAYER_MEETING' },
-                { label: 'Other', value: 'OTHER' },
-              ]}
-              required
-            />
-            
-            <Select 
-              label="Visibility" 
-              defaultValue="PUBLIC"
-              options={[
-                { label: 'Public', value: 'PUBLIC' },
-                { label: 'Members Only', value: 'MEMBERS' },
-                { label: 'Private', value: 'PRIVATE' },
-              ]}
-              required
-            />
-          </div>
-
-          <div className="grid grid-cols-2 gap-4">
-            <Input 
-              type="datetime-local" 
-              label="Start Time" 
-              required 
-            />
-            <Input 
-              type="datetime-local" 
-              label="End Time" 
-              required 
-            />
-          </div>
-
-          <div className="grid grid-cols-2 gap-4">
-            <Select 
-              label="Location Type" 
-              defaultValue="PHYSICAL"
-              options={[
-                { label: 'Physical', value: 'PHYSICAL' },
-                { label: 'Online', value: 'ONLINE' },
-                { label: 'Hybrid', value: 'HYBRID' },
-              ]}
-              required
-            />
-            
-            <Select 
-              label="Scope" 
-              defaultValue="GLOBAL"
-              options={[
-                { label: 'Global', value: 'GLOBAL' },
-                { label: 'Region', value: 'REGION' },
-                { label: 'Church', value: 'CHURCH' },
-              ]}
-              required
-            />
-          </div>
-
-          <div className="flex justify-end space-x-2 pt-4">
-            <Button variant="outline" type="button" onClick={() => navigate(`/events/${eventId}`)}>
-              Cancel
-            </Button>
-            <Button type="submit">
-              Save Changes
-            </Button>
-          </div>
-        </form>
+        <EventForm 
+          defaultValues={event}
+          onSubmit={handleSubmit}
+          onCancel={() => navigate(`/events/${eventId}`)}
+          isLoading={isSaving}
+        />
       </Card>
     </PageContainer>
   );

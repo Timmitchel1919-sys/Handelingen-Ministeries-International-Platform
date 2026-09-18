@@ -20,7 +20,7 @@ export const eventService = {
     ], 100);
   },
 
-  async createEvent(data: Omit<ChurchEvent, 'id' | 'createdAt' | 'updatedAt' | 'deletedAt' | 'deletedBy'>, actorUid: string) {
+  async createEvent(data: Omit<ChurchEvent, 'id' | 'createdAt' | 'updatedAt' | 'deletedAt' | 'deletedBy' | 'createdBy' | 'updatedBy'>, actorUid: string) {
     const now = new Date().toISOString();
     return repo.create({
       ...data,
@@ -41,4 +41,29 @@ export const eventService = {
       updatedBy: actorUid,
     });
   },
+
+  async getDashboardUpcomingEvents(churchId: string, limitCount = 3) {
+    const now = new Date().toISOString();
+    return repo.list([
+      where('churchId', '==', churchId),
+      where('startAt', '>=', now)
+    ], limitCount);
+  },
+
+  async getUpcomingPublicEvents(constraints: QueryConstraint[] = []) {
+    const now = new Date().toISOString();
+    return repo.list([
+      where('visibility', '==', 'PUBLIC'),
+      where('startAt', '>=', now),
+      ...constraints
+    ], 50);
+  },
+
+  async getPublicEventById(id: string) {
+    const event = await repo.getById(id);
+    if (event.visibility !== 'PUBLIC') {
+      throw { kind: 'not-found', message: 'Event not found or not public.' };
+    }
+    return event;
+  }
 };

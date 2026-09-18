@@ -335,7 +335,7 @@
     "status": {
       "DRAFT": "Concept",
       "PUBLISHED": "Gepubliceerd",
-      "ONGOING": "Aan de gang",
+      "ONGOING": "In Uitvoering",
       "COMPLETED": "Voltooid",
       "CANCELLED": "Geannuleerd"
     },
@@ -359,13 +359,21 @@
     },
     "visibility": {
       "PUBLIC": "Openbaar",
-      "MEMBERS": "Leden",
-      "CHURCH_ONLY": "Alleen Kerk",
-      "MINISTRY_ONLY": "Alleen Bediening",
-      "DEPARTMENT_ONLY": "Alleen Afdeling",
-      "LEADERSHIP_ONLY": "Alleen Leiderschap",
-      "PRIVATE": "Privé"
-    }
+      "MEMBERS": "Alleen Leden",
+      "CHURCH_ONLY": "Alleen Kerk"
+    },
+    "types": {
+      "CHURCH_SERVICE": "Kerkdienst",
+      "BIBLE_STUDY": "Bijbelstudie",
+      "PRAYER_MEETING": "Bidstond",
+      "CONFERENCE": "Conferentie",
+      "YOUTH_EVENT": "Jeugdevenement",
+      "CHILDREN_EVENT": "Kinder-evenement",
+      "OUTREACH": "Evangelisatie",
+      "OTHER": "Overig"
+    },
+    "description": "Beheer kerkevenementen, diensten en activiteiten.",
+    "createNew": "Evenement Aanmaken"
   },
   "attendance": {
     "title": "Aanwezigheid",

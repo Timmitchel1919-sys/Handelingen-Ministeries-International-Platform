@@ -77,6 +77,10 @@ export interface ChurchEvent {
   status: EventStatus;
   visibility: EventVisibility;
 
+  // People
+  organizerIds?: string[];
+  speakerIds?: string[];
+
   // Schedule
   startAt: string; // ISO string for frontend, converted to Firestore Timestamp on backend
   endAt: string;
@@ -88,13 +92,17 @@ export interface ChurchEvent {
   recurrenceCount?: number | null;
   parentEventId?: string | null; // If this is an instance of a recurring event
 
-  // Location
+  // Location & Online
   locationType: 'PHYSICAL' | 'ONLINE' | 'HYBRID';
   venueName?: string | null;
   address?: string | null;
   district?: string | null;
   country?: string | null;
   onlineMeetingUrl?: string | null;
+  meetingId?: string | null;
+  isLiveEnabled?: boolean;
+  liveStatus?: 'OFFLINE' | 'LIVE' | 'RECORDING_AVAILABLE';
+  livestreamUrl?: string | null;
 
   // Registration
   registrationRequired: boolean;

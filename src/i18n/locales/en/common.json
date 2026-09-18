@@ -335,7 +335,7 @@
     "status": {
       "DRAFT": "Draft",
       "PUBLISHED": "Published",
-      "ONGOING": "Ongoing",
+      "ONGOING": "In Progress",
       "COMPLETED": "Completed",
       "CANCELLED": "Cancelled"
     },
@@ -359,13 +359,21 @@
     },
     "visibility": {
       "PUBLIC": "Public",
-      "MEMBERS": "Members",
-      "CHURCH_ONLY": "Church Only",
-      "MINISTRY_ONLY": "Ministry Only",
-      "DEPARTMENT_ONLY": "Department Only",
-      "LEADERSHIP_ONLY": "Leadership Only",
-      "PRIVATE": "Private"
-    }
+      "MEMBERS": "Members Only",
+      "CHURCH_ONLY": "Church Only"
+    },
+    "types": {
+      "CHURCH_SERVICE": "Church Service",
+      "BIBLE_STUDY": "Bible Study",
+      "PRAYER_MEETING": "Prayer Meeting",
+      "CONFERENCE": "Conference",
+      "YOUTH_EVENT": "Youth Event",
+      "CHILDREN_EVENT": "Children's Event",
+      "OUTREACH": "Outreach",
+      "OTHER": "Other"
+    },
+    "description": "Manage church events, services, and activities.",
+    "createNew": "Create Event"
   },
   "attendance": {
     "title": "Attendance",
