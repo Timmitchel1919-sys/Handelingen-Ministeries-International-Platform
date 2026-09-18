@@ -130,7 +130,7 @@ export function GlobalPublicHeader({ onRegister }: GlobalPublicHeaderProps) {
         </Link>
 
         {/* Centre nav links (desktop) */}
-        <div className="hidden items-center gap-6 lg:flex">
+        <div className="hidden items-center gap-3 lg:gap-6 md:flex">
           {navItems.map((item) => (
             <Link
               key={item.path}
@@ -146,7 +146,7 @@ export function GlobalPublicHeader({ onRegister }: GlobalPublicHeaderProps) {
         {/* Right action cluster */}
         <div className="flex items-center gap-1.5 sm:gap-2">
           {/* Desktop Language picker */}
-          <div className="hidden lg:block">
+          <div className="hidden md:block">
             <Dropdown
               align="end"
               trigger={
@@ -169,7 +169,7 @@ export function GlobalPublicHeader({ onRegister }: GlobalPublicHeaderProps) {
           </div>
 
           {/* Desktop Theme picker */}
-          <div className="hidden lg:block">
+          <div className="hidden md:block">
             <Dropdown
               align="end"
               trigger={
@@ -214,7 +214,7 @@ export function GlobalPublicHeader({ onRegister }: GlobalPublicHeaderProps) {
           {isInstallable && (
             <button
               onClick={installPWA}
-              className="hidden lg:flex items-center gap-2 rounded-full bg-linear-to-t from-[#1458B8] to-[#3FA9F5] px-3 py-2 text-xs font-semibold text-white shadow-[inset_0_1px_1px_rgba(255,255,255,0.4),0_10px_28px_rgba(20,88,184,0.28)] hover:brightness-110 transition text-wrap-balance text-center"
+              className="hidden md:flex items-center gap-2 rounded-full bg-linear-to-t from-[#1458B8] to-[#3FA9F5] px-3 py-2 text-xs font-semibold text-white shadow-[inset_0_1px_1px_rgba(255,255,255,0.4),0_10px_28px_rgba(20,88,184,0.28)] hover:brightness-110 transition text-wrap-balance text-center"
             >
               <Icon name="monitor" size={14} />
               <span>Download App</span>
@@ -262,7 +262,7 @@ export function GlobalPublicHeader({ onRegister }: GlobalPublicHeaderProps) {
             aria-controls="mobile-menu"
             aria-label="Toggle navigation menu"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="flex lg:hidden h-9 w-9 items-center justify-center rounded-xl border border-white/60 bg-surface/25 text-text backdrop-blur-md transition hover:bg-surface/40"
+            className="flex md:hidden h-9 w-9 items-center justify-center rounded-xl border border-white/60 bg-surface/25 text-text backdrop-blur-md transition hover:bg-surface/40"
           >
             <Icon name={isMenuOpen ? 'close' : 'menu'} size={20} />
           </button>
@@ -273,7 +273,7 @@ export function GlobalPublicHeader({ onRegister }: GlobalPublicHeaderProps) {
           <div 
             id="mobile-menu"
             ref={menuRef}
-            className="absolute top-[110%] left-0 right-0 z-50 flex flex-col gap-2 rounded-2xl border border-white/55 bg-surface/90 px-4 py-4 shadow-xl backdrop-blur-2xl lg:hidden"
+            className="absolute top-[110%] left-0 right-0 z-50 flex flex-col gap-2 rounded-2xl border border-white/55 bg-surface/90 px-4 py-4 shadow-xl backdrop-blur-2xl md:hidden"
           >
             {navItems.map((item) => (
               <Link
