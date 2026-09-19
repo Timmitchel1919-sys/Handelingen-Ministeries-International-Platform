@@ -35,6 +35,9 @@ export function EventForm({ defaultValues, onSubmit, onCancel, isLoading }: Even
       capacity: undefined,
       attendanceEnabled: false,
       recurrenceType: 'NONE',
+      recurrenceEndDate: '',
+      isLiveEnabled: false,
+      livestreamUrl: '',
       registeredCount: 0,
       ...defaultValues,
     }
@@ -42,6 +45,8 @@ export function EventForm({ defaultValues, onSubmit, onCancel, isLoading }: Even
 
   const locationType = watch('locationType');
   const registrationRequired = watch('registrationRequired');
+  const recurrenceType = watch('recurrenceType');
+  const isLiveEnabled = watch('isLiveEnabled');
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-8">
@@ -126,6 +131,23 @@ export function EventForm({ defaultValues, onSubmit, onCancel, isLoading }: Even
             {...register('endAt', { required: 'End time is required' })} 
             error={errors.endAt?.message}
           />
+          <Select 
+            label="Recurrence" 
+            options={[
+              { label: 'None', value: 'NONE' },
+              { label: 'Daily', value: 'DAILY' },
+              { label: 'Weekly', value: 'WEEKLY' },
+              { label: 'Monthly', value: 'MONTHLY' },
+            ]}
+            {...register('recurrenceType')}
+          />
+          {recurrenceType !== 'NONE' && (
+            <Input 
+              type="date" 
+              label="Recurrence End Date" 
+              {...register('recurrenceEndDate')} 
+            />
+          )}
         </div>
       </div>
 
@@ -190,6 +212,21 @@ export function EventForm({ defaultValues, onSubmit, onCancel, isLoading }: Even
             label="Enable Attendance Tracking" 
             {...register('attendanceEnabled')}
           />
+        </div>
+
+        <div className="space-y-2">
+          <Checkbox 
+            label="Enable Livestream" 
+            {...register('isLiveEnabled')}
+          />
+          {isLiveEnabled && (
+            <div className="pl-6 pt-2">
+              <Input 
+                label="Livestream URL" 
+                {...register('livestreamUrl')} 
+              />
+            </div>
+          )}
         </div>
       </div>
 

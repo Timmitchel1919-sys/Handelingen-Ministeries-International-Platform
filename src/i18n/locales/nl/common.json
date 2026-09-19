@@ -329,7 +329,19 @@
     "create": "Evenement Aanmaken",
     "edit": "Evenement Bewerken",
     "cancel": "Evenement Annuleren",
-    "details": "Evenement Details",
+    "details": {
+      "about": "Over dit Evenement",
+      "locationType": "Locatietype",
+      "location": "Locatie",
+      "onlineLink": "Online Vergaderlink",
+      "startTime": "Starttijd",
+      "endTime": "Eindtijd",
+      "capacity": "Registratie Capaciteit",
+      "registered": "Geregistreerd",
+      "deadline": "Registratie Deadline",
+      "cancellationReason": "Reden van Annulering",
+      "unlimited": "Onbeperkt"
+    },
     "calendar": "Kalender",
     "list": "Lijst",
     "status": {
@@ -372,8 +384,33 @@
       "OUTREACH": "Evangelisatie",
       "OTHER": "Overig"
     },
+    "recurrence": {
+      "NONE": "Geen",
+      "DAILY": "Dagelijks",
+      "WEEKLY": "Wekelijks",
+      "MONTHLY": "Maandelijks"
+    },
+    "fields": {
+      "recurrence": "Herhaling",
+      "recurrenceEndDate": "Einddatum Herhaling",
+      "enableLivestream": "Livestream Inschakelen",
+      "livestreamUrl": "Livestream URL",
+      "capacity": "Capaciteit (Laat leeg voor onbeperkt)",
+      "requireRegistration": "Registratie Vereist",
+      "attendanceTracking": "Aanwezigheidsregistratie Inschakelen"
+    },
     "description": "Beheer kerkevenementen, diensten en activiteiten.",
-    "createNew": "Evenement Aanmaken"
+    "createNew": "Evenement Aanmaken",
+    "metrics": {
+      "upcoming": "Aankomende Evenementen",
+      "registrations": "Totaal Registraties",
+      "attendance": "Aanwezigheid Bijgehouden"
+    },
+    "views": {
+      "month": "Maand",
+      "week": "Week",
+      "list": "Lijst"
+    }
   },
   "attendance": {
     "title": "Aanwezigheid",
@@ -384,7 +421,20 @@
       "LATE": "Laat",
       "EXCUSED": "Vrijgesteld",
       "CHECKED_IN": "Ingecheckt"
-    }
+    },
+    "dashboard": "Dashboard",
+    "members": "Leden",
+    "visitors": "Bezoekers",
+    "records": "Lijst",
+    "total": "Totaal Aanwezig",
+    "searchMember": "Zoek lid...",
+    "firstName": "Voornaam",
+    "lastName": "Achternaam",
+    "email": "E-mailadres",
+    "phone": "Telefoonnummer",
+    "submitVisitor": "Registreer Bezoeker",
+    "markAttendance": "Registreer Aanwezigheid",
+    "noRecords": "Geen aanwezigheidsrecords gevonden."
   },
   "registrations": {
     "title": "Registraties",

@@ -1,5 +1,6 @@
 import { useEffect, useState, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { PageContainer } from '@/components/layout/PageContainer';
 import { PageHeader } from '@/components/layout/PageHeader';
 import { Button } from '@/components/ui/Button';
@@ -12,6 +13,7 @@ import type { ChurchEvent, EventStatus, EventType, EventVisibility } from '@/typ
 import { CalendarView } from '../components/CalendarView';
 
 export function EventsDashboardPage() {
+  const { t } = useTranslation('common');
   const navigate = useNavigate();
   const { user } = useAuth();
   const churchId = user?.churchId;
@@ -92,6 +94,27 @@ export function EventsDashboardPage() {
           </div>
         }
       />
+
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+        <Card className="p-4">
+          <div className="text-sm font-medium text-[var(--color-text-muted)] mb-1">{t('events.metrics.upcoming', 'Upcoming Events')}</div>
+          <div className="text-2xl font-bold">
+            {events.filter(e => new Date(e.startAt) > new Date()).length}
+          </div>
+        </Card>
+        <Card className="p-4">
+          <div className="text-sm font-medium text-[var(--color-text-muted)] mb-1">{t('events.metrics.registrations', 'Total Registrations')}</div>
+          <div className="text-2xl font-bold">
+            {events.reduce((sum, e) => sum + (e.registeredCount || 0), 0)}
+          </div>
+        </Card>
+        <Card className="p-4">
+          <div className="text-sm font-medium text-[var(--color-text-muted)] mb-1">{t('events.metrics.attendance', 'Attendance Tracked')}</div>
+          <div className="text-2xl font-bold">
+            {events.filter(e => e.attendanceEnabled).length}
+          </div>
+        </Card>
+      </div>
 
       <div className="flex flex-wrap gap-4 mb-6">
         <Select 

@@ -158,7 +158,8 @@ service cloud.firestore {
     match /events/{id} {
       allow read: if resource.data.visibility == 'PUBLIC' || sameChurch(resource.data.churchId);
       allow create: if staff(request.resource.data.churchId);
-      allow update, delete: if staff(resource.data.churchId);
+      allow update: if staff(resource.data.churchId) || (sameChurch(resource.data.churchId) && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['registeredCount', 'updatedAt']));
+      allow delete: if staff(resource.data.churchId);
     }
     match /eventRegistrations/{id} {
       allow read, update, delete: if sameChurch(resource.data.churchId) && (staff(resource.data.churchId) || resource.data.memberId == request.auth.uid);

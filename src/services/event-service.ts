@@ -17,6 +17,30 @@ export const eventService = {
     return repo.list([
       where('churchId', '==', churchId),
       ...constraints
+    ], 500); // Larger limit for calendars
+  },
+
+  /**
+   * Dashboard helper to get upcoming events.
+   */
+  async getDashboardUpcomingEvents(churchId: string, limitCount = 3) {
+    const now = new Date().toISOString();
+    return repo.list([
+      where('churchId', '==', churchId),
+      where('startAt', '>=', now),
+      where('status', 'in', ['DRAFT', 'PUBLISHED', 'ONGOING'])
+    ], limitCount);
+  },
+
+  /**
+   * Helper to get events strictly for this month (useful for dashboard cards)
+   */
+  async getEventsThisMonth(churchId: string, startOfMonthIso: string, endOfMonthIso: string) {
+    return repo.list([
+      where('churchId', '==', churchId),
+      where('startAt', '>=', startOfMonthIso),
+      where('startAt', '<=', endOfMonthIso),
+      where('status', 'in', ['DRAFT', 'PUBLISHED', 'ONGOING', 'COMPLETED'])
     ], 100);
   },
 
@@ -30,6 +54,9 @@ export const eventService = {
       updatedBy: actorUid,
       deletedAt: null,
       deletedBy: null,
+      cancelledAt: null,
+      cancelledBy: null,
+      cancellationReason: null,
     });
   },
 
@@ -42,12 +69,21 @@ export const eventService = {
     });
   },
 
-  async getDashboardUpcomingEvents(churchId: string, limitCount = 3) {
-    const now = new Date().toISOString();
-    return repo.list([
-      where('churchId', '==', churchId),
-      where('startAt', '>=', now)
-    ], limitCount);
+  /**
+   * Soft cancel an event preserving historical integrity.
+   */
+  async cancelEvent(churchId: string, id: string, reason: string, actorUid: string) {
+    const event = await this.getEventById(churchId, id);
+    if (event.status === 'CANCELLED') return;
+
+    return repo.update(id, {
+      status: 'CANCELLED',
+      cancelledAt: new Date().toISOString(),
+      cancelledBy: actorUid,
+      cancellationReason: reason,
+      updatedAt: new Date().toISOString(),
+      updatedBy: actorUid,
+    });
   },
 
   async getUpcomingPublicEvents(constraints: QueryConstraint[] = []) {

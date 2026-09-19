@@ -329,7 +329,19 @@
     "create": "Create Event",
     "edit": "Edit Event",
     "cancel": "Cancel Event",
-    "details": "Event Details",
+    "details": {
+      "about": "About this Event",
+      "locationType": "Location Type",
+      "location": "Location",
+      "onlineLink": "Online Meeting Link",
+      "startTime": "Start Time",
+      "endTime": "End Time",
+      "capacity": "Registration Capacity",
+      "registered": "Registered",
+      "deadline": "Registration Deadline",
+      "cancellationReason": "Cancellation Reason",
+      "unlimited": "Unlimited"
+    },
     "calendar": "Calendar",
     "list": "List",
     "status": {
@@ -372,8 +384,33 @@
       "OUTREACH": "Outreach",
       "OTHER": "Other"
     },
+    "recurrence": {
+      "NONE": "None",
+      "DAILY": "Daily",
+      "WEEKLY": "Weekly",
+      "MONTHLY": "Monthly"
+    },
+    "fields": {
+      "recurrence": "Recurrence",
+      "recurrenceEndDate": "Recurrence End Date",
+      "enableLivestream": "Enable Livestream",
+      "livestreamUrl": "Livestream URL",
+      "capacity": "Capacity (Leave blank for unlimited)",
+      "requireRegistration": "Require Registration",
+      "attendanceTracking": "Enable Attendance Tracking"
+    },
     "description": "Manage church events, services, and activities.",
-    "createNew": "Create Event"
+    "createNew": "Create Event",
+    "metrics": {
+      "upcoming": "Upcoming Events",
+      "registrations": "Total Registrations",
+      "attendance": "Attendance Tracked"
+    },
+    "views": {
+      "month": "Month",
+      "week": "Week",
+      "list": "List"
+    }
   },
   "attendance": {
     "title": "Attendance",
@@ -384,7 +421,20 @@
       "LATE": "Late",
       "EXCUSED": "Excused",
       "CHECKED_IN": "Checked In"
-    }
+    },
+    "dashboard": "Dashboard",
+    "members": "Members",
+    "visitors": "Visitors",
+    "records": "Records",
+    "total": "Total Attendance",
+    "searchMember": "Search member...",
+    "firstName": "First Name",
+    "lastName": "Last Name",
+    "email": "Email",
+    "phone": "Phone",
+    "submitVisitor": "Record Visitor Attendance",
+    "markAttendance": "Mark Attendance",
+    "noRecords": "No attendance records found."
   },
   "registrations": {
     "title": "Registrations",

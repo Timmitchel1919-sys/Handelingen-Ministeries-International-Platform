@@ -120,6 +120,9 @@ export interface ChurchEvent {
   updatedAt: string;
   deletedAt?: string | null;
   deletedBy?: string | null;
+  cancelledAt?: string | null;
+  cancelledBy?: string | null;
+  cancellationReason?: string | null;
 }
 
 export interface EventRegistration {
@@ -132,11 +135,19 @@ export interface EventRegistration {
   updatedAt: string;
 }
 
+export interface VisitorInfo {
+  firstName: string;
+  lastName: string;
+  email?: string;
+  phone?: string;
+}
+
 export interface AttendanceRecord {
   id: string;
   eventId: string;
   churchId: string;
-  memberId: string;
+  memberId?: string | null;
+  visitorInfo?: VisitorInfo | null;
   status: AttendanceStatus;
   checkInTime?: string | null;
   recordedBy: string;
