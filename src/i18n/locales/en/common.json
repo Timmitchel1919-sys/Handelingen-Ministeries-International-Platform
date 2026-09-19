@@ -219,7 +219,10 @@
       "country": "Country",
       "districtCity": "District / City",
       "address": "Address",
-      "phone": "Phone Number"
+      "phone": "Phone Number",
+      "isBaptizedRequired": "Please indicate if you are baptized",
+      "hasChildrenRequired": "Please indicate if you have children",
+      "ageUnder16": "You must be at least 16 years old to create an independent Handelingen Ministries account. A parent or guardian can add you to their household."
     },
     "registerWizard": {
       "step1": "Personal Info",
@@ -242,7 +245,15 @@
         "usher": "Usher",
         "facility": "Facility Team"
       }
-    }
+    },
+    "isBaptized": "Baptized?",
+    "hasChildren": "Do you have children?",
+    "childrenAttending": "Children attending this church",
+    "childrenAttendingHelp": "Only add children who also attend this church.",
+    "child": "Child",
+    "age": "Age",
+    "addAnotherChild": "Add another child",
+    "removeChild": "Remove child"
   },
   "public": {
     "navigation": {

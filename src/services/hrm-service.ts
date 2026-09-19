@@ -39,6 +39,7 @@ export async function approveRegistration(registrationId: string, actorUid: stri
         dateOfBirth: reg.dateOfBirth,
         gender: reg.gender,
         maritalStatus: reg.maritalStatus,
+        isBaptized: reg.isBaptized,
       },
 
       contact: {
@@ -77,6 +78,41 @@ export async function approveRegistration(registrationId: string, actorUid: stri
 
     // Create member
     t.set(newMemberRef, newMember);
+
+    // Create household and children if needed
+    if (reg.hasChildren && reg.children && reg.children.length > 0) {
+      const householdRef = doc(collection(db, 'households'));
+      t.set(householdRef, {
+        churchId: reg.churchId,
+        name: `${reg.lastName} Household`,
+        primaryMemberId: newMemberRef.id,
+        createdAt: serverTimestamp(),
+        updatedAt: serverTimestamp(),
+      });
+
+      // Update primary member with householdId
+      t.update(newMemberRef, {
+        householdId: householdRef.id,
+        householdRole: 'head',
+      });
+
+      // Create dependent profiles for children
+      reg.children.forEach(child => {
+        const childRef = doc(collection(db, 'dependentProfiles'));
+        t.set(childRef, {
+          churchId: reg.churchId,
+          householdId: householdRef.id,
+          parentMemberId: newMemberRef.id,
+          firstName: child.firstName,
+          lastName: child.lastName,
+          dateOfBirth: child.dateOfBirth,
+          relationshipToPrimaryMember: 'child',
+          status: 'active',
+          createdAt: serverTimestamp(),
+          updatedAt: serverTimestamp(),
+        });
+      });
+    }
 
     // Audit log
     const auditRef = doc(collection(db, 'auditLogs'));

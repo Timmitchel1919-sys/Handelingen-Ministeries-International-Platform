@@ -219,7 +219,10 @@
       "country": "Land",
       "districtCity": "District / Stad",
       "address": "Adres",
-      "phone": "Telefoonnummer"
+      "phone": "Telefoonnummer",
+      "isBaptizedRequired": "Geef aan of u gedoopt bent",
+      "hasChildrenRequired": "Geef aan of u kinderen heeft",
+      "ageUnder16": "Je moet minimaal 16 jaar zijn om zelfstandig een Handelingen Ministries-account aan te maken. Een ouder of verzorger kan je toevoegen aan het huishouden."
     },
     "registerWizard": {
       "step1": "Persoonlijke gegevens",
@@ -242,7 +245,15 @@
         "usher": "Usher",
         "facility": "Facility Team"
       }
-    }
+    },
+    "isBaptized": "Bent u gedoopt?",
+    "hasChildren": "Heeft u kinderen?",
+    "childrenAttending": "Kinderen die deze kerk bezoeken",
+    "childrenAttendingHelp": "Voeg alleen kinderen toe die deze kerk ook bezoeken.",
+    "child": "Kind",
+    "age": "Leeftijd",
+    "addAnotherChild": "Nog een kind toevoegen",
+    "removeChild": "Kind verwijderen"
   },
   "public": {
     "navigation": {

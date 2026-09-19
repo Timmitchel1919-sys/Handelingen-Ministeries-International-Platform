@@ -16,6 +16,12 @@ export interface EmergencyContact {
   relationship: string;
 }
 
+export interface ChildRegistration {
+  firstName: string;
+  lastName: string;
+  dateOfBirth: string;
+}
+
 export interface MemberRegistration {
   id: string;
   uid: string;
@@ -29,6 +35,10 @@ export interface MemberRegistration {
   gender: string;
   maritalStatus: string;
   memberType: string;
+
+  isBaptized?: boolean;
+  hasChildren?: boolean;
+  children?: ChildRegistration[];
 
   country: string;
   district: string;
@@ -51,4 +61,3 @@ export interface MemberRegistration {
   decisionReason?: string;
   schemaVersion: number;
 }
-

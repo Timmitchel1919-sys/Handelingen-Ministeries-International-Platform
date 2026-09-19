@@ -12,3 +12,4 @@ data = data.replace(/<Badge tone="outline">/g, '<Badge tone="neutral">');
 data = data.replace(/<Badge tone="secondary">/g, '<Badge tone="neutral">');
 data = data.replace(/variant="destructive"/g, 'variant="outline" className="text-[#a82d42] border-[#a82d42] hover:bg-[#fff1f3]"');
 fs.writeFileSync(file, data);
+

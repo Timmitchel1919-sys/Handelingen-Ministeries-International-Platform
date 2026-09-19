@@ -102,6 +102,15 @@ service cloud.firestore {
     }
     
     // Existing member repository is read-only. Intake writes require the next layer.
+    
+    match /households/{id} {
+      allow read: if sameChurch(resource.data.churchId) && staff(resource.data.churchId);
+      allow create, update, delete: if sameChurch(resource.data.churchId) && staff(resource.data.churchId);
+    }
+    match /dependentProfiles/{id} {
+      allow read: if sameChurch(resource.data.churchId) && staff(resource.data.churchId);
+      allow create, update, delete: if sameChurch(resource.data.churchId) && staff(resource.data.churchId);
+    }
     match /members/{memberId} {
       allow read: if staff(resource.data.churchId)
         || (sameChurch(resource.data.churchId)

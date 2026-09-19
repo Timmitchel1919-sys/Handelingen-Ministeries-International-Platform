@@ -25,6 +25,7 @@ export interface Member {
     dateOfBirth: string;
     gender: string;
     maritalStatus: string;
+    isBaptized?: boolean;
   };
 
   contact: {
